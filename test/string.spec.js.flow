@@ -1,0 +1,28 @@
+// @flow
+
+/* eslint-disable @typescript-eslint/no-unused-vars */
+
+import * as t from '../src/'
+import { expect } from 'chai'
+import dedent from 'dedent-js'
+import { describe, it } from 'mocha'
+
+describe(`t.string`, function() {
+  const ValueType = t.string()
+  type Value = t.ExtractType<typeof ValueType>
+
+  const a: Value = 'foo'
+  // $FlowFixMe
+  const v: Value = 1
+})
+
+describe(`t.string(literal)`, function() {
+  const ValueType = t.string<'foo'>('foo')
+  type Value = t.ExtractType<typeof ValueType>
+
+  const a: Value = 'foo'
+  // $FlowFixMe
+  const b: Value = 'bar'
+  // $FlowFixMe
+  const v: Value = 1
+})

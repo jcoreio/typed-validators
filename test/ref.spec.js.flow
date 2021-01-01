@@ -1,0 +1,41 @@
+// @flow
+
+import * as t from '../src/'
+import { describe, it } from 'mocha'
+
+/* eslint-disable @typescript-eslint/no-unused-vars */
+
+describe(`t.ref`, function() {
+  const NodeType = t.alias(
+    'Node',
+    t.object({
+      required: {
+        value: t.any(),
+      },
+      optional: {
+        left: t.ref(() => NodeType),
+        right: t.ref(() => NodeType),
+      },
+    })
+  )
+
+  type Node = t.ExtractType<typeof NodeType>
+
+  it(`doesn't error on valid values`, () => {
+    const a: Node = { value: 1 }
+    const b: Node = { value: 1, left: { value: 1 } }
+    const c: Node = {
+      value: 1,
+      left: { value: 1 },
+      right: { value: 1, left: { value: 1 } },
+    }
+  })
+  it(`errors on invalid values`, () => {
+    // $FlowFixMe
+    const a: Node = { foo: 'bar' }
+    // $FlowFixMe
+    const b: Node = { value: 'bar', left: 1 }
+    // $FlowFixMe
+    const c: Node = { value: 'bar', left: { value: 1, left: 1 } }
+  })
+})

@@ -1,0 +1,88 @@
+// @flow
+
+import * as t from '../src/'
+import { describe, it } from 'mocha'
+
+/* eslint-disable @typescript-eslint/no-unused-vars */
+
+describe(`t.oneOf`, function() {
+  const NumberOrStringType = t.oneOf(t.number(), t.string())
+  type NumberOrString = t.ExtractType<typeof NumberOrStringType>
+
+  const ObjectUnionType = t.oneOf(
+    t.object({ required: { foo: t.number() }, exact: true }),
+    // $FlowFixMe
+    t.object({ required: { bar: t.string() }, exact: true })
+  )
+  type ObjectUnion = t.ExtractType<typeof ObjectUnionType>
+
+  const NestedObjectUnionType = t.object({
+    optional: {
+      obj: ObjectUnionType,
+    },
+  })
+  type NestedObjectUnion = t.ExtractType<typeof NestedObjectUnionType>
+
+  const TypeFieldUnionType = t.oneOf(
+    t.object({
+      required: { type: t.string<'foo'>('foo'), foo: t.number() },
+      exact: true,
+    }),
+    t.object({
+      // $FlowFixMe
+      required: { type: t.string<'bar'>('bar'), bar: t.string() },
+      exact: true,
+    })
+  )
+  type TypeFieldUnion = t.ExtractType<typeof TypeFieldUnionType>
+
+  it(`accepts valid values`, function() {
+    const a: NumberOrString = 1
+    const b: NumberOrString = 2
+    const c: NumberOrString = 'three'
+    const d: NumberOrString = 'four'
+
+    const e: ObjectUnion = { foo: 1 }
+    const f: ObjectUnion = { bar: 'hello' }
+
+    const e1: TypeFieldUnion = { type: 'foo', foo: 1 }
+    const f1: TypeFieldUnion = { type: 'bar', bar: 'hello' }
+
+    const g: NestedObjectUnion = { obj: { foo: 1 } }
+    const h: NestedObjectUnion = { obj: { bar: 'hello' } }
+    const i: NestedObjectUnion = { obj: undefined }
+  })
+  it(`rejects invalid values`, function() {
+    // $FlowFixMe
+    const a: NumberOrString = true
+    // $FlowFixMe
+    const b: NumberOrString = new Date()
+
+    // $FlowFixMe
+    const c: ObjectUnion = { foo: 'hello' }
+    const d: ObjectUnion = { bar: 1 }
+    // $FlowFixMe
+    const e: ObjectUnion = { bar: 'hello', baz: 'qux' }
+    // $FlowFixMe
+    const f: ObjectUnion = {}
+
+    // $FlowFixMe
+    const c1: TypeFieldUnion = { type: 'foo', foo: 'hello' }
+    const d1: TypeFieldUnion = { type: 'bar', bar: 1 }
+    // $FlowFixMe
+    const d2: TypeFieldUnion = { type: 'bar', foo: 1 }
+    // $FlowFixMe
+    const e1: TypeFieldUnion = { type: 'bar', bar: 'hello', baz: 'qux' }
+    // $FlowFixMe
+    const f1: TypeFieldUnion = { type: 'baz' }
+
+    // $FlowFixMe
+    const g: NestedObjectUnion = { obj: { foo: 'hello' } }
+    // $FlowFixMe
+    const h: NestedObjectUnion = { obj: { bar: 1 } }
+    // $FlowFixMe
+    const i: NestedObjectUnion = { obj: { bar: 'hello', baz: 'qux' } }
+    // $FlowFixMe
+    const j: NestedObjectUnion = { obj: {} }
+  })
+})

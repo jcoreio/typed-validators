@@ -1,0 +1,161 @@
+// @flow
+
+/* eslint-disable @typescript-eslint/no-unused-vars */
+
+import * as t from '../src/index'
+import { describe, it } from 'mocha'
+
+describe('inexact', () => {
+  it('required only', () => {
+    const PersonType = t.object({
+      required: { name: t.string() },
+      exact: false,
+    })
+
+    type Person = t.ExtractType<typeof PersonType>
+
+    const a: Person = { name: 'foo' }
+    const b: Person = { name: 'foo', age: 2 }
+    const c: Person = { name: 'foo', age: 2, bar: 'baz' }
+
+    // $FlowFixMe
+    const d: Person = { age: 2 }
+    // $FlowFixMe
+    const e: Person = { name: 2 }
+    // $FlowFixMe
+    const f: Person = { name: 'foo', age: '2' }
+    // $FlowFixMe
+    const g: Person = 2
+  })
+  it('optional only', () => {
+    const PersonType = t.object({
+      optional: { name: t.string(), age: t.number() },
+      exact: false,
+    })
+
+    type Person = t.ExtractType<typeof PersonType>
+
+    const a: Person = { name: 'foo' }
+    const b: Person = { name: 'foo', age: 2 }
+    const c: Person = { name: 'foo', age: 2, bar: 'baz' }
+    const d: Person = { bar: 'baz' }
+    const e: Person = { age: 2 }
+
+    // $FlowFixMe
+    const f: Person = { name: 2 }
+    // $FlowFixMe
+    const g: Person = { name: 'foo', age: '2' }
+    // $FlowFixMe
+    const h: Person = 2
+  })
+  it('required and optional', () => {
+    const PersonType = t.object({
+      required: { name: t.string() },
+      optional: { age: t.number() },
+      exact: false,
+    })
+
+    type Person = t.ExtractType<typeof PersonType>
+
+    const a: Person = { name: 'foo' }
+    const b: Person = { name: 'foo', age: 2 }
+    const c: Person = { name: 'foo', age: 2, bar: 'baz' }
+
+    // $FlowFixMe
+    const d: Person = { age: 2 }
+    // $FlowFixMe
+    const e: Person = { name: 2 }
+    // $FlowFixMe
+    const f: Person = { name: 'foo', age: '2' }
+    // $FlowFixMe
+    const g: Person = 2
+  })
+})
+describe('exact', () => {
+  it('required only', () => {
+    const PersonType = t.object({
+      required: { name: t.string() },
+    })
+
+    type Person = t.ExtractType<typeof PersonType>
+
+    const a: Person = { name: 'foo' }
+    // $FlowFixMe
+    const b: Person = { name: 'foo', age: 2 }
+    // $FlowFixMe
+    const c: Person = { name: 'foo', age: 2, bar: 'baz' }
+    // $FlowFixMe
+    const d: Person = { age: 2 }
+    // $FlowFixMe
+    const e: Person = { name: 2 }
+    // $FlowFixMe
+    const f: Person = { name: 'foo', age: '2' }
+    // $FlowFixMe
+    const g: Person = 2
+  })
+  it('required only -- shortcut', () => {
+    const PersonType = t.object({
+      name: t.string(),
+    })
+
+    type Person = t.ExtractType<typeof PersonType>
+
+    const a: Person = { name: 'foo' }
+    // $FlowFixMe
+    const b: Person = { name: 'foo', age: 2 }
+    // $FlowFixMe
+    const c: Person = { name: 'foo', age: 2, bar: 'baz' }
+    // $FlowFixMe
+    const d: Person = { age: 2 }
+    // $FlowFixMe
+    const e: Person = { name: 2 }
+    // $FlowFixMe
+    const f: Person = { name: 'foo', age: '2' }
+    // $FlowFixMe
+    const g: Person = 2
+  })
+  it('optional only', () => {
+    const PersonType = t.object({
+      optional: { name: t.string(), age: t.number() },
+    })
+
+    type Person = t.ExtractType<typeof PersonType>
+
+    const a: Person = { name: 'foo' }
+    const b: Person = { name: 'foo', age: 2 }
+    // $FlowFixMe
+    const c: Person = { name: 'foo', age: 2, bar: 'baz' }
+    // $FlowFixMe
+    const d: Person = { bar: 'baz' }
+    const e: Person = { age: 2 }
+
+    // $FlowFixMe
+    const f: Person = { name: 2 }
+    // $FlowFixMe
+    const g: Person = { name: 'foo', age: '2' }
+    // $FlowFixMe
+    const h: Person = 2
+  })
+  it('required and optional', () => {
+    const PersonType = t.object({
+      required: { name: t.string() },
+      optional: { age: t.number() },
+    })
+
+    type Person = t.ExtractType<typeof PersonType>
+
+    const a: Person = { name: 'foo' }
+    const b: Person = { name: 'foo', age: 2 }
+    // $FlowFixMe
+    const c: Person = { name: 'foo', age: 2, bar: 'baz' }
+
+    // $FlowFixMe
+    const d: Person = { age: 2 }
+    // $FlowFixMe
+    const e: Person = { name: 2 }
+    // $FlowFixMe
+    const f: Person = { name: 'foo', age: '2' }
+    // $FlowFixMe
+    const g: Person = 2
+  })
+})
