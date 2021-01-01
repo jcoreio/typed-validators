@@ -2,10 +2,10 @@
 
 import Type from './Type'
 
-declare class InstanceOfType<T: Class<any>> extends Type<T> {
-  classType: T;
+declare class InstanceOfType<T> extends Type<T> {
+  classType: Class<T>;
 
-  constructor(classType: T): void;
+  constructor(classType: Class<T>): void;
 }
 
 export default InstanceOfType

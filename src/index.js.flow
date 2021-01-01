@@ -139,9 +139,7 @@ declare export function record<K: string | number | symbol, V>(
   value: Type<V>
 ): RecordType<K, V>
 
-declare export function instanceOf<T>(classType: {
-  new(...args: any[]): T,
-}): Type<T>
+declare export function instanceOf<T>(classType: Class<T>): Type<T>
 
 declare export function tuple<T: Type<any>[]>(
   ...types: T
