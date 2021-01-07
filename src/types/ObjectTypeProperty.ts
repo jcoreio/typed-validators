@@ -28,6 +28,10 @@ export default class ObjectTypeProperty<
     this.optional = optional
   }
 
+  clone(): ObjectTypeProperty<K, V> {
+    return new ObjectTypeProperty(this.key, this.value, this.optional)
+  }
+
   addConstraint(...constraints: TypeConstraint<V>[]): ObjectTypeProperty<K, V> {
     addConstraints(this, ...constraints)
     return this

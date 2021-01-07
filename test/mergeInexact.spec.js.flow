@@ -1,0 +1,28 @@
+// @flow
+
+import * as t from '../src/'
+import { describe, it } from 'mocha'
+
+/* eslint-disable @typescript-eslint/no-unused-vars */
+
+describe(`t.allOf`, function() {
+  const MergedType = t.mergeInexact(
+    t.object({ foo: t.number() }),
+    t.object({ bar: t.string() })
+  )
+  type Merged = t.ExtractType<typeof MergedType>
+  it(`accepts valid values`, function() {
+    const a: Merged = { foo: 1, bar: 'a' }
+    const e: Merged = { foo: 1, bar: 'a', baz: 'qux' }
+  })
+  it(`rejects invalid values`, function() {
+    // $FlowFixMe
+    const a: Merged = { foo: 1 }
+    // $FlowFixMe
+    const b: Merged = { bar: 'a' }
+    // $FlowFixMe
+    const c: Merged = { foo: 1, bar: 1 }
+    // $FlowFixMe
+    const d: Merged = { foo: 'a', bar: 'a' }
+  })
+})

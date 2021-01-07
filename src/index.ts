@@ -23,6 +23,8 @@ import TypeReference from './types/TypeReference'
 import Validation from './Validation'
 import RuntimeTypeError from './errorReporting/RuntimeTypeError'
 import oneOf from './oneOf'
+import merge from './merge'
+import mergeInexact from './mergeInexact'
 
 export {
   Type,
@@ -50,6 +52,8 @@ export {
   Validation,
   RuntimeTypeError,
   oneOf,
+  merge,
+  mergeInexact,
 }
 
 export const any = (): Type<any> => new AnyType()
@@ -106,21 +110,21 @@ export function symbol(
 
 export function object<R extends Record<string | number | symbol, Type<any>>>(
   required: R
-): Type<{ [K in keyof R]: ExtractType<R[K]> }>
+): ObjectType<{ [K in keyof R]: ExtractType<R[K]> }>
 export function object<R extends Record<string | number | symbol, Type<any>>>({
   required,
   exact,
 }: {
   required: R
   exact?: boolean
-}): Type<{ [K in keyof R]: ExtractType<R[K]> }>
+}): ObjectType<{ [K in keyof R]: ExtractType<R[K]> }>
 export function object<S extends Record<string | number | symbol, Type<any>>>({
   optional,
   exact,
 }: {
   optional: S
   exact?: boolean
-}): Type<{ [K in keyof S]?: ExtractType<S[K]> }>
+}): ObjectType<{ [K in keyof S]?: ExtractType<S[K]> }>
 export function object<
   R extends Record<string | number | symbol, Type<any>>,
   S extends Record<string | number | symbol, Type<any>>
@@ -132,7 +136,7 @@ export function object<
   required: R
   optional: S
   exact?: boolean
-}): Type<
+}): ObjectType<
   { [K in keyof R]: ExtractType<R[K]> } & { [K in keyof S]?: ExtractType<S[K]> }
 >
 export function object<
@@ -146,7 +150,7 @@ export function object<
         optional?: S
         exact?: boolean
       }
-): Type<
+): ObjectType<
   { [K in keyof R]: ExtractType<R[K]> } & { [K in keyof S]?: ExtractType<S[K]> }
 > {
   const { required, optional, exact } = options
@@ -173,8 +177,6 @@ export function object<
     true
   ) as any
 }
-
-type Properties = Record<string | number | symbol, Type<any>>
 
 export const record = <K extends string | number | symbol, V>(
   key: Type<K>,

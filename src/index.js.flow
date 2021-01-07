@@ -25,6 +25,8 @@ import TypeReference from './types/TypeReference'
 import Validation from './Validation'
 import RuntimeTypeError from './errorReporting/RuntimeTypeError'
 import oneOf from './oneOf'
+import merge from './merge'
+import mergeInexact from './mergeInexact'
 
 export {
   Type,
@@ -52,6 +54,8 @@ export {
   Validation,
   RuntimeTypeError,
   oneOf,
+  merge,
+  mergeInexact,
 }
 
 declare export function any(): Type<any>
@@ -91,19 +95,19 @@ type ExtractOptionalPropertyTypes<P: { [any]: Type<any> }> = $Exact<
 declare export function object<R: { [any]: Type<any> }>({|
   required: R,
   exact: false,
-|}): Type<{ ...ExtractPropertyTypes<R>, ... }>
+|}): ObjectType<{ ...ExtractPropertyTypes<R>, ... }>
 declare export function object<R: { [any]: Type<any> }>({|
   required: R,
   exact?: true,
-|}): Type<ExtractPropertyTypes<R>>
+|}): ObjectType<ExtractPropertyTypes<R>>
 declare export function object<S: { [any]: Type<any> }>({|
   optional: S,
   exact: false,
-|}): Type<{ ...ExtractOptionalPropertyTypes<S>, ... }>
+|}): ObjectType<{ ...ExtractOptionalPropertyTypes<S>, ... }>
 declare export function object<S: { [any]: Type<any> }>({|
   optional: S,
   exact?: true,
-|}): Type<ExtractOptionalPropertyTypes<S>>
+|}): ObjectType<ExtractOptionalPropertyTypes<S>>
 declare export function object<
   R: { [any]: Type<any> },
   S: { [any]: Type<any> }
@@ -111,7 +115,7 @@ declare export function object<
   required: R,
   optional: S,
   exact: false,
-|}): Type<{
+|}): ObjectType<{
   ...ExtractPropertyTypes<R>,
   ...ExtractOptionalPropertyTypes<S>,
   ...
@@ -123,13 +127,13 @@ declare export function object<
   required: R,
   optional: S,
   exact?: true,
-|}): Type<{|
+|}): ObjectType<{|
   ...ExtractPropertyTypes<R>,
   ...ExtractOptionalPropertyTypes<S>,
 |}>
 declare export function object<R: { [any]: Type<any> }>(
   required: R
-): Type<ExtractPropertyTypes<R>>
+): ObjectType<ExtractPropertyTypes<R>>
 
 type Properties = { [string | number | symbol]: Type<any> }
 

@@ -35,6 +35,8 @@ The validation errors are detailed. Adapted from the brilliant work in `flow-run
     - [`t.array(t.number())`](#tarraytnumber)
     - [`t.object(properties)`](#tobjectproperties)
     - [`t.object({ required?, optional?, exact? })`](#tobject-required-optional-exact-)
+    - [`t.merge(t.object(...), t.object(...), ...)`](#tmergetobject-tobject-)
+    - [`t.mergeInexact(t.object(...), t.object(...), ...)`](#tmergeinexacttobject-tobject-)
     - [`t.record(t.string(), t.number())`](#trecordtstring-tnumber)
     - [`t.instanceOf(() => Date)`](#tinstanceof--date)
     - [`t.tuple(t.string(), t.number())`](#ttupletstring-tnumber)
@@ -285,6 +287,46 @@ PersonType.assert({ name: 1 }) // error
 PersonType.assert({ name: 'dude', age: 'old' }) // error
 ```
 
+### `t.merge(t.object(...), t.object(...), ...)`
+
+Merges the properties of multiple object validators together into an exact object validator (no additional properties are allowed).
+Accepts a variable number of arguments, though type generation is only overloaded up to 8 arguments.
+
+For example:
+
+```ts
+const PersonType = t.object({
+  required: {
+    name: t.string(),
+  },
+  optional: {
+    age: t.number(),
+  },
+})
+const AddressType = t.object({
+  street: t.string(),
+  city: t.string(),
+  state: t.string(),
+  zip: t.string(),
+})
+
+const PersonWithAddressType = t.merge(PersonType, AddressType)
+
+PersonWithAddressType.assert({
+  // ok
+  name: 'dude',
+  age: 100,
+  street: 'Bourbon Street',
+  city: 'New Orleans',
+  zip: '77777',
+})
+```
+
+### `t.mergeInexact(t.object(...), t.object(...), ...)`
+
+Merges the properties of multiple object validators together into an inexact object validator (additional properties are allowed).
+Accepts a variable number of arguments, though type generation is only overloaded up to 8 arguments.
+
 ### `t.record(t.string(), t.number())`
 
 A validator that requires the value to be `Record<string, number>`.
@@ -313,7 +355,7 @@ CommentedThingType.assert({ name: 'foo', comment: 'sweet' })
 
 ### `t.oneOf(t.string(), t.number())`
 
-A validator that requires the value to be `string | number`. Accepts a variable number of arguments, though type generation is only overloaded up to 8 arguments.
+A validator that requires the value to be `string | number`. Accepts a variable number of arguments, though type generation is only overloaded up to 32 arguments.
 
 ### `t.alias(name, type)`
 
