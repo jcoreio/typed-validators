@@ -53,7 +53,7 @@ export default class RecordType<
     yield* collectErrorsWithIndexers(this, validation, path, input)
   }
 
-  accepts(input: any): boolean {
+  accepts(input: any): input is Record<K, V> {
     if (input === null) {
       return false
     }

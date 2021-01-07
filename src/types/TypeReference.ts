@@ -19,7 +19,7 @@ export default class TypeReference<T> extends Type<T> {
     yield* this.type().errors(validation, path, input)
   }
 
-  accepts(input: any): boolean {
+  accepts(input: any): input is T {
     return this.type().accepts(input)
   }
 

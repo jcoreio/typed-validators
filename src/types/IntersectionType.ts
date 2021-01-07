@@ -22,7 +22,7 @@ export default class IntersectionType<T> extends Type<T> {
     }
   }
 
-  accepts(input: any): boolean {
+  accepts(input: any): input is T {
     const { types } = this
     const { length } = types
     for (let i = 0; i < length; i++) {

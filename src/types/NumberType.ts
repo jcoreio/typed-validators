@@ -16,7 +16,7 @@ export default class NumberType extends Type<number> {
     }
   }
 
-  accepts(input: any): boolean {
+  accepts(input: any): input is number {
     return typeof input === 'number'
   }
 

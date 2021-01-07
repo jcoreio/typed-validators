@@ -19,7 +19,7 @@ export default abstract class Type<T> {
     /* eslint-enable @typescript-eslint/no-unused-vars */
   ): Generator<ErrorTuple, void, void>
 
-  abstract accepts(input: any): boolean
+  abstract accepts(input: any): input is T
 
   assert<V extends T>(input: any, prefix = '', path?: IdentifierPath): V {
     const validation = this.validate(input, prefix, path)

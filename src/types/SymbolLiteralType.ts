@@ -26,7 +26,7 @@ export default class SymbolLiteralType<T extends symbol> extends Type<T> {
     }
   }
 
-  accepts(input: any): boolean {
+  accepts(input: any): input is T {
     return input === this.value
   }
 

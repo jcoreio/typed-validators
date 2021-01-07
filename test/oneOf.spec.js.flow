@@ -29,7 +29,6 @@ describe(`t.oneOf`, function() {
       exact: true,
     }),
     t.object({
-      // $FlowFixMe
       required: { type: t.string<'bar'>('bar'), bar: t.string() },
       exact: true,
     })
@@ -60,6 +59,7 @@ describe(`t.oneOf`, function() {
 
     // $FlowFixMe
     const c: ObjectUnion = { foo: 'hello' }
+    // $FlowFixMe
     const d: ObjectUnion = { bar: 1 }
     // $FlowFixMe
     const e: ObjectUnion = { bar: 'hello', baz: 'qux' }
@@ -68,6 +68,7 @@ describe(`t.oneOf`, function() {
 
     // $FlowFixMe
     const c1: TypeFieldUnion = { type: 'foo', foo: 'hello' }
+    // $FlowFixMe
     const d1: TypeFieldUnion = { type: 'bar', bar: 1 }
     // $FlowFixMe
     const d2: TypeFieldUnion = { type: 'bar', foo: 1 }

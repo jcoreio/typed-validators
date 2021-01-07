@@ -55,6 +55,7 @@ export {
 }
 
 declare export function any(): Type<any>
+declare export function unknown(): Type<mixed>
 
 declare export function array<T>(elementType: Type<T>): Type<T[]>
 
@@ -80,13 +81,11 @@ declare export function string(): Type<string>
 declare export function symbol<T: symbol>(literal: T): Type<T>
 declare export function symbol(): Type<symbol>
 
-type ExtractPropertyTypes<P: { [any]: Type<any> }> = $ObjMap<
-  P,
-  <V>(Type<V>) => V
+type ExtractPropertyTypes<P: { [any]: Type<any> }> = $Exact<
+  $ObjMap<P, <T: Type<any>>(T) => $PropertyType<T, '__type'>>
 >
-type ExtractOptionalPropertyTypes<P: { [any]: Type<any> }> = $Rest<
-  ExtractPropertyTypes<P>,
-  { ... }
+type ExtractOptionalPropertyTypes<P: { [any]: Type<any> }> = $Exact<
+  $Rest<ExtractPropertyTypes<P>, { ... }>
 >
 
 declare export function object<R: { [any]: Type<any> }>({|
@@ -96,7 +95,7 @@ declare export function object<R: { [any]: Type<any> }>({|
 declare export function object<R: { [any]: Type<any> }>({|
   required: R,
   exact?: true,
-|}): Type<$Exact<ExtractPropertyTypes<R>>>
+|}): Type<ExtractPropertyTypes<R>>
 declare export function object<S: { [any]: Type<any> }>({|
   optional: S,
   exact: false,
@@ -104,7 +103,7 @@ declare export function object<S: { [any]: Type<any> }>({|
 declare export function object<S: { [any]: Type<any> }>({|
   optional: S,
   exact?: true,
-|}): Type<$Exact<ExtractOptionalPropertyTypes<S>>>
+|}): Type<ExtractOptionalPropertyTypes<S>>
 declare export function object<
   R: { [any]: Type<any> },
   S: { [any]: Type<any> }
@@ -113,8 +112,8 @@ declare export function object<
   optional: S,
   exact: false,
 |}): Type<{
-  ...$Exact<ExtractPropertyTypes<R>>,
-  ...$Exact<ExtractOptionalPropertyTypes<S>>,
+  ...ExtractPropertyTypes<R>,
+  ...ExtractOptionalPropertyTypes<S>,
   ...
 }>
 declare export function object<
@@ -125,12 +124,12 @@ declare export function object<
   optional: S,
   exact?: true,
 |}): Type<{|
-  ...$Exact<ExtractPropertyTypes<R>>,
-  ...$Exact<ExtractOptionalPropertyTypes<S>>,
+  ...ExtractPropertyTypes<R>,
+  ...ExtractOptionalPropertyTypes<S>,
 |}>
 declare export function object<R: { [any]: Type<any> }>(
   required: R
-): Type<$Exact<ExtractPropertyTypes<R>>>
+): Type<ExtractPropertyTypes<R>>
 
 type Properties = { [string | number | symbol]: Type<any> }
 
@@ -139,7 +138,7 @@ declare export function record<K: string | number | symbol, V>(
   value: Type<V>
 ): RecordType<K, V>
 
-declare export function instanceOf<T>(classType: Class<T>): Type<T>
+declare export function instanceOf<T>(classType: () => Class<T>): Type<T>
 
 declare export function tuple<T: Type<any>[]>(
   ...types: T
@@ -191,3 +190,28 @@ declare export function alias<T>(name: string, type: Type<T>): TypeAlias<T>
 declare export function ref<T>(type: () => TypeAlias<T>): Type<T>
 
 export type ExtractType<T: Type<any>> = $PropertyType<T, '__type'>
+
+type DeployConfig = ExtractType<
+  Type<{|
+    ...ExtractPropertyTypes<{|
+      Redis: Type<
+        | {|
+            ...ExtractPropertyTypes<{|
+              Host: Type<string>,
+              Type: Type<'External'>,
+            |}>,
+            ...ExtractOptionalPropertyTypes<{|
+              DB: Type<number>,
+              Port: Type<number>,
+              SecurityGroupId: Type<string>,
+            |}>,
+          |}
+        | ExtractPropertyTypes<{|
+            AvailabilityZone: Type<string>,
+            Type: Type<'ElastiCache'>,
+          |}>
+      >,
+    |}>,
+    ...ExtractOptionalPropertyTypes<{| AppName: Type<string> |}>,
+  |}>
+>

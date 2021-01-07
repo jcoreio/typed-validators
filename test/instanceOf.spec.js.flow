@@ -9,7 +9,7 @@ class Foo {}
 class Bar {}
 
 describe(`t.instanceOf`, function() {
-  const FooInstanceType = t.instanceOf(Foo)
+  const FooInstanceType = t.instanceOf(() => Foo)
   type FooInstance = t.ExtractType<typeof FooInstanceType>
 
   it(`accepts instances of class type`, function() {

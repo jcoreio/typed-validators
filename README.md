@@ -17,6 +17,8 @@ The validation errors are detailed. Adapted from the brilliant work in `flow-run
 - [What about generating validators from type defs?](#what-about-generating-validators-from-type-defs)
 - [API](#api)
   - [Type creators](#type-creators)
+    - [`t.any()`](#tany)
+    - [`t.unknown()`](#tunknown)
     - [`t.boolean()`](#tboolean)
     - [`t.boolean(true)`](#tbooleantrue)
     - [`t.string()`](#tstring)
@@ -34,7 +36,7 @@ The validation errors are detailed. Adapted from the brilliant work in `flow-run
     - [`t.object(properties)`](#tobjectproperties)
     - [`t.object({ required?, optional?, exact? })`](#tobject-required-optional-exact-)
     - [`t.record(t.string(), t.number())`](#trecordtstring-tnumber)
-    - [`t.instanceOf(Date)`](#tinstanceofdate)
+    - [`t.instanceOf(() => Date)`](#tinstanceof--date)
     - [`t.tuple(t.string(), t.number())`](#ttupletstring-tnumber)
     - [`t.allOf(A, B)`](#tallofa-b)
     - [`t.oneOf(t.string(), t.number())`](#toneoftstring-tnumber)
@@ -172,6 +174,14 @@ import * as t from 'typed-validators'
 
 All of the following methods return an instance of `t.Type<T>`.
 
+### `t.any()`
+
+A validator that accepts any value.
+
+### `t.unknown()`
+
+A validator that accepts any value but has TS `unknown` type/Flow `mixed` type.
+
 ### `t.boolean()`
 
 A validator that requires the value to be a `boolean`.
@@ -279,7 +289,7 @@ PersonType.assert({ name: 'dude', age: 'old' }) // error
 
 A validator that requires the value to be `Record<string, number>`.
 
-### `t.instanceOf(Date)`
+### `t.instanceOf(() => Date)`
 
 A validator that requires the value to be an instance of `Date`.
 

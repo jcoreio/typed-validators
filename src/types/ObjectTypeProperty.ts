@@ -72,7 +72,7 @@ export default class ObjectTypeProperty<
     }
   }
 
-  accepts(input: Record<K, V>): boolean {
+  accepts(input: Record<K, V>): input is any {
     // @flowIgnore
     const { optional, key, value } = this
     if (!optional && !this.existsOn(input)) {

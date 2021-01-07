@@ -57,7 +57,7 @@ export default class ObjectType<T extends {}> extends Type<T> {
     validation.endCycle(this, input)
   }
 
-  accepts(input: any): boolean {
+  accepts(input: any): input is T {
     if (input === null) {
       return false
     }

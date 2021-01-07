@@ -53,6 +53,7 @@ export {
 }
 
 export const any = (): Type<any> => new AnyType()
+export const unknown = (): Type<unknown> => new AnyType()
 
 export const array = <T>(elementType: Type<T>): Type<T[]> =>
   new ArrayType(elementType)
@@ -180,9 +181,11 @@ export const record = <K extends string | number | symbol, V>(
   value: Type<V>
 ): RecordType<K, V> => new RecordType(key, value)
 
-export const instanceOf = <T>(classType: {
-  new (...args: any[]): T
-}): Type<T> => new InstanceOfType(classType)
+export const instanceOf = <T>(
+  classType: () => {
+    new (...args: any[]): T
+  }
+): Type<T> => new InstanceOfType(classType)
 
 export const tuple = <T extends Type<any>[]>(
   ...types: T

@@ -44,7 +44,7 @@ export default class TypeAlias<T> extends Type<T> {
     }
   }
 
-  accepts(input: any): boolean {
+  accepts(input: any): input is T {
     const { type } = this
     if (!type.accepts(input)) {
       return false

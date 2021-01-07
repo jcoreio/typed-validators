@@ -16,7 +16,7 @@ export default class BooleanType extends Type<boolean> {
     }
   }
 
-  accepts(input: any): boolean {
+  accepts(input: any): input is boolean {
     return typeof input === 'boolean'
   }
 

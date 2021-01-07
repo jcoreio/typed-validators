@@ -33,7 +33,7 @@ export default class TupleType<T extends any[]> extends Type<T> {
     }
   }
 
-  accepts(input: any): boolean {
+  accepts(input: any): input is T {
     const { types } = this
     const { length } = types
 

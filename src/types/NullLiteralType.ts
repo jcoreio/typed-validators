@@ -16,7 +16,7 @@ export default class NullLiteralType extends Type<null> {
     }
   }
 
-  accepts(input: any): boolean {
+  accepts(input: any): input is null {
     return input === null
   }
 

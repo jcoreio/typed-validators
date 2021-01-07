@@ -8,7 +8,8 @@ export default class AnyType extends Type<any> {
   // eslint-disable-next-line @typescript-eslint/no-empty-function
   *errors(): Generator<ErrorTuple, void, void> {}
 
-  accepts(): boolean {
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
+  accepts(input: any): input is any {
     return true
   }
 

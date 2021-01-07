@@ -3,13 +3,19 @@ import Type from './Type'
 import getErrorMessage from '../getErrorMessage'
 import Validation, { ErrorTuple, IdentifierPath } from '../Validation'
 
+export type ClassTypeOption<T> = () => { new (...args: any[]): T }
+
 export default class InstanceOfType<T> extends Type<T> {
   typeName = 'InstanceOfType'
-  classType: { new (...args: any[]): T }
+  private _classType: ClassTypeOption<T>
 
-  constructor(classType: { new (...args: any[]): T }) {
+  get classType(): { new (...args: any[]): T } {
+    return this._classType()
+  }
+
+  constructor(classType: ClassTypeOption<T>) {
     super()
-    this.classType = classType
+    this._classType = classType
   }
 
   *errors(
@@ -26,7 +32,7 @@ export default class InstanceOfType<T> extends Type<T> {
     }
   }
 
-  accepts(input: any): boolean {
+  accepts(input: any): input is T {
     return input instanceof this.classType
   }
 

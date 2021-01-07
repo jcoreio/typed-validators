@@ -16,7 +16,7 @@ export default class UndefinedLiteralType extends Type<undefined> {
     }
   }
 
-  accepts(input: any): boolean {
+  accepts(input: any): input is undefined {
     return input === undefined
   }
 

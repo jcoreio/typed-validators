@@ -15,7 +15,7 @@ export default class StringType extends Type<string> {
     }
   }
 
-  accepts(input: any): boolean {
+  accepts(input: any): input is string {
     return typeof input === 'string'
   }
 

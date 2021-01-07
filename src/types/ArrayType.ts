@@ -43,7 +43,7 @@ export default class ArrayType<T> extends Type<Array<T>> {
     validation.endCycle(this, input)
   }
 
-  accepts(input: any): boolean {
+  accepts(input: any): input is Array<T> {
     if (!Array.isArray(input)) {
       return false
     }

@@ -26,7 +26,7 @@ export default class BooleanLiteralType<T extends boolean> extends Type<T> {
     }
   }
 
-  accepts(input: any): boolean {
+  accepts(input: any): input is T {
     return input === this.value
   }
 

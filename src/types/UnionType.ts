@@ -27,7 +27,7 @@ export default class UnionType<T> extends Type<T> {
     yield [path, getErrorMessage('ERR_NO_UNION', this.toString()), this]
   }
 
-  accepts(input: any): boolean {
+  accepts(input: any): input is T {
     const { types } = this
     const { length } = types
     for (let i = 0; i < length; i++) {

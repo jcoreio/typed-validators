@@ -16,7 +16,7 @@ export default class SymbolType extends Type<symbol> {
     }
   }
 
-  accepts(input: any): boolean {
+  accepts(input: any): input is symbol {
     return typeof input === 'symbol'
   }
 
