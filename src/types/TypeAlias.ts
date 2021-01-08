@@ -1,5 +1,6 @@
 import Type from './Type'
 import Validation, { ErrorTuple, IdentifierPath } from '../Validation'
+import ObjectType from './ObjectType'
 import {
   addConstraints,
   collectConstraintErrors,
@@ -17,6 +18,10 @@ export default class TypeAlias<T> extends Type<T> {
     super()
     this.name = name
     this.type = type
+  }
+
+  resolveObjectType(): ObjectType<T> {
+    return this.type.resolveObjectType()
   }
 
   addConstraint(...constraints: TypeConstraint<T>[]): this {

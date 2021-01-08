@@ -7,6 +7,7 @@ import InstanceOfType from './types/InstanceOfType'
 import IntersectionType from './types/IntersectionType'
 import NullLiteralType from './types/NullLiteralType'
 import UndefinedLiteralType from './types/UndefinedLiteralType'
+import MergedObjectType from './types/MergedObjectType'
 import NumberType from './types/NumberType'
 import NumericLiteralType from './types/NumericLiteralType'
 import ObjectType from './types/ObjectType'
@@ -36,6 +37,7 @@ export {
   IntersectionType,
   NullLiteralType,
   UndefinedLiteralType,
+  MergedObjectType,
   NumberType,
   NumericLiteralType,
   ObjectType,

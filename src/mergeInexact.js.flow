@@ -1,119 +1,122 @@
 // @flow
 
-import type ObjectType from './types/ObjectType'
-import { type ExtractType } from './index'
+import Type from './types/Type'
 
-declare export default function mergeInexact<T1: ObjectType<any>>(
-  t1: T1
-): ObjectType<{ ...$Exact<ExtractType<T1>>, ... }>
+declare export default function mergeInexact<T1: {}>(
+  t1: Type<T1>
+): Type<{ ...$Exact<T1>, ... }>
+declare export default function mergeInexact<T1: {}, T2: {}>(
+  t1: Type<T1>,
+  t2: Type<T2>
+): Type<{ ...$Exact<T1>, ...$Exact<T2>, ... }>
+declare export default function mergeInexact<T1: {}, T2: {}, T3: {}>(
+  t1: Type<T1>,
+  t2: Type<T2>,
+  t3: Type<T3>
+): Type<{ ...$Exact<T1>, ...$Exact<T2>, ...$Exact<T3>, ... }>
+declare export default function mergeInexact<T1: {}, T2: {}, T3: {}, T4: {}>(
+  t1: Type<T1>,
+  t2: Type<T2>,
+  t3: Type<T3>,
+  t4: Type<T4>
+): Type<{ ...$Exact<T1>, ...$Exact<T2>, ...$Exact<T3>, ...$Exact<T4>, ... }>
 declare export default function mergeInexact<
-  T1: ObjectType<any>,
-  T2: ObjectType<any>
+  T1: {},
+  T2: {},
+  T3: {},
+  T4: {},
+  T5: {}
 >(
-  t1: T1,
-  t2: T2
-): ObjectType<{ ...$Exact<ExtractType<T1>>, ...$Exact<ExtractType<T2>>, ... }>
-declare export default function mergeInexact<
-  T1: ObjectType<any>,
-  T2: ObjectType<any>,
-  T3: ObjectType<any>
->(
-  t1: T1,
-  t2: T2,
-  t3: T3
-): ObjectType<{
-  ...$Exact<ExtractType<T1>>,
-  ...$Exact<ExtractType<T2>>,
-  ...$Exact<ExtractType<T3>>,
+  t1: Type<T1>,
+  t2: Type<T2>,
+  t3: Type<T3>,
+  t4: Type<T4>,
+  t5: Type<T5>
+): Type<{
+  ...$Exact<T1>,
+  ...$Exact<T2>,
+  ...$Exact<T3>,
+  ...$Exact<T4>,
+  ...$Exact<T5>,
   ...
 }>
 declare export default function mergeInexact<
-  T1: ObjectType<any>,
-  T2: ObjectType<any>,
-  T3: ObjectType<any>,
-  T4: ObjectType<any>
+  T1: {},
+  T2: {},
+  T3: {},
+  T4: {},
+  T5: {},
+  T6: {}
 >(
-  t1: T1,
-  t2: T2,
-  t3: T3,
-  t4: T4
-): ObjectType<{
-  ...$Exact<ExtractType<T1>>,
-  ...$Exact<ExtractType<T2>>,
-  ...$Exact<ExtractType<T3>>,
-  ...$Exact<ExtractType<T4>>,
+  t1: Type<T1>,
+  t2: Type<T2>,
+  t3: Type<T3>,
+  t4: Type<T4>,
+  t5: Type<T5>,
+  t6: Type<T6>
+): Type<{
+  ...$Exact<T1>,
+  ...$Exact<T2>,
+  ...$Exact<T3>,
+  ...$Exact<T4>,
+  ...$Exact<T5>,
+  ...$Exact<T6>,
   ...
 }>
 declare export default function mergeInexact<
-  T1: ObjectType<any>,
-  T2: ObjectType<any>,
-  T3: ObjectType<any>,
-  T4: ObjectType<any>,
-  T5: ObjectType<any>
+  T1: {},
+  T2: {},
+  T3: {},
+  T4: {},
+  T5: {},
+  T6: {},
+  T7: {}
 >(
-  t1: T1,
-  t2: T2,
-  t3: T3,
-  t4: T4,
-  t5: T5
-): ObjectType<{
-  ...$Exact<ExtractType<T1>>,
-  ...$Exact<ExtractType<T2>>,
-  ...$Exact<ExtractType<T3>>,
-  ...$Exact<ExtractType<T4>>,
-  ...$Exact<ExtractType<T5>>,
+  t1: Type<T1>,
+  t2: Type<T2>,
+  t3: Type<T3>,
+  t4: Type<T4>,
+  t5: Type<T5>,
+  t6: Type<T6>,
+  t7: Type<T7>
+): Type<{
+  ...$Exact<T1>,
+  ...$Exact<T2>,
+  ...$Exact<T3>,
+  ...$Exact<T4>,
+  ...$Exact<T5>,
+  ...$Exact<T6>,
+  ...$Exact<T7>,
   ...
 }>
 declare export default function mergeInexact<
-  T1: ObjectType<any>,
-  T2: ObjectType<any>,
-  T3: ObjectType<any>,
-  T4: ObjectType<any>,
-  T5: ObjectType<any>,
-  T6: ObjectType<any>
+  T1: {},
+  T2: {},
+  T3: {},
+  T4: {},
+  T5: {},
+  T6: {},
+  T7: {},
+  T8: {}
 >(
-  t1: T1,
-  t2: T2,
-  t3: T3,
-  t4: T4,
-  t5: T5,
-  t6: T6
-): ObjectType<{
-  ...$Exact<ExtractType<T1>>,
-  ...$Exact<ExtractType<T2>>,
-  ...$Exact<ExtractType<T3>>,
-  ...$Exact<ExtractType<T4>>,
-  ...$Exact<ExtractType<T5>>,
-  ...$Exact<ExtractType<T6>>,
-  ...
-}>
-declare export default function mergeInexact<
-  T1: ObjectType<any>,
-  T2: ObjectType<any>,
-  T3: ObjectType<any>,
-  T4: ObjectType<any>,
-  T5: ObjectType<any>,
-  T6: ObjectType<any>,
-  T7: ObjectType<any>
->(
-  t1: T1,
-  t2: T2,
-  t3: T3,
-  t4: T4,
-  t5: T5,
-  t6: T6,
-  t7: T7
-): ObjectType<{
-  ...$Exact<ExtractType<T1>>,
-  ...$Exact<ExtractType<T2>>,
-  ...$Exact<ExtractType<T3>>,
-  ...$Exact<ExtractType<T4>>,
-  ...$Exact<ExtractType<T5>>,
-  ...$Exact<ExtractType<T6>>,
-  ...$Exact<ExtractType<T7>>,
+  t1: Type<T1>,
+  t2: Type<T2>,
+  t3: Type<T3>,
+  t4: Type<T4>,
+  t5: Type<T5>,
+  t6: Type<T6>,
+  t7: Type<T7>,
+  t8: Type<T8>
+): Type<{
+  ...$Exact<T1>,
+  ...$Exact<T2>,
+  ...$Exact<T3>,
+  ...$Exact<T4>,
+  ...$Exact<T5>,
+  ...$Exact<T6>,
+  ...$Exact<T7>,
+  ...$Exact<T8>,
   ...
 }>
 
-declare export default function mergeInexact(
-  ...types: ObjectType<any>[]
-): ObjectType<any>
+declare export default function mergeInexact(...types: Type<{}>[]): Type<{}>

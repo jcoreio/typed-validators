@@ -287,9 +287,12 @@ PersonType.assert({ name: 1 }) // error
 PersonType.assert({ name: 'dude', age: 'old' }) // error
 ```
 
-### `t.merge(t.object(...), t.object(...), ...)`
+### `t.merge(...objectTypes)`
 
 Merges the properties of multiple object validators together into an exact object validator (no additional properties are allowed).
+
+Note: merging `t.alias`es and `t.ref`s that resolve to object validators is supported, but any constraints on the referenced aliases won't be applied.
+
 Accepts a variable number of arguments, though type generation is only overloaded up to 8 arguments.
 
 For example:
@@ -322,9 +325,13 @@ PersonWithAddressType.assert({
 })
 ```
 
-### `t.mergeInexact(t.object(...), t.object(...), ...)`
+### `t.mergeInexact(...objectTypes)`
 
 Merges the properties of multiple object validators together into an inexact object validator (additional properties are allowed).
+
+Note: merging `t.alias`es and `t.ref`s that resolve to object validators is supported, but any constraints on the referenced aliases won't be applied.
+
+Accepts a variable number of arguments, though type generation is only overloaded up to 8 arguments.
 Accepts a variable number of arguments, though type generation is only overloaded up to 8 arguments.
 
 ### `t.record(t.string(), t.number())`

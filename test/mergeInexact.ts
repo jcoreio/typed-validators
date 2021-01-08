@@ -3,10 +3,22 @@ import { expect } from 'chai'
 import dedent from 'dedent-js'
 
 describe(`t.mergeInexact`, function() {
+  const BarAlias = t.alias('Bar', t.object({ bar: t.string() }))
   const Merged = t.mergeInexact(
     t.object({ foo: t.number() }),
-    t.object({ bar: t.string() })
+    t.ref(() => BarAlias)
   )
+  it(`throws if any of the given types aren't objects`, function() {
+    const NumberAlias = t.alias('Number', t.number())
+    expect(() =>
+      t
+        .mergeInexact(
+          t.object({ foo: t.number() }),
+          t.ref(() => NumberAlias)
+        )
+        .assert({ foo: 3 })
+    ).to.throw('invalid type used where an object was expected: number')
+  })
   it(`accepts valid values`, function() {
     for (const value of [
       { foo: 2, bar: 'hello' },
