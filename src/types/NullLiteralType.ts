@@ -20,6 +20,10 @@ export default class NullLiteralType extends Type<null> {
     return input === null
   }
 
+  protected acceptsSpecificType(type: Type<any>): boolean {
+    return type instanceof NullLiteralType
+  }
+
   toString(): string {
     return 'null'
   }

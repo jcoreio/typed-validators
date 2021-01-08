@@ -30,6 +30,10 @@ export default class BooleanLiteralType<T extends boolean> extends Type<T> {
     return input === this.value
   }
 
+  protected acceptsSpecificType(type: Type<any>): boolean {
+    return type instanceof BooleanLiteralType && type.value === this.value
+  }
+
   toString(): string {
     return this.value ? 'true' : 'false'
   }

@@ -95,6 +95,14 @@ export default class ObjectTypeProperty<
     }
   }
 
+  protected acceptsSpecificType(type: Type<any>): boolean {
+    return (
+      type instanceof ObjectTypeProperty &&
+      type.key === this.key &&
+      this.value.acceptsType(type.value)
+    )
+  }
+
   toString(): string {
     let key: any = this.key
     if (typeof key === 'symbol') {

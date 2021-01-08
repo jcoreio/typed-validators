@@ -20,6 +20,8 @@ declare class Type<T> {
 
   accepts(input: any): boolean;
 
+  acceptsType(type: Type<any>): boolean;
+
   assert<V: T>(input: any, prefix?: string, path?: IdentifierPath): V;
 
   validate(input: any, prefix?: string, path?: IdentifierPath): Validation;

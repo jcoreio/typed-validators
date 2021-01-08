@@ -1,5 +1,4 @@
 import Type from './Type'
-
 import getErrorMessage from '../getErrorMessage'
 import Validation, { ErrorTuple, IdentifierPath } from '../Validation'
 
@@ -34,6 +33,13 @@ export default class InstanceOfType<T> extends Type<T> {
 
   accepts(input: any): input is T {
     return input instanceof this.classType
+  }
+
+  protected acceptsSpecificType(type: Type<any>): boolean {
+    return (
+      type instanceof InstanceOfType &&
+      Object.getPrototypeOf(type._classType instanceof this._classType)
+    )
   }
 
   toString(): string {

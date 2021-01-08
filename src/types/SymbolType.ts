@@ -1,6 +1,7 @@
 import Type from './Type'
 import getErrorMessage from '../getErrorMessage'
 import Validation, { ErrorTuple, IdentifierPath } from '../Validation'
+import SymbolLiteralType from './SymbolLiteralType'
 
 export default class SymbolType extends Type<symbol> {
   typeName = 'SymbolType';
@@ -18,6 +19,10 @@ export default class SymbolType extends Type<symbol> {
 
   accepts(input: any): input is symbol {
     return typeof input === 'symbol'
+  }
+
+  protected acceptsSpecificType(type: Type<any>): boolean {
+    return type instanceof SymbolType || type instanceof SymbolLiteralType
   }
 
   toString(): string {

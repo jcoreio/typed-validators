@@ -1,5 +1,5 @@
 import Type from './Type'
-
+import BooleanLiteralType from './BooleanLiteralType'
 import getErrorMessage from '../getErrorMessage'
 import Validation, { ErrorTuple, IdentifierPath } from '../Validation'
 
@@ -18,6 +18,10 @@ export default class BooleanType extends Type<boolean> {
 
   accepts(input: any): input is boolean {
     return typeof input === 'boolean'
+  }
+
+  protected acceptsSpecificType(type: Type<any>): boolean {
+    return type instanceof BooleanType || type instanceof BooleanLiteralType
   }
 
   toString(): string {

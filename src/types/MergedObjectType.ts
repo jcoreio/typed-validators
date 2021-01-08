@@ -40,6 +40,10 @@ export default class MergedObjectType<T extends {}> extends Type<T> {
     return this.resolveObjectType().accepts(input)
   }
 
+  protected acceptsSpecificType(type: Type<any>): boolean {
+    return this.resolveObjectType().acceptsType(type)
+  }
+
   toString(): string {
     return this.resolveObjectType().toString()
   }

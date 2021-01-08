@@ -1,6 +1,7 @@
 import Type from './Type'
 import getErrorMessage from '../getErrorMessage'
 import Validation, { ErrorTuple, IdentifierPath } from '../Validation'
+import StringLiteralType from './StringLiteralType'
 
 export default class StringType extends Type<string> {
   typeName = 'StringType';
@@ -17,6 +18,9 @@ export default class StringType extends Type<string> {
 
   accepts(input: any): input is string {
     return typeof input === 'string'
+  }
+  protected acceptsSpecificType(type: Type<any>): boolean {
+    return type instanceof StringType || type instanceof StringLiteralType
   }
 
   toString(): string {

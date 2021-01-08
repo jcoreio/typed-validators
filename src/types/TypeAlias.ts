@@ -59,6 +59,9 @@ export default class TypeAlias<T> extends Type<T> {
       return true
     }
   }
+  protected acceptsSpecificType(type: Type<any>): boolean {
+    return this.type.acceptsType(type)
+  }
 
   toString(): string {
     return this.name

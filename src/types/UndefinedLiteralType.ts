@@ -20,6 +20,10 @@ export default class UndefinedLiteralType extends Type<undefined> {
     return input === undefined
   }
 
+  protected acceptsSpecificType(type: Type<any>): boolean {
+    return type instanceof UndefinedLiteralType
+  }
+
   toString(): string {
     return 'undefined'
   }

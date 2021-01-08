@@ -18,6 +18,7 @@ import { keyToString } from '../errorReporting/keyToString'
 export default class ObjectType<T extends {}> extends Type<T> {
   typeName = 'ObjectType'
   readonly properties: ObjectTypeProperty<keyof T, any>[]
+  readonly propertiesByKey: Map<keyof T, ObjectTypeProperty<keyof T, any>>
   readonly exact: boolean
 
   constructor(
@@ -28,6 +29,7 @@ export default class ObjectType<T extends {}> extends Type<T> {
     this.properties = properties
     this.exact = exact
     properties.forEach(prop => (prop.__objectType = this))
+    this.propertiesByKey = new Map(properties.map(p => [p.key, p]))
   }
 
   resolveObjectType(): ObjectType<T> {
@@ -80,6 +82,31 @@ export default class ObjectType<T extends {}> extends Type<T> {
     }
     endValidationCycle(this, input)
     return result
+  }
+
+  protected acceptsSpecificType(type: Type<any>): boolean {
+    let _resolved: ObjectType<any> | undefined
+    try {
+      _resolved = type.resolveObjectType()
+    } catch (error) {
+      return false
+    }
+    const resolved = _resolved
+    if (!resolved) return false
+    if (
+      !this.properties.every(p => {
+        const resolvedProp = resolved.propertiesByKey.get(p.key as any)
+        return resolvedProp != null && p.acceptsType(resolvedProp)
+      })
+    )
+      return false
+    if (
+      this.exact &&
+      (!resolved.exact ||
+        resolved.properties.some(p => !this.propertiesByKey.has(p.key as any)))
+    )
+      return false
+    return true
   }
 
   toString(): string {

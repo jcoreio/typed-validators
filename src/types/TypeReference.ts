@@ -28,6 +28,10 @@ export default class TypeReference<T> extends Type<T> {
     return this.type().accepts(input)
   }
 
+  protected acceptsSpecificType(type: Type<any>): boolean {
+    return this.type().acceptsType(type)
+  }
+
   toString(): string {
     return this.type().toString()
   }

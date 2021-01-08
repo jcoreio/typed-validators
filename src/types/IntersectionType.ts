@@ -34,6 +34,13 @@ export default class IntersectionType<T> extends Type<T> {
     return true
   }
 
+  protected acceptsSpecificType(type: Type<any>): boolean {
+    if (type instanceof IntersectionType) {
+      return type.types.every(t => this.acceptsType(t))
+    }
+    return this.types.every(t => t.acceptsType(type))
+  }
+
   toString(): string {
     return this.types.join(' & ')
   }

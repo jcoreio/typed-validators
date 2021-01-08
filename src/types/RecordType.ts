@@ -70,6 +70,26 @@ export default class RecordType<
     endValidationCycle(this, input)
     return result
   }
+  protected acceptsSpecificType(type: Type<any>): boolean {
+    if (type instanceof RecordType)
+      return (
+        this.key.acceptsType(type.key) && this.value.acceptsType(type.value)
+      )
+    try {
+      const resolved = type.resolveObjectType()
+      for (const property of resolved.properties) {
+        if (
+          !this.key.accepts(property.key) ||
+          !this.value.acceptsType(property.value)
+        )
+          return false
+      }
+      return true
+    } catch (error) {
+      // fallthrough
+    }
+    return false
+  }
 
   toString(): string {
     if (inToStringCycle(this)) {

@@ -13,6 +13,10 @@ export default class AnyType extends Type<any> {
     return true
   }
 
+  protected acceptsSpecificType(): boolean {
+    return true
+  }
+
   toString(): string {
     return 'any'
   }

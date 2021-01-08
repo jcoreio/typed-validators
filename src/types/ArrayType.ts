@@ -11,6 +11,7 @@ import {
   startToStringCycle,
   endToStringCycle,
 } from '../cyclic'
+import { TupleType } from '..'
 
 export default class ArrayType<T> extends Type<Array<T>> {
   typeName = 'ArrayType'
@@ -61,6 +62,18 @@ export default class ArrayType<T> extends Type<Array<T>> {
     }
     endValidationCycle(this, input)
     return true
+  }
+
+  protected acceptsSpecificType(type: Type<any>): boolean {
+    if (type instanceof ArrayType)
+      return this.elementType.accepts(type.elementType)
+    if (type instanceof TupleType) {
+      for (const elem of type.types as any) {
+        if (!this.elementType.accepts(elem)) return false
+      }
+      return true
+    }
+    return false
   }
 
   toString(): string {

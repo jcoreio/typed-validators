@@ -29,6 +29,9 @@ export default class SymbolLiteralType<T extends symbol> extends Type<T> {
   accepts(input: any): input is T {
     return input === this.value
   }
+  protected acceptsSpecificType(type: Type<any>): boolean {
+    return type instanceof SymbolLiteralType && type.value === this.value
+  }
 
   toString(): string {
     return `typeof ${String(this.value)}`

@@ -1,5 +1,6 @@
 import Validation from '../Validation'
 import { ErrorTuple, IdentifierPath } from '../Validation'
+import AnyType from './AnyType'
 import ObjectType from './ObjectType'
 import makeTypeError from '../errorReporting/makeTypeError'
 
@@ -27,6 +28,17 @@ export default abstract class Type<T> {
   ): Generator<ErrorTuple, void, void>
 
   abstract accepts(input: any): input is T
+
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
+  protected acceptsSpecificType(type: Type<any>): boolean {
+    return false
+  }
+
+  acceptsType(type: Type<any>): boolean {
+    return (
+      type === this || type instanceof AnyType || this.acceptsSpecificType(type)
+    )
+  }
 
   assert<V extends T>(input: any, prefix = '', path?: IdentifierPath): V {
     const validation = this.validate(input, prefix, path)

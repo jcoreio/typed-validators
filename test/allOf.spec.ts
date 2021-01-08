@@ -1,6 +1,8 @@
 import * as t from '../src/'
 import { expect } from 'chai'
 import dedent from 'dedent-js'
+import acceptsTypeTests from './acceptsTypeTests'
+import notAcceptsTypeTests from './notAcceptsTypeTests'
 
 describe(`t.allOf`, function() {
   const ObjectIntersection = t.allOf(
@@ -54,4 +56,16 @@ describe(`t.allOf`, function() {
     )
     expect(ObjectIntersection.accepts({ bar: 'hello' })).to.be.false
   })
+
+  acceptsTypeTests(
+    ObjectIntersection,
+    t.object({ foo: t.number(), bar: t.string() })
+  )
+
+  notAcceptsTypeTests(ObjectIntersection, [
+    t.object({ foo: t.number() }),
+    t.object({ bar: t.string() }),
+    t.object({ foo: t.string(), bar: t.string() }),
+    t.object({ foo: t.number(), bar: t.number() }),
+  ])
 })

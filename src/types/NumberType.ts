@@ -2,6 +2,7 @@ import Type from './Type'
 
 import getErrorMessage from '../getErrorMessage'
 import Validation, { ErrorTuple, IdentifierPath } from '../Validation'
+import NumericLiteralType from './NumericLiteralType'
 
 export default class NumberType extends Type<number> {
   typeName = 'NumberType';
@@ -18,6 +19,9 @@ export default class NumberType extends Type<number> {
 
   accepts(input: any): input is number {
     return typeof input === 'number'
+  }
+  protected acceptsSpecificType(type: Type<any>): boolean {
+    return type instanceof NumberType || type instanceof NumericLiteralType
   }
 
   toString(): string {

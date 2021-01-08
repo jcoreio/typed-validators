@@ -1,6 +1,7 @@
 import * as t from '../src/'
 import { expect } from 'chai'
 import dedent from 'dedent-js'
+import acceptsTypeTests from './acceptsTypeTests'
 
 describe(`t.array`, function() {
   it(`accepts matching arrays`, function() {
@@ -33,9 +34,7 @@ describe(`t.array`, function() {
       t.array(t.number()).assert([1, 'bar'], '', ['array'])
     ).to.throw(
       t.RuntimeTypeError,
-      dedent`
-        array[1] must be a number
-
+      dedent` array[1] must be a number 
         Expected: number
 
         Actual Value: "bar"
@@ -57,4 +56,10 @@ describe(`t.array`, function() {
         Actual Type: number`
     )
   })
+
+  acceptsTypeTests(t.array(t.oneOf(t.number(), t.string())), [
+    t.array(t.number()),
+    t.array(t.string()),
+    t.array(t.oneOf(t.string(), t.number())),
+  ])
 })

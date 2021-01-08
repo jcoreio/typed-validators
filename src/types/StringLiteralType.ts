@@ -29,6 +29,9 @@ export default class StringLiteralType<T extends string> extends Type<T> {
   accepts(input: any): input is T {
     return input === this.value
   }
+  protected acceptsSpecificType(type: Type<any>): boolean {
+    return type instanceof StringLiteralType && type.value === this.value
+  }
 
   toString(): string {
     return JSON.stringify(this.value)

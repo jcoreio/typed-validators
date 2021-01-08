@@ -48,6 +48,15 @@ export default class TupleType<T extends any[]> extends Type<T> {
     }
     return true
   }
+  protected acceptsSpecificType(type: Type<any>): boolean {
+    if (!(type instanceof TupleType)) return false
+    const typeElems = (type.types as any) as Type<any>[]
+    const thisElems = (this.types as any) as Type<any>[]
+    return (
+      typeElems.length === thisElems.length &&
+      thisElems.every((type, index) => type.acceptsType(typeElems[index]))
+    )
+  }
 
   toString(): string {
     return `[${this.types.join(', ')}]`
