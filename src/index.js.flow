@@ -1,63 +1,65 @@
 // @flow
 
-import Type from './types/Type'
 import AnyType from './types/AnyType'
 import ArrayType from './types/ArrayType'
 import BooleanLiteralType from './types/BooleanLiteralType'
 import BooleanType from './types/BooleanType'
 import InstanceOfType from './types/InstanceOfType'
 import IntersectionType from './types/IntersectionType'
-import NullLiteralType from './types/NullLiteralType'
-import UndefinedLiteralType from './types/UndefinedLiteralType'
+import merge from './merge'
 import MergedObjectType from './types/MergedObjectType'
+import mergeInexact from './mergeInexact'
+import NullLiteralType from './types/NullLiteralType'
 import NumberType from './types/NumberType'
 import NumericLiteralType from './types/NumericLiteralType'
 import ObjectType from './types/ObjectType'
 import ObjectTypeProperty from './types/ObjectTypeProperty'
+import oneOf from './oneOf'
 import RecordType from './types/RecordType'
+import RuntimeTypeError from './errorReporting/RuntimeTypeError'
 import StringLiteralType from './types/StringLiteralType'
 import StringType from './types/StringType'
 import SymbolLiteralType from './types/SymbolLiteralType'
 import SymbolType from './types/SymbolType'
 import TupleType from './types/TupleType'
-import UnionType from './types/UnionType'
+import Type from './types/Type'
 import TypeAlias from './types/TypeAlias'
 import TypeReference from './types/TypeReference'
-import Validation from './Validation'
-import RuntimeTypeError from './errorReporting/RuntimeTypeError'
-import oneOf from './oneOf'
-import merge from './merge'
-import mergeInexact from './mergeInexact'
+import UndefinedLiteralType from './types/UndefinedLiteralType'
+import UnionType from './types/UnionType'
+import Validation, { type ErrorTuple } from './Validation'
+
+export type { ErrorTuple }
 
 export {
-  Type,
   AnyType,
   ArrayType,
   BooleanLiteralType,
   BooleanType,
   InstanceOfType,
   IntersectionType,
+  merge,
+  MergedObjectType,
+  mergeInexact,
   NullLiteralType,
-  UndefinedLiteralType,
   NumberType,
   NumericLiteralType,
-  MergedObjectType,
   ObjectType,
   ObjectTypeProperty,
+  oneOf,
   RecordType,
+  RuntimeTypeError,
   StringLiteralType,
   StringType,
   SymbolLiteralType,
   SymbolType,
   TupleType,
-  UnionType,
+  Type,
   TypeAlias,
   TypeReference,
+  UndefinedLiteralType,
+  UnionType,
   Validation,
-  RuntimeTypeError,
-  oneOf,
-  merge,
-  mergeInexact,
 }
 
 declare export function any(): Type<any>
