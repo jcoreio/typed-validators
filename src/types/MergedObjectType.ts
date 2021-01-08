@@ -15,12 +15,20 @@ export default class MergedObjectType<T extends {}> extends Type<T> {
     this.exact = exact
   }
 
-  resolveObjectType(): ObjectType<T> {
+  resolveType(): Type<T> {
     if (!this.resolved) {
       const properties: Record<any, ObjectTypeProperty<any, any>> = {}
       for (const object of this.objects) {
-        for (const property of object.resolveObjectType().properties) {
-          properties[property.key] = property
+        const resolved = object.resolveType()
+        if (!(resolved instanceof ObjectType)) {
+          throw new Error(
+            `a merged type didn't resolve to an ObjectType: ${object.toString()}${
+              resolved !== object ? ` (resolved to ${resolved.toString()})` : ''
+            }`
+          )
+        }
+        for (const property of resolved.properties) {
+          properties[property.key as any] = property
         }
       }
       this.resolved = new ObjectType(Object.values(properties), this.exact)
@@ -33,14 +41,14 @@ export default class MergedObjectType<T extends {}> extends Type<T> {
     path: IdentifierPath,
     input: any
   ): Generator<ErrorTuple, void, void> {
-    yield* this.resolveObjectType().errors(validation, path, input)
+    yield* this.resolveType().errors(validation, path, input)
   }
 
   accepts(input: any): input is T {
-    return this.resolveObjectType().accepts(input)
+    return this.resolveType().accepts(input)
   }
 
   toString(): string {
-    return this.resolveObjectType().toString()
+    return this.resolveType().toString()
   }
 }

@@ -1,6 +1,5 @@
 import Validation from '../Validation'
 import { ErrorTuple, IdentifierPath } from '../Validation'
-import ObjectType from './ObjectType'
 import makeTypeError from '../errorReporting/makeTypeError'
 
 /**
@@ -12,10 +11,8 @@ export default abstract class Type<T> {
   readonly __type: T = null as any
   typeName = 'Type'
 
-  resolveObjectType(): ObjectType<T> {
-    throw new Error(
-      `invalid type used where an object was expected: ${this.toString()}`
-    )
+  resolveType(): Type<T> {
+    return this
   }
 
   abstract errors(

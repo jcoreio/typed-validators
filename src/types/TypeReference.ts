@@ -1,6 +1,5 @@
 import Type from './Type'
 import TypeAlias from './TypeAlias'
-import ObjectType from './ObjectType'
 import Validation, { ErrorTuple, IdentifierPath } from '../Validation'
 
 export default class TypeReference<T> extends Type<T> {
@@ -12,8 +11,8 @@ export default class TypeReference<T> extends Type<T> {
     this.type = type
   }
 
-  resolveObjectType(): ObjectType<T> {
-    return this.type().resolveObjectType()
+  resolveType(): Type<T> {
+    return this.type().resolveType()
   }
 
   *errors(

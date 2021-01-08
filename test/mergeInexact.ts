@@ -17,7 +17,9 @@ describe(`t.mergeInexact`, function() {
           t.ref(() => NumberAlias)
         )
         .assert({ foo: 3 })
-    ).to.throw('invalid type used where an object was expected: number')
+    ).to.throw(
+      `a merged type didn't resolve to an ObjectType: Number (resolved to number)`
+    )
   })
   it(`accepts valid values`, function() {
     for (const value of [
