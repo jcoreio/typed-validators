@@ -12,7 +12,7 @@ export default class SymbolLiteralType<T extends symbol> extends Type<T> {
   }
 
   *errors(
-    validation: Validation<any>,
+    validation: Validation,
     path: IdentifierPath,
     input: any
   ): Generator<ErrorTuple, void, void> {

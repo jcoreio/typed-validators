@@ -27,7 +27,7 @@ export default class RecordType<
   }
 
   *errors(
-    validation: Validation<any>,
+    validation: Validation,
     path: IdentifierPath,
     input: any
   ): Generator<ErrorTuple, void, void> {
@@ -95,7 +95,7 @@ function acceptsWithIndexers(
 
 function* collectErrorsWithIndexers(
   type: RecordType<any, any>,
-  validation: Validation<any>,
+  validation: Validation,
   path: IdentifierPath,
   input: Record<any, any>
 ): Generator<ErrorTuple, void, void> {

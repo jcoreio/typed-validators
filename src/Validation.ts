@@ -5,8 +5,8 @@ export type IdentifierPath = Array<string | number | symbol>
 
 export type ErrorTuple = [IdentifierPath, string, Type<any>]
 
-export default class Validation<T> {
-  readonly input: T
+export default class Validation {
+  readonly input: any
 
   readonly path: IdentifierPath = []
 
@@ -17,7 +17,7 @@ export default class Validation<T> {
   // Tracks whether we're in validation of cyclic objects.
   cyclic: WeakMap<Type<any>, WeakSet<any>> = new WeakMap()
 
-  constructor(input: T, prefix = '', path?: IdentifierPath) {
+  constructor(input: any, prefix = '', path?: IdentifierPath) {
     this.input = input
     this.prefix = prefix
     if (path) this.path.push(...path)

@@ -7,7 +7,7 @@ export default class UndefinedLiteralType extends Type<undefined> {
   typeName = 'UndefinedLiteralType';
 
   *errors(
-    validation: Validation<any>,
+    validation: Validation,
     path: IdentifierPath,
     input: any
   ): Generator<ErrorTuple, void, void> {

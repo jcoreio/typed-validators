@@ -20,7 +20,7 @@ export default abstract class Type<T> {
 
   abstract errors(
     /* eslint-disable @typescript-eslint/no-unused-vars */
-    validation: Validation<any>,
+    validation: Validation,
     path: IdentifierPath,
     input: any
     /* eslint-enable @typescript-eslint/no-unused-vars */
@@ -37,7 +37,7 @@ export default abstract class Type<T> {
     return input
   }
 
-  validate(input: any, prefix = '', path?: IdentifierPath): Validation<T> {
+  validate(input: any, prefix = '', path?: IdentifierPath): Validation {
     const validation = new Validation(input, prefix, path)
     for (const error of this.errors(validation, [], input))
       validation.errors.push(error)

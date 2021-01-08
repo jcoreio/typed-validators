@@ -13,7 +13,7 @@ declare class Type<T> {
   +__type: T;
 
   errors(
-    validation: Validation<any>,
+    validation: Validation,
     path: IdentifierPath,
     input: any
   ): Generator<ErrorTuple, void, void>;
@@ -22,7 +22,7 @@ declare class Type<T> {
 
   assert<V: T>(input: any, prefix?: string, path?: IdentifierPath): V;
 
-  validate(input: any, prefix?: string, path?: IdentifierPath): Validation<T>;
+  validate(input: any, prefix?: string, path?: IdentifierPath): Validation;
 
   toString(): string;
 }

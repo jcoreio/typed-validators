@@ -7,7 +7,7 @@ export default class NullLiteralType extends Type<null> {
   typeName = 'NullLiteralType';
 
   *errors(
-    validation: Validation<any>,
+    validation: Validation,
     path: IdentifierPath,
     input: any
   ): Generator<ErrorTuple, void, void> {

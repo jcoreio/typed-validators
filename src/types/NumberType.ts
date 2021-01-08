@@ -7,7 +7,7 @@ export default class NumberType extends Type<number> {
   typeName = 'NumberType';
 
   *errors(
-    validation: Validation<any>,
+    validation: Validation,
     path: IdentifierPath,
     input: any
   ): Generator<ErrorTuple, void, void> {

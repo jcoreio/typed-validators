@@ -8,7 +8,7 @@ import typeOf from './typeOf'
 const delimiter = '\n-------------------------------------------------\n\n'
 
 export default function makeTypeError<T>(
-  validation: Validation<T>
+  validation: Validation
 ): RuntimeTypeError | undefined {
   if (!validation.hasErrors()) {
     return

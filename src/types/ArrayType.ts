@@ -22,7 +22,7 @@ export default class ArrayType<T> extends Type<Array<T>> {
   }
 
   *errors(
-    validation: Validation<any>,
+    validation: Validation,
     path: IdentifierPath,
     input: any
   ): Generator<ErrorTuple, void, void> {

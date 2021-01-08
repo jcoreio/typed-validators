@@ -11,7 +11,7 @@ export default class IntersectionType<T> extends Type<T> {
   }
 
   *errors(
-    validation: Validation<any>,
+    validation: Validation,
     path: IdentifierPath,
     input: any
   ): Generator<ErrorTuple, void, void> {

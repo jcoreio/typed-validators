@@ -6,8 +6,8 @@ export type IdentifierPath = Array<string | number | symbol>
 
 export type ErrorTuple = [IdentifierPath, string, Type<any>]
 
-declare class Validation<T> {
-  input: T;
+declare class Validation {
+  input: any;
 
   path: IdentifierPath;
 
@@ -15,7 +15,7 @@ declare class Validation<T> {
 
   errors: ErrorTuple[];
 
-  constructor(input: T, prefix?: string, path?: IdentifierPath): void;
+  constructor(input: any, prefix?: string, path?: IdentifierPath): void;
 
   inCycle(type: Type<any>, input: any): boolean;
 

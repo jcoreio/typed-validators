@@ -34,7 +34,7 @@ export default class TypeAlias<T> extends Type<T> {
   }
 
   *errors(
-    validation: Validation<any>,
+    validation: Validation,
     path: IdentifierPath,
     input: any
   ): Generator<ErrorTuple, void, void> {
