@@ -27,6 +27,10 @@ export default class TypeReference<T> extends Type<T> {
     return this.type().accepts(input)
   }
 
+  get acceptsSomeCompositeTypes(): boolean {
+    return this.type().acceptsSomeCompositeTypes
+  }
+
   toString(): string {
     return this.type().toString()
   }

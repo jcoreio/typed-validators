@@ -24,4 +24,7 @@ describe(`t.undefined`, function() {
       )
     }
   })
+  it(`.acceptsSomeCompositeTypes is false`, function() {
+    expect(t.undefined().acceptsSomeCompositeTypes).to.be.false
+  })
 })

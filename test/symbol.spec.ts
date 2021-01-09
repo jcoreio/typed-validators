@@ -31,6 +31,9 @@ describe(`t.symbol`, function() {
         Actual Type: number`
     )
   })
+  it(`.acceptsSomeCompositeTypes is false`, function() {
+    expect(t.symbol().acceptsSomeCompositeTypes).to.be.false
+  })
 })
 
 describe(`t.symbol(literal)`, function() {

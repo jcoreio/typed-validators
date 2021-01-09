@@ -24,4 +24,7 @@ describe(`t.null`, function() {
       )
     }
   })
+  it(`.acceptsSomeCompositeTypes is false`, function() {
+    expect(t.null().acceptsSomeCompositeTypes).to.be.false
+  })
 })

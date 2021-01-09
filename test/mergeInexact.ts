@@ -71,4 +71,7 @@ describe(`t.mergeInexact`, function() {
     )
     expect(Merged.accepts({ bar: 'hello' })).to.be.false
   })
+  it(`.acceptsSomeCompositeTypes is true`, function() {
+    expect(Merged.acceptsSomeCompositeTypes).to.be.true
+  })
 })

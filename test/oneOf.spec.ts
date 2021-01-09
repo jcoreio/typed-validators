@@ -72,4 +72,12 @@ describe(`t.oneOf`, function() {
       expect(ObjectUnion.accepts(value)).to.be.false
     }
   })
+  it(`.acceptsSomeCompositeTypes`, function() {
+    expect(t.oneOf(t.number(), t.string()).acceptsSomeCompositeTypes).to.be
+      .false
+    expect(
+      t.oneOf(t.number(), t.object({ foo: t.number() }))
+        .acceptsSomeCompositeTypes
+    ).to.be.true
+  })
 })

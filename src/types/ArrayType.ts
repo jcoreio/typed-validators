@@ -63,6 +63,10 @@ export default class ArrayType<T> extends Type<Array<T>> {
     return true
   }
 
+  get acceptsSomeCompositeTypes(): boolean {
+    return true
+  }
+
   toString(): string {
     const { elementType } = this
     if (inToStringCycle(this)) {

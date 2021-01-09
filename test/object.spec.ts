@@ -67,4 +67,7 @@ describe(`t.object`, function() {
       )
     }
   })
+  it(`.acceptsSomeCompositeTypes is true`, function() {
+    expect(t.object({ foo: t.number() }).acceptsSomeCompositeTypes).to.be.true
+  })
 })

@@ -34,6 +34,10 @@ export default class IntersectionType<T> extends Type<T> {
     return true
   }
 
+  get acceptsSomeCompositeTypes(): boolean {
+    return this.types.some(t => t.acceptsSomeCompositeTypes)
+  }
+
   toString(): string {
     return this.types.join(' & ')
   }

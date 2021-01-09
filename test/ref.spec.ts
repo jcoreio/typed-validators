@@ -77,4 +77,11 @@ describe(`t.ref`, function() {
         }`
     )
   })
+  it(`.acceptsSomeCompositeTypes`, function() {
+    expect(t.ref(() => t.alias('Foo', t.number())).acceptsSomeCompositeTypes).to
+      .be.false
+    expect(
+      t.ref(() => t.alias('Foo', t.array(t.number()))).acceptsSomeCompositeTypes
+    ).to.be.true
+  })
 })

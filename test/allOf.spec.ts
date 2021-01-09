@@ -54,4 +54,14 @@ describe(`t.allOf`, function() {
     )
     expect(ObjectIntersection.accepts({ bar: 'hello' })).to.be.false
   })
+  it(`.acceptsSomeCompositeTypes`, function() {
+    expect(t.allOf(t.string('foo'), t.string()).acceptsSomeCompositeTypes).to.be
+      .false
+    expect(
+      t.allOf(
+        t.object({ foo: t.string() }),
+        t.object({ foo: t.oneOf(t.string(), t.number()) })
+      ).acceptsSomeCompositeTypes
+    ).to.be.true
+  })
 })

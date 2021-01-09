@@ -59,6 +59,10 @@ export default class TypeAlias<T> extends Type<T> {
     }
   }
 
+  get acceptsSomeCompositeTypes(): boolean {
+    return this.type.acceptsSomeCompositeTypes
+  }
+
   toString(): string {
     return this.name
   }

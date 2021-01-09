@@ -49,6 +49,10 @@ export default class TupleType<T extends any[]> extends Type<T> {
     return true
   }
 
+  get acceptsSomeCompositeTypes(): boolean {
+    return true
+  }
+
   toString(): string {
     return `[${this.types.join(', ')}]`
   }

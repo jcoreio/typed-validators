@@ -13,6 +13,10 @@ export default class AnyType extends Type<any> {
     return true
   }
 
+  get acceptsSomeCompositeTypes(): boolean {
+    return true
+  }
+
   toString(): string {
     return 'any'
   }

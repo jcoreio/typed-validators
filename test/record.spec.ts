@@ -41,4 +41,8 @@ describe(`t.record`, function() {
       )
     }
   })
+  it(`.acceptsSomeCompositeTypes is false`, function() {
+    expect(t.record(t.string(), t.number()).acceptsSomeCompositeTypes).to.be
+      .true
+  })
 })

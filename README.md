@@ -35,8 +35,8 @@ The validation errors are detailed. Adapted from the brilliant work in `flow-run
     - [`t.array(t.number())`](#tarraytnumber)
     - [`t.object(properties)`](#tobjectproperties)
     - [`t.object({ required?, optional?, exact? })`](#tobject-required-optional-exact-)
-    - [`t.merge(t.object(...), t.object(...), ...)`](#tmergetobject-tobject-)
-    - [`t.mergeInexact(t.object(...), t.object(...), ...)`](#tmergeinexacttobject-tobject-)
+    - [`t.merge(...objectTypes)`](#tmergeobjecttypes)
+    - [`t.mergeInexact(...objectTypes)`](#tmergeinexactobjecttypes)
     - [`t.record(t.string(), t.number())`](#trecordtstring-tnumber)
     - [`t.instanceOf(() => Date)`](#tinstanceof--date)
     - [`t.tuple(t.string(), t.number())`](#ttupletstring-tnumber)
@@ -46,6 +46,7 @@ The validation errors are detailed. Adapted from the brilliant work in `flow-run
     - [`t.ref(() => typeAlias)`](#tref--typealias)
   - [`t.Type`](#ttype)
     - [`accepts(input: any): boolean`](#acceptsinput-any-boolean)
+    - [`acceptsSomeCompositeTypes: boolean (getter)`](#acceptssomecompositetypes-boolean-getter)
     - [`assert(input: any, prefix = '', path?: (string | number | symbol)[]): V`](#assertinput-any-prefix---path-string--number--symbol-v)
     - [`validate(input: any, prefix = '', path?: (string | number | symbol)[]): Validation`](#validateinput-any-prefix---path-string--number--symbol-validation)
     - [`warn(input: any, prefix = '', path?: (string | number | symbol)[]): void`](#warninput-any-prefix---path-string--number--symbol-void)
@@ -293,8 +294,6 @@ Merges the properties of multiple object validators together into an exact objec
 
 Note: merging `t.alias`es and `t.ref`s that resolve to object validators is supported, but any constraints on the referenced aliases won't be applied.
 
-Accepts a variable number of arguments, though type generation is only overloaded up to 8 arguments.
-
 For example:
 
 ```ts
@@ -386,6 +385,10 @@ The base class for all validator types.
 ### `accepts(input: any): boolean`
 
 Returns `true` if and only if `input` is the correct type.
+
+### `acceptsSomeCompositeTypes: boolean (getter)`
+
+Returns `true` if the validator accepts some values that are not primitives, null or undefined.
 
 ### `assert<V extends T>(input: any, prefix = '', path?: (string | number | symbol)[]): V`
 

@@ -25,6 +25,10 @@ export default abstract class Type<T> {
 
   abstract accepts(input: any): input is T
 
+  get acceptsSomeCompositeTypes(): boolean {
+    return false
+  }
+
   assert<V extends T>(input: any, prefix = '', path?: IdentifierPath): V {
     const validation = this.validate(input, prefix, path)
     const error = makeTypeError(validation)

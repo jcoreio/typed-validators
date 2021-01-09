@@ -37,4 +37,7 @@ describe(`t.instanceOf`, function() {
     )
     expect(t.instanceOf(() => Date).accepts(new Foo())).to.be.false
   })
+  it(`.acceptsSomeCompositeTypes is true`, function() {
+    expect(t.instanceOf(() => Date).acceptsSomeCompositeTypes).to.be.true
+  })
 })

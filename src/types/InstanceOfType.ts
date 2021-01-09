@@ -36,6 +36,10 @@ export default class InstanceOfType<T> extends Type<T> {
     return input instanceof this.classType
   }
 
+  get acceptsSomeCompositeTypes(): boolean {
+    return true
+  }
+
   toString(): string {
     return this.classType.prototype.constructor.name
   }

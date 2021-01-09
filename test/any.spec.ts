@@ -20,4 +20,7 @@ describe(`t.any`, function() {
       ]).to.deep.equal([])
     }
   })
+  it(`.acceptsSomeCompositeTypes is true`, function() {
+    expect(t.any().acceptsSomeCompositeTypes).to.be.true
+  })
 })

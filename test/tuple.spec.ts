@@ -69,4 +69,7 @@ describe(`t.tuple`, function() {
         Actual Type: null`
     )
   })
+  it(`.acceptsSomeCompositeTypes is true`, function() {
+    expect(t.tuple(t.number()).acceptsSomeCompositeTypes).to.be.true
+  })
 })

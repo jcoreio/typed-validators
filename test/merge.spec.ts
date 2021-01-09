@@ -94,4 +94,7 @@ describe(`t.merge`, function() {
     )
     expect(Merged.accepts({ foo: 1, bar: 'a', baz: 'qux' })).to.be.false
   })
+  it(`.acceptsSomeCompositeTypes is true`, function() {
+    expect(Merged.acceptsSomeCompositeTypes).to.be.true
+  })
 })

@@ -47,6 +47,9 @@ describe(`t.boolean`, function() {
         Actual Type: Array`
     )
   })
+  it(`.acceptsSomeCompositeTypes is false`, function() {
+    expect(t.boolean().acceptsSomeCompositeTypes).to.be.false
+  })
 })
 
 describe(`t.boolean(literal)`, function() {
@@ -106,5 +109,8 @@ describe(`t.boolean(literal)`, function() {
 
         Actual Type: string`
     )
+  })
+  it(`.acceptsSomeCompositeTypes is false`, function() {
+    expect(t.boolean(true).acceptsSomeCompositeTypes).to.be.false
   })
 })

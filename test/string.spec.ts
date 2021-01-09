@@ -31,6 +31,9 @@ describe(`t.string`, function() {
         Actual Type: number`
     )
   })
+  it(`.acceptsSomeCompositeTypes is false`, function() {
+    expect(t.string().acceptsSomeCompositeTypes).to.be.false
+  })
 })
 
 describe(`t.string(literal)`, function() {
@@ -61,5 +64,8 @@ describe(`t.string(literal)`, function() {
 
         Actual Type: number`
     )
+  })
+  it(`.acceptsSomeCompositeTypes is false`, function() {
+    expect(t.string('foo').acceptsSomeCompositeTypes).to.be.false
   })
 })

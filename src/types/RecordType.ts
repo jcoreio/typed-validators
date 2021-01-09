@@ -71,6 +71,10 @@ export default class RecordType<
     return result
   }
 
+  get acceptsSomeCompositeTypes(): boolean {
+    return true
+  }
+
   toString(): string {
     if (inToStringCycle(this)) {
       return '$Cycle<Record<string, any>>'

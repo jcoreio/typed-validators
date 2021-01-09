@@ -57,4 +57,7 @@ describe(`t.array`, function() {
         Actual Type: number`
     )
   })
+  it(`.acceptsSomeCompositeTypes is true`, function() {
+    expect(t.array(t.number()).acceptsSomeCompositeTypes).to.be.true
+  })
 })

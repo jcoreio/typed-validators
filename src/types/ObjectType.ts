@@ -82,6 +82,10 @@ export default class ObjectType<T extends {}> extends Type<T> {
     return result
   }
 
+  get acceptsSomeCompositeTypes(): boolean {
+    return true
+  }
+
   toString(): string {
     const { properties } = this
     if (inToStringCycle(this)) {

@@ -39,6 +39,10 @@ export default class UnionType<T> extends Type<T> {
     return false
   }
 
+  get acceptsSomeCompositeTypes(): boolean {
+    return this.types.some(t => t.acceptsSomeCompositeTypes)
+  }
+
   toString(): string {
     const { types } = this
     const normalized = new Array(types.length)

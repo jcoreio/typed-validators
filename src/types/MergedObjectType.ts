@@ -48,6 +48,10 @@ export default class MergedObjectType<T extends {}> extends Type<T> {
     return this.resolveType().accepts(input)
   }
 
+  get acceptsSomeCompositeTypes(): boolean {
+    return true
+  }
+
   toString(): string {
     return this.resolveType().toString()
   }
