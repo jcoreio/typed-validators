@@ -57,7 +57,7 @@ const validIdentifierOrAccessor = /^[$A-Z_][0-9A-Z_$[\].]*$/i
 
 export function stringifyPath(path: IdentifierPath): string {
   if (!path.length) {
-    return 'Value'
+    return 'input'
   }
   const { length } = path
   const parts = new Array(length)

@@ -11,7 +11,7 @@ describe(`t.symbol`, function() {
     expect(() => t.symbol().assert(true)).to.throw(
       t.RuntimeTypeError,
       dedent`
-        Value must be a symbol
+        input must be a symbol
 
         Expected: symbol
 
@@ -22,7 +22,7 @@ describe(`t.symbol`, function() {
     expect(() => t.symbol().assert(2)).to.throw(
       t.RuntimeTypeError,
       dedent`
-        Value must be a symbol
+        input must be a symbol
 
         Expected: symbol
 
@@ -47,7 +47,7 @@ describe(`t.symbol(literal)`, function() {
     expect(() => t.symbol(foo).assert(bar)).to.throw(
       t.RuntimeTypeError,
       dedent`
-        Value must be exactly typeof Symbol(foo)
+        input must be exactly typeof Symbol(foo)
 
         Expected: typeof Symbol(foo)
 
@@ -58,7 +58,7 @@ describe(`t.symbol(literal)`, function() {
     expect(() => t.symbol(foo).assert(3)).to.throw(
       t.RuntimeTypeError,
       dedent`
-        Value must be exactly typeof Symbol(foo)
+        input must be exactly typeof Symbol(foo)
 
         Expected: typeof Symbol(foo)
         

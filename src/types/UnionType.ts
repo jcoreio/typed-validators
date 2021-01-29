@@ -24,6 +24,16 @@ export default class UnionType<T> extends Type<T> {
         return
       }
     }
+    if (input != null) {
+      const deepErrors: ErrorTuple[][] = this.types
+        .map(t => [...t.errors(validation, path, input)])
+        .filter(errors => errors.find(([path]) => path.length > 0))
+      if (deepErrors.length === 1) {
+        // eslint-disable-next-line @typescript-eslint/no-explicit-any
+        yield* deepErrors[0] as any
+        return
+      }
+    }
     yield [path, getErrorMessage('ERR_NO_UNION', this.toString()), this]
   }
 

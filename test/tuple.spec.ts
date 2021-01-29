@@ -18,7 +18,7 @@ describe(`t.tuple`, function() {
       expect(() => TheTuple.assert(value)).to.throw(
         t.RuntimeTypeError,
         dedent`
-          Value must have length of 3
+          input must have length of 3
           
           Expected: [string, number, boolean]
           
@@ -34,7 +34,7 @@ describe(`t.tuple`, function() {
       expect(() => TheTuple.assert(value)).to.throw(
         t.RuntimeTypeError,
         dedent`
-          Value must have length of 3
+          input must have length of 3
           
           Expected: [string, number, boolean]
           
@@ -50,7 +50,7 @@ describe(`t.tuple`, function() {
     expect(() => TheTuple.assert(value)).to.throw(
       t.RuntimeTypeError,
       dedent`
-        [0] must be a string
+        input[0] must be a string
         
         Expected: string
         
@@ -60,7 +60,7 @@ describe(`t.tuple`, function() {
         
         -------------------------------------------------
         
-        [2] must be true or false
+        input[2] must be true or false
         
         Expected: boolean
         

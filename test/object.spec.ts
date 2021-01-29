@@ -27,13 +27,55 @@ describe(`t.object`, function() {
     expect(() => Person.assert({ age: 20 })).to.throw(
       t.RuntimeTypeError,
       dedent`
-        Value must have property: name
+        input is missing required property: name
 
-        Expected: ${Person.toString()}
+        Expected: name: string
 
-        Actual Value: ${JSON.stringify({ age: 20 }, null, 2)}
+        Actual Value: undefined
 
-        Actual Type: ${typeOf({ age: 20 })}`
+        Actual Type: undefined
+      `
+    )
+  })
+  it(`validates properties`, function() {
+    const value = { name: 1 }
+    expect(Person.accepts(value)).to.be.false
+    expect(() => Person.assert(value, undefined, ['value'])).to.throw(
+      t.RuntimeTypeError,
+      dedent`
+        value.name must be a string
+
+        Expected: string
+
+        Actual Value: 1
+
+        Actual Type: number`
+    )
+  })
+  it(`deep validation`, function() {
+    const People = t.array(Person)
+    const values = [{ name: 1 }, { name: 'Jimbo', age: 'old' }]
+    expect(() => People.assert(values, undefined, ['values'])).to.throw(
+      t.RuntimeTypeerror,
+      dedent`
+        values[0].name must be a string
+        
+        Expected: string
+        
+        Actual Value: 1
+        
+        Actual Type: number
+        
+        -------------------------------------------------
+        
+        values[1].age must be one of: number | null
+        
+        Expected: number | null
+        
+        Actual Value: "old"
+        
+        Actual Type: string
+      `
     )
   })
   it(`rejects extraneous properties`, function() {
@@ -42,13 +84,14 @@ describe(`t.object`, function() {
     expect(() => Person.assert(value)).to.throw(
       t.RuntimeTypeError,
       dedent`
-        Value should not contain the key: powerLevel
+        input has unknown property: powerLevel
 
-        Expected: ${Person.toString()}
+        Expected: undefined
 
-        Actual Value: ${JSON.stringify(value, null, 2)}
+        Actual Value: 9001
 
-        Actual Type: ${typeOf(value)}`
+        Actual Type: number
+      `
     )
   })
   it(`rejects everything else`, function() {
@@ -57,7 +100,7 @@ describe(`t.object`, function() {
       expect(() => Person.assert(value)).to.throw(
         t.RuntimeTypeError,
         dedent`
-        Value must be an object
+        input must be an object
 
         Expected: ${Person.toString()}
 

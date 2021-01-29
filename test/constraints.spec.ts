@@ -20,7 +20,7 @@ describe(`constraints`, function() {
       expect(() => PositiveNumberType.assert(value)).to.throw(
         t.RuntimeTypeError,
         dedent`
-          Value must be > 0
+          input must be > 0
           
           Expected: PositiveNumber
           
@@ -36,7 +36,7 @@ describe(`constraints`, function() {
       expect(() => PositiveNumberType.assert(value)).to.throw(
         t.RuntimeTypeError,
         dedent`
-          Value must be a number
+          input must be a number
           
           Expected: number
 

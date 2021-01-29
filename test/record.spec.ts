@@ -31,7 +31,7 @@ describe(`t.record`, function() {
       expect(() => Numbers.assert(value)).to.throw(
         t.RuntimeTypeError,
         dedent`
-        Value must be an object
+        input must be an object
 
         Expected: Record<string, number>
 

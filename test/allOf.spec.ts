@@ -17,40 +17,34 @@ describe(`t.allOf`, function() {
     }
   })
   it(`rejects invalid values`, function() {
-    expect(() => ObjectIntersection.assert({ foo: 3 })).to.throw(
+    expect(() =>
+      ObjectIntersection.assert({ foo: 3 }, undefined, ['value'])
+    ).to.throw(
       t.RuntimeTypeError,
       dedent`
-          Value must have property: bar
+          value is missing required property: bar
           
-          Expected: {
-            bar: string
-          }
+          Expected: bar: string
           
-          Actual Value: {
-            "foo": 3
-          }
+          Actual Value: undefined
           
-          Actual Type: {
-            foo: number
-          }`
+          Actual Type: undefined
+        `
     )
     expect(ObjectIntersection.accepts({ foo: 3 })).to.be.false
-    expect(() => ObjectIntersection.assert({ bar: 'hello' })).to.throw(
+    expect(() =>
+      ObjectIntersection.assert({ bar: 'hello' }, undefined, ['value'])
+    ).to.throw(
       t.RuntimeTypeError,
       dedent`
-          Value must have property: foo
-          
-          Expected: {
-            foo: number
-          }
-          
-          Actual Value: {
-            "bar": "hello"
-          }
-          
-          Actual Type: {
-            bar: string
-          }`
+        value is missing required property: foo
+
+        Expected: foo: number
+        
+        Actual Value: undefined
+        
+        Actual Type: undefined
+      `
     )
     expect(ObjectIntersection.accepts({ bar: 'hello' })).to.be.false
   })

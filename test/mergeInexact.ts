@@ -35,39 +35,27 @@ describe(`t.mergeInexact`, function() {
     expect(() => Merged.assert({ foo: 3 })).to.throw(
       t.RuntimeTypeError,
       dedent`
-          Value must have property: bar
+          input is missing required property: bar
           
-          Expected: {
-            foo: number
-            bar: string
-          }
+          Expected: bar: string
           
-          Actual Value: {
-            "foo": 3
-          }
+          Actual Value: undefined
           
-          Actual Type: {
-            foo: number
-          }`
+          Actual Type: undefined
+      `
     )
     expect(Merged.accepts({ foo: 3 })).to.be.false
     expect(() => Merged.assert({ bar: 'hello' })).to.throw(
       t.RuntimeTypeError,
       dedent`
-          Value must have property: foo
+          input is missing required property: foo
           
-          Expected: {
-            foo: number
-            bar: string
-          }
+          Expected: foo: number
           
-          Actual Value: {
-            "bar": "hello"
-          }
+          Actual Value: undefined
           
-          Actual Type: {
-            bar: string
-          }`
+          Actual Type: undefined
+      `
     )
     expect(Merged.accepts({ bar: 'hello' })).to.be.false
   })

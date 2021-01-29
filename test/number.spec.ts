@@ -11,7 +11,7 @@ describe(`t.number`, function() {
     expect(() => t.number().assert(true)).to.throw(
       t.RuntimeTypeError,
       dedent`
-        Value must be a number
+        input must be a number
 
         Expected: number
 
@@ -22,7 +22,7 @@ describe(`t.number`, function() {
     expect(() => t.number().assert('foo')).to.throw(
       t.RuntimeTypeError,
       dedent`
-        Value must be a number
+        input must be a number
 
         Expected: number
 
@@ -45,7 +45,7 @@ describe(`t.number(literal)`, function() {
     expect(() => t.number(2).assert(3)).to.throw(
       t.RuntimeTypeError,
       dedent`
-      Value must be exactly 2
+      input must be exactly 2
 
       Expected: 2
 
@@ -56,7 +56,7 @@ describe(`t.number(literal)`, function() {
     expect(() => t.number(2).assert('foo')).to.throw(
       t.RuntimeTypeError,
       dedent`
-        Value must be exactly 2
+        input must be exactly 2
 
         Expected: 2
 

@@ -15,7 +15,7 @@ describe(`t.instanceOf`, function() {
     expect(() => t.instanceOf(() => Date).assert({})).to.throw(
       t.RuntimeTypeError,
       dedent`
-        Value must be an instance of Date
+        input must be an instance of Date
         
         Expected: Date
         
@@ -29,7 +29,7 @@ describe(`t.instanceOf`, function() {
     expect(() => t.instanceOf(() => Date).assert(new Foo())).to.throw(
       t.RuntimeTypeError,
       dedent`
-        Value must be an instance of Date
+        input must be an instance of Date
         
         Expected: Date
         

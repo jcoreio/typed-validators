@@ -14,7 +14,7 @@ describe(`t.array`, function() {
     expect(() => t.array(t.number()).assert({ foo: 'bar' })).to.throw(
       t.RuntimeTypeError,
       dedent`
-        Value must be an Array
+        input must be an Array
 
         Expected: Array<number>
 

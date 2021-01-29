@@ -14,7 +14,7 @@ describe(`t.undefined`, function() {
       expect(() => t.undefined().assert(value)).to.throw(
         t.RuntimeTypeError,
         dedent`
-        Value must be undefined
+        input must be undefined
 
         Expected: undefined
 

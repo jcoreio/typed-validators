@@ -14,7 +14,7 @@ describe(`t.null`, function() {
       expect(() => t.null().assert(value)).to.throw(
         t.RuntimeTypeError,
         dedent`
-        Value must be null
+        input must be null
 
         Expected: null
 

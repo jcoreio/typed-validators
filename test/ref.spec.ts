@@ -58,23 +58,14 @@ describe(`t.ref`, function() {
     ).to.throw(
       t.RuntimeTypeError,
       dedent`
-        node.left.right should not contain the key: bar
+        node.left.right has unknown property: bar
 
-        Expected: {
-          value: any
-          left?: Node
-          right?: Node
-        }
+        Expected: undefined
         
-        Actual Value: {
-          "value": 3,
-          "bar": 3
-        }
+        Actual Value: 3
         
-        Actual Type: {
-          value: number,
-          bar: number
-        }`
+        Actual Type: number
+      `
     )
   })
   it(`.acceptsSomeCompositeTypes`, function() {

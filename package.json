@@ -1,6 +1,6 @@
 {
   "name": "typed-validators",
-  "version": "0.0.0-development",
+  "version": "3.1.0",
   "description": "complex type validators that generate TypeScript and Flow types for you",
   "main": "index.js",
   "sideEffects": false,

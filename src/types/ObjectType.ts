@@ -1,6 +1,7 @@
 import Type from './Type'
 
 import ObjectTypeProperty from './ObjectTypeProperty'
+import UndefinedLiteralType from './UndefinedLiteralType'
 
 import getErrorMessage from '../getErrorMessage'
 import Validation, { ErrorTuple, IdentifierPath } from '../Validation'
@@ -13,7 +14,6 @@ import {
   startToStringCycle,
   endToStringCycle,
 } from '../cyclic'
-import { keyToString } from '../errorReporting/keyToString'
 
 export default class ObjectType<T extends {}> extends Type<T> {
   typeName = 'ObjectType'
@@ -152,7 +152,11 @@ function* collectErrorsExact(
   for (const key in input) {
     // eslint-disable-line guard-for-in
     if (!properties.some(property => property.key === key)) {
-      yield [path, getErrorMessage('ERR_UNKNOWN_KEY', keyToString(key)), type]
+      yield [
+        [...path, key],
+        getErrorMessage('ERR_UNKNOWN_PROPERTY'),
+        new UndefinedLiteralType(),
+      ]
     }
   }
 }

@@ -8,7 +8,6 @@ import {
 
 import Validation, { ErrorTuple, IdentifierPath } from '../Validation'
 import getErrorMessage from '../getErrorMessage'
-import { keyToString } from '../errorReporting/keyToString'
 
 export default class ObjectTypeProperty<
   K extends string | number | symbol,
@@ -53,16 +52,12 @@ export default class ObjectTypeProperty<
   ): Generator<ErrorTuple, void, void> {
     // @flowIgnore
     const { optional, key, value } = this
+    const targetPath = path.concat(key)
     if (!optional && !this.existsOn(input)) {
-      yield [
-        path,
-        getErrorMessage('ERR_MISSING_PROPERTY', keyToString(key)),
-        this.__objectType,
-      ]
+      yield [targetPath, getErrorMessage('ERR_MISSING_PROPERTY'), this]
       return
     }
     const target = input[key]
-    const targetPath = path.concat(key)
     if (optional && target === undefined) {
       return
     }

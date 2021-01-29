@@ -27,10 +27,11 @@ const errorMessages = {
   ERR_EXPECT_VOID: 'must be undefined',
   ERR_EXPECT_LENGTH: 'must have length of $0',
   ERR_INVALID_DATE: 'must be a valid date',
-  ERR_MISSING_PROPERTY: 'must have property: $0',
+  ERR_MISSING_PROPERTY:
+    '$parentPath is missing required property: $lastPathElement',
   ERR_NO_INDEXER: 'is not one of the permitted indexer types',
   ERR_NO_UNION: 'must be one of: $0',
-  ERR_UNKNOWN_KEY: 'should not contain the key: $0',
+  ERR_UNKNOWN_PROPERTY: '$parentPath has unknown property: $lastPathElement',
 }
 
 export type ErrorKey = keyof typeof errorMessages

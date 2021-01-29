@@ -14,7 +14,7 @@ describe(`t.boolean`, function() {
     expect(() => t.boolean().assert(2)).to.throw(
       t.RuntimeTypeError,
       dedent`
-        Value must be true or false
+        input must be true or false
 
         Expected: boolean
 
@@ -26,7 +26,7 @@ describe(`t.boolean`, function() {
     expect(() => t.boolean().assert('foo')).to.throw(
       t.RuntimeTypeError,
       dedent`
-        Value must be true or false
+        input must be true or false
 
         Expected: boolean
 
@@ -38,7 +38,7 @@ describe(`t.boolean`, function() {
     expect(() => t.boolean().assert([])).to.throw(
       t.RuntimeTypeError,
       dedent`
-        Value must be true or false
+        input must be true or false
 
         Expected: boolean
 
@@ -68,7 +68,7 @@ describe(`t.boolean(literal)`, function() {
     expect(() => t.boolean(true).assert(false)).to.throw(
       t.RuntimeTypeError,
       dedent`
-        Value must be true
+        input must be true
 
         Expected: true
 
@@ -79,7 +79,7 @@ describe(`t.boolean(literal)`, function() {
     expect(() => t.boolean(false).assert(true)).to.throw(
       t.RuntimeTypeError,
       dedent`
-        Value must be false
+        input must be false
 
         Expected: false
 
@@ -90,7 +90,7 @@ describe(`t.boolean(literal)`, function() {
     expect(() => t.boolean(true).assert(2)).to.throw(
       t.RuntimeTypeError,
       dedent`
-        Value must be true
+        input must be true
 
         Expected: true
 
@@ -101,7 +101,7 @@ describe(`t.boolean(literal)`, function() {
     expect(() => t.boolean(false).assert('foo')).to.throw(
       t.RuntimeTypeError,
       dedent`
-        Value must be false
+        input must be false
 
         Expected: false
 

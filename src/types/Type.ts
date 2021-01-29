@@ -38,7 +38,11 @@ export default abstract class Type<T> {
     return input
   }
 
-  validate(input: any, prefix = '', path?: IdentifierPath): Validation {
+  validate(
+    input: any,
+    prefix = '',
+    path: IdentifierPath = ['input']
+  ): Validation {
     const validation = new Validation(input, prefix, path)
     for (const error of this.errors(validation, [], input))
       validation.errors.push(error)

@@ -20,17 +20,36 @@ export default function makeTypeError<T>(
     const actual = resolvePath(input, path)
     const actualType = typeOf(actual)
 
-    const field = stringifyPath([...validation.path, ...path])
+    const fieldPath = [...validation.path, ...path]
+
+    const interpolatedMessage = message.replace(
+      /\$(parentPath|lastPathElement)/g,
+      match => {
+        switch (match) {
+          case '$parentPath':
+            return stringifyPath(fieldPath.slice(0, fieldPath.length - 1))
+          case '$lastPathElement':
+            return stringifyPath(fieldPath.slice(fieldPath.length - 1))
+          default:
+            return match
+        }
+      }
+    )
+
+    const finalMessage =
+      interpolatedMessage !== message
+        ? interpolatedMessage
+        : `${stringifyPath(fieldPath)} ${message}`
 
     const actualAsString = makeString(actual)
 
     if (typeof actualAsString === 'string') {
       collected.push(
-        `${field} ${message}\n\nExpected: ${expected}\n\nActual Value: ${actualAsString}\n\nActual Type: ${actualType}\n`
+        `${finalMessage}\n\nExpected: ${expected}\n\nActual Value: ${actualAsString}\n\nActual Type: ${actualType}\n`
       )
     } else {
       collected.push(
-        `${field} ${message}\n\nExpected: ${expected}\n\nActual: ${actualType}\n`
+        `${finalMessage}\n\nExpected: ${expected}\n\nActual: ${actualType}\n`
       )
     }
   }
