@@ -38,7 +38,7 @@ describe(`t.symbol`, function() {
 
 describe(`t.symbol(literal)`, function() {
   const foo = Symbol('foo')
-  const bar = Symbol()
+  const bar = Symbol('bar')
   it(`accepts literal value`, function() {
     t.symbol(foo).assert(foo)
     t.symbol(bar).assert(bar)
@@ -47,20 +47,20 @@ describe(`t.symbol(literal)`, function() {
     expect(() => t.symbol(foo).assert(bar)).to.throw(
       t.RuntimeTypeError,
       dedent`
-        input must be exactly typeof Symbol(foo)
+        input must be Symbol(foo)
 
-        Expected: typeof Symbol(foo)
+        Expected: Symbol(foo)
 
-        Actual Value: Symbol()
+        Actual Value: Symbol(bar)
 
         Actual Type: symbol`
     )
     expect(() => t.symbol(foo).assert(3)).to.throw(
       t.RuntimeTypeError,
       dedent`
-        input must be exactly typeof Symbol(foo)
+        input must be Symbol(foo)
 
-        Expected: typeof Symbol(foo)
+        Expected: Symbol(foo)
         
         Actual Value: 3
         

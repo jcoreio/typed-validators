@@ -45,7 +45,7 @@ describe(`t.string(literal)`, function() {
     expect(() => t.string('foo').assert('bar')).to.throw(
       t.RuntimeTypeError,
       dedent`
-        input must be exactly "foo"
+        input must be "foo"
 
         Expected: "foo"
 
@@ -56,7 +56,7 @@ describe(`t.string(literal)`, function() {
     expect(() => t.string('foo').assert(3)).to.throw(
       t.RuntimeTypeError,
       dedent`
-        input must be exactly "foo"
+        input must be "foo"
 
         Expected: "foo"
 

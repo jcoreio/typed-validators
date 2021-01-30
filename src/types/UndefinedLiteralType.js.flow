@@ -1,7 +1,9 @@
 // @flow
 
-import Type from './Type'
+import PrimitiveLiteralType from './PrimitiveLiteralType'
 
-declare class UndefinedLiteralType extends Type<void> {}
+declare class UndefinedLiteralType extends PrimitiveLiteralType<void> {
+  constructor(): void;
+}
 
 export default UndefinedLiteralType

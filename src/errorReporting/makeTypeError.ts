@@ -69,10 +69,10 @@ function makeString(value: any): string | undefined {
   }
   switch (typeof value) {
     case 'string':
-      return `"${value}"`
-    // @flowIssue
-    case 'symbol':
+      return JSON.stringify(value)
     case 'number':
+      return Object.is(value, -0) ? '-0' : String(value)
+    case 'symbol':
     case 'boolean':
     case 'undefined':
       return String(value)

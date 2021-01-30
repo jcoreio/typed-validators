@@ -1,10 +1,8 @@
 // @flow
 
-import Type from './Type'
+import PrimitiveLiteralType from './Type'
 
-declare class NumericLiteralType<T: number> extends Type<T> {
-  value: T;
-
+declare class NumericLiteralType<T: number> extends PrimitiveLiteralType<T> {
   constructor(value: T): void;
 }
 export default NumericLiteralType
