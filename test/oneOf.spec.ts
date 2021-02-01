@@ -1,7 +1,6 @@
 import * as t from '../src/'
 import { expect } from 'chai'
 import dedent from 'dedent-js'
-import typeOf from '../src/errorReporting/typeOf'
 
 describe(`t.oneOf`, function() {
   const NumberOrString = t.oneOf(t.number(), t.string())
@@ -30,13 +29,10 @@ describe(`t.oneOf`, function() {
       expect(() => NumberOrString.assert(value)).to.throw(
         t.RuntimeTypeError,
         dedent`
-          input must be one of: number | string
-          
-          Expected: number | string
+          input must be one of number | string
           
           Actual Value: ${JSON.stringify(value, null, 2)}
-          
-          Actual Type: ${typeOf(value)}`
+        `
       )
       expect(NumberOrString.accepts(value)).to.be.false
     }
@@ -53,21 +49,16 @@ describe(`t.oneOf`, function() {
       expect(() => ObjectUnion.assert(value)).to.throw(
         t.RuntimeTypeError,
         dedent`
-          input must be one of: {
-            foo: number
-          } | {
-            bar: string
-          }
-          
-          Expected: {
-            foo: number
-          } | {
-            bar: string
-          }
+          input must be one of:
+
+            {
+              foo: number
+            } | {
+              bar: string
+            }
           
           Actual Value: ${JSON.stringify(value, null, 2)}
-          
-          Actual Type: ${typeOf(value)}`
+        `
       )
       expect(ObjectUnion.accepts(value)).to.be.false
     }
@@ -80,27 +71,19 @@ describe(`t.oneOf`, function() {
       dedent`
         value.foo must be a string
 
-        Expected: string
-
         Actual Value: 1
-
-        Actual Type: number
       `
     )
     expect(() => MaybeFoo.assert(1, undefined, ['value'])).to.throw(
       t.RuntimeTypeError,
       dedent`
-        value must be one of: {
-          foo: string
-        } | null
-        
-        Expected: {
-          foo: string
-        } | null
-        
+        value must be one of:
+
+          {
+            foo: string
+          } | null
+
         Actual Value: 1
-        
-        Actual Type: number
       `
     )
   })
@@ -116,11 +99,7 @@ describe(`t.oneOf`, function() {
       dedent`
         value[0].foo must be a string
 
-        Expected: string
-
         Actual Value: 1
-
-        Actual Type: number
       `
     )
     expect(() =>
@@ -128,39 +107,31 @@ describe(`t.oneOf`, function() {
     ).to.throw(
       t.RuntimeTypeError,
       dedent`
-        value[0] is missing required property: foo
+        value[0] is missing required property foo, which must be a string
 
-        Expected: foo: string
-
-        Actual Value: undefined
-
-        Actual Type: undefined
+        Actual Value: {
+          "bar": "hello"
+        }
 
         -------------------------------------------------
         
         value[0] has unknown property: bar
         
-        Expected: undefined
-        
-        Actual Value: "hello"
-        
-        Actual Type: string
+        Actual Value: {
+          "bar": "hello"
+        }
       `
     )
     expect(() => MaybeFooArray.assert(1, undefined, ['value'])).to.throw(
       t.RuntimeTypeError,
       dedent`
-        value must be one of: Array<{
-          foo: string
-        }> | null
-        
-        Expected: Array<{
-          foo: string
-        }> | null
+        value must be one of:
+
+          Array<{
+            foo: string
+          }> | null
         
         Actual Value: 1
-        
-        Actual Type: number
       `
     )
   })

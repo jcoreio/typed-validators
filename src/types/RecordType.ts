@@ -1,7 +1,5 @@
 import Type from './Type'
-
-import getErrorMessage from '../getErrorMessage'
-import Validation, { ErrorTuple, IdentifierPath } from '../Validation'
+import Validation, { IdentifierPath } from '../Validation'
 
 import {
   inValidationCycle,
@@ -11,6 +9,9 @@ import {
   startToStringCycle,
   endToStringCycle,
 } from '../cyclic'
+import RuntimeTypeErrorItem from '../errorReporting/RuntimeTypeErrorItem'
+import InvalidTypeErrorItem from '../errorReporting/InvalidTypeErrorItem'
+import InvalidKeyTypeErrorItem from '../errorReporting/InvalidKeyTypeErrorItem'
 
 export default class RecordType<
   K extends string | number | symbol,
@@ -30,14 +31,9 @@ export default class RecordType<
     validation: Validation,
     path: IdentifierPath,
     input: any
-  ): Generator<ErrorTuple, void, void> {
-    if (input === null) {
-      yield [path, getErrorMessage('ERR_EXPECT_OBJECT'), this]
-      return
-    }
-
-    if (typeof input !== 'object' || Array.isArray(input)) {
-      yield [path, getErrorMessage('ERR_EXPECT_OBJECT'), this]
+  ): Iterable<RuntimeTypeErrorItem> {
+    if (input == null || typeof input !== 'object' || Array.isArray(input)) {
+      yield new InvalidTypeErrorItem(path, input, this)
       return
     }
 
@@ -46,10 +42,6 @@ export default class RecordType<
     }
     validation.startCycle(this, input)
 
-    if (input instanceof Object && Array.isArray(input)) {
-      yield [path, getErrorMessage('ERR_EXPECT_OBJECT'), this]
-      return
-    }
     yield* collectErrorsWithIndexers(this, validation, path, input)
   }
 
@@ -75,7 +67,13 @@ export default class RecordType<
     return true
   }
 
-  toString(): string {
+  toString(options?: { formatForMustBe?: boolean }): string {
+    if (options?.formatForMustBe) {
+      const formatted = this.toString()
+      return /\n/.test(formatted)
+        ? `of type:\n\n${formatted.replace(/^/gm, '  ')}`
+        : `of type ${formatted}`
+    }
     if (inToStringCycle(this)) {
       return '$Cycle<Record<string, any>>'
     }
@@ -102,8 +100,10 @@ function* collectErrorsWithIndexers(
   validation: Validation,
   path: IdentifierPath,
   input: Record<any, any>
-): Generator<ErrorTuple, void, void> {
+): Iterable<RuntimeTypeErrorItem> {
   for (const key in input) {
+    if (!type.key.accepts(key))
+      yield new InvalidKeyTypeErrorItem(path, input, type, key, type.key)
     yield* type.value.errors(validation, [...path, key], input[key])
   }
 }

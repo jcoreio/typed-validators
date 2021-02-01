@@ -1,9 +1,8 @@
 import Type from './types/Type'
 import { weakSetAdd, weakSetDelete, weakSetHas } from './cyclic'
+import RuntimeTypeErrorItem from './errorReporting/RuntimeTypeErrorItem'
 
 export type IdentifierPath = Array<string | number | symbol>
-
-export type ErrorTuple = [IdentifierPath, string, Type<any>]
 
 export default class Validation {
   readonly input: any
@@ -12,7 +11,7 @@ export default class Validation {
 
   readonly prefix: string
 
-  readonly errors: ErrorTuple[] = []
+  readonly errors: RuntimeTypeErrorItem[] = []
 
   // Tracks whether we're in validation of cyclic objects.
   cyclic: WeakMap<Type<any>, WeakSet<any>> = new WeakMap()

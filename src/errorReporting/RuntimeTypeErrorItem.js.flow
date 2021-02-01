@@ -1,0 +1,19 @@
+// @flow
+
+import { type IdentifierPath } from '../Validation'
+import type Type from '../types/Type'
+
+declare export default class RuntimeTypeErrorItem {
+  static code: string;
+  +path: IdentifierPath;
+  +valueAtPath: mixed;
+  +expectedTypeAtPath: Type<mixed>;
+  +depth: number;
+
+  constructor(
+    path: IdentifierPath,
+    valueAtPath: mixed,
+    expectedTypeAtPath: Type<mixed>,
+    depth?: number
+  ): void;
+}

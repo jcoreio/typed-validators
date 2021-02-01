@@ -1,7 +1,8 @@
 // @flow
 
 import type Validation from '../Validation'
-import type { ErrorTuple, IdentifierPath } from '../Validation'
+import type { IdentifierPath } from '../Validation'
+import type RuntimeTypeErrorItem from '../errorReporting/RuntimeTypeErrorItem'
 
 /**
  * # Type
@@ -16,7 +17,7 @@ declare class Type<T> {
     validation: Validation,
     path: IdentifierPath,
     input: any
-  ): Generator<ErrorTuple, void, void>;
+  ): Iterable<RuntimeTypeErrorItem>;
 
   accepts(input: any): boolean;
 
@@ -26,7 +27,7 @@ declare class Type<T> {
 
   validate(input: any, prefix?: string, path?: IdentifierPath): Validation;
 
-  toString(): string;
+  toString(options?: { formatForMustBe?: boolean }): string;
 }
 
 export default Type

@@ -1,6 +1,7 @@
 import Type from './Type'
-import getErrorMessage from '../getErrorMessage'
-import Validation, { ErrorTuple, IdentifierPath } from '../Validation'
+import Validation, { IdentifierPath } from '../Validation'
+import RuntimeTypeErrorItem from '../errorReporting/RuntimeTypeErrorItem'
+import InvalidTypeErrorItem from '../errorReporting/InvalidTypeErrorItem'
 
 export default class SymbolType extends Type<symbol> {
   typeName = 'SymbolType';
@@ -9,10 +10,10 @@ export default class SymbolType extends Type<symbol> {
     validation: Validation,
     path: IdentifierPath,
     input: any
-  ): Generator<ErrorTuple, void, void> {
+  ): Iterable<RuntimeTypeErrorItem> {
     // @flowIssue 252
     if (typeof input !== 'symbol') {
-      yield [path, getErrorMessage('ERR_EXPECT_SYMBOL'), this]
+      yield new InvalidTypeErrorItem(path, input, this)
     }
   }
 
@@ -20,7 +21,7 @@ export default class SymbolType extends Type<symbol> {
     return typeof input === 'symbol'
   }
 
-  toString(): string {
-    return 'symbol'
+  toString(options?: { formatForMustBe?: boolean }): string {
+    return options?.formatForMustBe ? 'a symbol' : 'symbol'
   }
 }

@@ -2,7 +2,7 @@
 
 import Type from './Type'
 
-declare class PrimitiveLiteralType<
+declare export default class PrimitiveLiteralType<
   T: string | number | boolean | symbol | null | void
 > extends Type<T> {
   +value: T;

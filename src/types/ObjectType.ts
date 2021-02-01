@@ -1,10 +1,7 @@
 import Type from './Type'
 
 import ObjectTypeProperty from './ObjectTypeProperty'
-import UndefinedLiteralType from './UndefinedLiteralType'
-
-import getErrorMessage from '../getErrorMessage'
-import Validation, { ErrorTuple, IdentifierPath } from '../Validation'
+import Validation, { IdentifierPath } from '../Validation'
 
 import {
   inValidationCycle,
@@ -14,6 +11,9 @@ import {
   startToStringCycle,
   endToStringCycle,
 } from '../cyclic'
+import RuntimeTypeErrorItem from '../errorReporting/RuntimeTypeErrorItem'
+import InvalidTypeErrorItem from '../errorReporting/InvalidTypeErrorItem'
+import UnknownPropertyErrorItem from '../errorReporting/UnknownPropertyErrorItem'
 
 export default class ObjectType<T extends {}> extends Type<T> {
   typeName = 'ObjectType'
@@ -38,14 +38,9 @@ export default class ObjectType<T extends {}> extends Type<T> {
     validation: Validation,
     path: IdentifierPath,
     input: any
-  ): Generator<ErrorTuple, void, void> {
-    if (input === null) {
-      yield [path, getErrorMessage('ERR_EXPECT_OBJECT'), this]
-      return
-    }
-
-    if (typeof input !== 'object' || Array.isArray(input)) {
-      yield [path, getErrorMessage('ERR_EXPECT_OBJECT'), this]
+  ): Iterable<RuntimeTypeErrorItem> {
+    if (input == null || typeof input !== 'object' || Array.isArray(input)) {
+      yield new InvalidTypeErrorItem(path, input, this)
       return
     }
 
@@ -86,7 +81,13 @@ export default class ObjectType<T extends {}> extends Type<T> {
     return true
   }
 
-  toString(): string {
+  toString(options?: { formatForMustBe?: boolean }): string {
+    if (options?.formatForMustBe) {
+      const formatted = this.toString()
+      return /\n/.test(formatted)
+        ? `of type:\n\n${formatted.replace(/^/gm, '  ')}`
+        : `of type ${formatted}`
+    }
     const { properties } = this
     if (inToStringCycle(this)) {
       return '$Cycle<Record<string, any>>'
@@ -134,7 +135,7 @@ function* collectErrorsWithoutIndexers(
   validation: Validation,
   path: IdentifierPath,
   input: Record<string, any>
-): Generator<ErrorTuple, void, void> {
+): Iterable<RuntimeTypeErrorItem> {
   const { properties } = type
   for (let i = 0; i < properties.length; i++) {
     const property = properties[i]
@@ -147,16 +148,12 @@ function* collectErrorsExact(
   validation: Validation,
   path: IdentifierPath,
   input: Record<string, any>
-): Generator<ErrorTuple, void, void> {
+): Iterable<RuntimeTypeErrorItem> {
   const { properties } = type
   for (const key in input) {
     // eslint-disable-line guard-for-in
     if (!properties.some(property => property.key === key)) {
-      yield [
-        [...path, key],
-        getErrorMessage('ERR_UNKNOWN_PROPERTY'),
-        new UndefinedLiteralType(),
-      ]
+      yield new UnknownPropertyErrorItem(path, input, type, key)
     }
   }
 }

@@ -1,7 +1,7 @@
 import Type from './Type'
-
-import getErrorMessage from '../getErrorMessage'
-import Validation, { ErrorTuple, IdentifierPath } from '../Validation'
+import Validation, { IdentifierPath } from '../Validation'
+import RuntimeTypeErrorItem from '../errorReporting/RuntimeTypeErrorItem'
+import InvalidTypeErrorItem from '../errorReporting/InvalidTypeErrorItem'
 
 export default class NumberType extends Type<number> {
   typeName = 'NumberType';
@@ -10,9 +10,9 @@ export default class NumberType extends Type<number> {
     validation: Validation,
     path: IdentifierPath,
     input: any
-  ): Generator<ErrorTuple, void, void> {
+  ): Iterable<RuntimeTypeErrorItem> {
     if (typeof input !== 'number') {
-      yield [path, getErrorMessage('ERR_EXPECT_NUMBER'), this]
+      yield new InvalidTypeErrorItem(path, input, this)
     }
   }
 
@@ -20,7 +20,7 @@ export default class NumberType extends Type<number> {
     return typeof input === 'number'
   }
 
-  toString(): string {
-    return 'number'
+  toString(options?: { formatForMustBe?: boolean }): string {
+    return options?.formatForMustBe ? 'a number' : 'number'
   }
 }

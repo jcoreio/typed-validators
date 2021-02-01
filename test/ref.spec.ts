@@ -59,12 +59,11 @@ describe(`t.ref`, function() {
       t.RuntimeTypeError,
       dedent`
         node.left.right has unknown property: bar
-
-        Expected: undefined
         
-        Actual Value: 3
-        
-        Actual Type: number
+        Actual Value: {
+          "value": 3,
+          "bar": 3
+        }
       `
     )
   })

@@ -18,13 +18,10 @@ describe(`t.tuple`, function() {
       expect(() => TheTuple.assert(value)).to.throw(
         t.RuntimeTypeError,
         dedent`
-          input must have length of 3
-          
-          Expected: [string, number, boolean]
+          input.length must be 3, instead it is ${value.length}
           
           Actual Value: ${JSON.stringify(value, null, 2)}
-          
-          Actual Type: Array`
+        `
       )
       expect(TheTuple.accepts(value)).to.be.false
     }
@@ -34,13 +31,10 @@ describe(`t.tuple`, function() {
       expect(() => TheTuple.assert(value)).to.throw(
         t.RuntimeTypeError,
         dedent`
-          input must have length of 3
-          
-          Expected: [string, number, boolean]
-          
+          input.length must be 3, instead it is 4
+
           Actual Value: ${JSON.stringify(value, null, 2)}
-          
-          Actual Type: Array`
+        `
       )
       expect(TheTuple.accepts(value)).to.be.false
     }
@@ -52,21 +46,14 @@ describe(`t.tuple`, function() {
       dedent`
         input[0] must be a string
         
-        Expected: string
-        
         Actual Value: 1
-        
-        Actual Type: number
         
         -------------------------------------------------
         
-        input[2] must be true or false
-        
-        Expected: boolean
+        input[2] must be a boolean
         
         Actual Value: null
-        
-        Actual Type: null`
+      `
     )
   })
   it(`.acceptsSomeCompositeTypes is true`, function() {

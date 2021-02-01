@@ -1,6 +1,7 @@
 import Validation from '../Validation'
-import { ErrorTuple, IdentifierPath } from '../Validation'
-import makeTypeError from '../errorReporting/makeTypeError'
+import { IdentifierPath } from '../Validation'
+import RuntimeTypeErrorItem from '../errorReporting/RuntimeTypeErrorItem'
+import { RuntimeTypeError } from '..'
 
 /**
  * # Type
@@ -21,7 +22,7 @@ export default abstract class Type<T> {
     path: IdentifierPath,
     input: any
     /* eslint-enable @typescript-eslint/no-unused-vars */
-  ): Generator<ErrorTuple, void, void>
+  ): Iterable<RuntimeTypeErrorItem>
 
   abstract accepts(input: any): input is T
 
@@ -29,11 +30,14 @@ export default abstract class Type<T> {
     return false
   }
 
-  assert<V extends T>(input: any, prefix = '', path?: IdentifierPath): V {
+  assert<V extends T>(
+    input: any,
+    prefix = '',
+    path: IdentifierPath = ['input']
+  ): V {
     const validation = this.validate(input, prefix, path)
-    const error = makeTypeError(validation)
-    if (error) {
-      throw error
+    if (validation.errors.length) {
+      throw new RuntimeTypeError(validation.errors)
     }
     return input
   }
@@ -44,10 +48,10 @@ export default abstract class Type<T> {
     path: IdentifierPath = ['input']
   ): Validation {
     const validation = new Validation(input, prefix, path)
-    for (const error of this.errors(validation, [], input))
+    for (const error of this.errors(validation, path, input))
       validation.errors.push(error)
     return validation
   }
 
-  abstract toString(): string
+  abstract toString(options?: { formatForMustBe?: boolean }): string
 }

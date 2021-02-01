@@ -15,6 +15,7 @@ import ObjectTypeProperty from './types/ObjectTypeProperty'
 import oneOf from './oneOf'
 import RecordType from './types/RecordType'
 import RuntimeTypeError from './errorReporting/RuntimeTypeError'
+import RuntimeTypeErrorItem from './errorReporting/RuntimeTypeErrorItem'
 import StringLiteralType from './types/StringLiteralType'
 import StringType from './types/StringType'
 import SymbolLiteralType from './types/SymbolLiteralType'
@@ -25,14 +26,13 @@ import TypeAlias from './types/TypeAlias'
 import TypeReference from './types/TypeReference'
 import UndefinedLiteralType from './types/UndefinedLiteralType'
 import UnionType from './types/UnionType'
-import Validation, { ErrorTuple } from './Validation'
+import Validation from './Validation'
 
 export {
   AnyType,
   ArrayType,
   BooleanLiteralType,
   BooleanType,
-  ErrorTuple,
   InstanceOfType,
   IntersectionType,
   merge,
@@ -46,6 +46,7 @@ export {
   oneOf,
   RecordType,
   RuntimeTypeError,
+  RuntimeTypeErrorItem,
   StringLiteralType,
   StringType,
   SymbolLiteralType,

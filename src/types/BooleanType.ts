@@ -1,7 +1,7 @@
 import Type from './Type'
-
-import getErrorMessage from '../getErrorMessage'
-import Validation, { ErrorTuple, IdentifierPath } from '../Validation'
+import Validation, { IdentifierPath } from '../Validation'
+import { RuntimeTypeErrorItem } from '..'
+import InvalidTypeErrorItem from '../errorReporting/InvalidTypeErrorItem'
 
 export default class BooleanType extends Type<boolean> {
   typeName = 'BooleanType';
@@ -10,9 +10,9 @@ export default class BooleanType extends Type<boolean> {
     validation: Validation,
     path: IdentifierPath,
     input: any
-  ): Generator<ErrorTuple, void, void> {
+  ): Iterable<RuntimeTypeErrorItem> {
     if (typeof input !== 'boolean') {
-      yield [path, getErrorMessage('ERR_EXPECT_BOOLEAN'), this]
+      yield new InvalidTypeErrorItem(path, input, this)
     }
   }
 
@@ -20,7 +20,7 @@ export default class BooleanType extends Type<boolean> {
     return typeof input === 'boolean'
   }
 
-  toString(): string {
-    return 'boolean'
+  toString(options?: { formatForMustBe?: boolean }): string {
+    return options?.formatForMustBe ? 'a boolean' : 'boolean'
   }
 }

@@ -1,7 +1,6 @@
 import * as t from '../src/'
 import { expect } from 'chai'
 import dedent from 'dedent-js'
-import typeOf from '../src/errorReporting/typeOf'
 
 describe(`t.undefined`, function() {
   it(`accepts undefined`, function() {
@@ -14,13 +13,10 @@ describe(`t.undefined`, function() {
       expect(() => t.undefined().assert(value)).to.throw(
         t.RuntimeTypeError,
         dedent`
-        input must be undefined
+          input must be undefined
 
-        Expected: undefined
-
-        Actual Value: ${JSON.stringify(value)}
-
-        Actual Type: ${typeOf(value)}`
+          Actual Value: ${JSON.stringify(value)}
+        `
       )
     }
   })

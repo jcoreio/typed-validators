@@ -14,17 +14,12 @@ describe(`t.array`, function() {
     expect(() => t.array(t.number()).assert({ foo: 'bar' })).to.throw(
       t.RuntimeTypeError,
       dedent`
-        input must be an Array
-
-        Expected: Array<number>
+        input must be an Array<number>
 
         Actual Value: {
           "foo": "bar"
         }
-
-        Actual Type: {
-          foo: string
-        }`
+      `
     )
   })
   it(`rejects nonmatching array elements`, function() {
@@ -36,11 +31,8 @@ describe(`t.array`, function() {
       dedent`
         array[1] must be a number
 
-        Expected: number
-
         Actual Value: "bar"
-
-        Actual Type: string`
+      `
     )
     expect(t.array(t.string()).accepts(['foo', 2])).to.be.false
     expect(() =>
@@ -50,11 +42,8 @@ describe(`t.array`, function() {
       dedent`
         array[1] must be a string
 
-        Expected: string
-
         Actual Value: 2
-
-        Actual Type: number`
+      `
     )
   })
   it(`.acceptsSomeCompositeTypes is true`, function() {

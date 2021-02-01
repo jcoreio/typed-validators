@@ -27,9 +27,9 @@ import TypeAlias from './types/TypeAlias'
 import TypeReference from './types/TypeReference'
 import UndefinedLiteralType from './types/UndefinedLiteralType'
 import UnionType from './types/UnionType'
-import Validation, { type ErrorTuple } from './Validation'
+import Validation, { type RuntimeTypeErrorItem } from './Validation'
 
-export type { ErrorTuple }
+export type { RuntimeTypeErrorItem }
 
 export {
   AnyType,

@@ -22,13 +22,11 @@ describe(`t.allOf`, function() {
     ).to.throw(
       t.RuntimeTypeError,
       dedent`
-          value is missing required property: bar
+          value is missing required property bar, which must be a string
           
-          Expected: bar: string
-          
-          Actual Value: undefined
-          
-          Actual Type: undefined
+          Actual Value: {
+            "foo": 3
+          }
         `
     )
     expect(ObjectIntersection.accepts({ foo: 3 })).to.be.false
@@ -37,13 +35,11 @@ describe(`t.allOf`, function() {
     ).to.throw(
       t.RuntimeTypeError,
       dedent`
-        value is missing required property: foo
-
-        Expected: foo: number
+        value is missing required property foo, which must be a number
         
-        Actual Value: undefined
-        
-        Actual Type: undefined
+        Actual Value: {
+          "bar": "hello"
+        }
       `
     )
     expect(ObjectIntersection.accepts({ bar: 'hello' })).to.be.false

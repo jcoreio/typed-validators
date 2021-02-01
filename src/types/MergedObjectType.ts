@@ -1,7 +1,8 @@
 import Type from './Type'
 import ObjectType from './ObjectType'
 import ObjectTypeProperty from './ObjectTypeProperty'
-import Validation, { ErrorTuple, IdentifierPath } from '../Validation'
+import Validation, { IdentifierPath } from '../Validation'
+import RuntimeTypeErrorItem from '../errorReporting/RuntimeTypeErrorItem'
 
 export default class MergedObjectType<T extends {}> extends Type<T> {
   typeName = 'MergedObjectType'
@@ -40,7 +41,7 @@ export default class MergedObjectType<T extends {}> extends Type<T> {
     validation: Validation,
     path: IdentifierPath,
     input: any
-  ): Generator<ErrorTuple, void, void> {
+  ): Iterable<RuntimeTypeErrorItem> {
     yield* this.resolveType().errors(validation, path, input)
   }
 
@@ -52,7 +53,7 @@ export default class MergedObjectType<T extends {}> extends Type<T> {
     return true
   }
 
-  toString(): string {
-    return this.resolveType().toString()
+  toString(options?: { formatForMustBe?: boolean }): string {
+    return this.resolveType().toString(options)
   }
 }

@@ -1,6 +1,8 @@
 import Type from './Type'
-import getErrorMessage from '../getErrorMessage'
-import Validation, { ErrorTuple, IdentifierPath } from '../Validation'
+import Validation, { IdentifierPath } from '../Validation'
+import RuntimeTypeErrorItem from '../errorReporting/RuntimeTypeErrorItem'
+import InvalidLengthErrorItem from '../errorReporting/InvalidLengthErrorItem'
+import InvalidTypeErrorItem from '../errorReporting/InvalidTypeErrorItem'
 
 export default class TupleType<T extends any[]> extends Type<T> {
   typeName = 'TupleType'
@@ -15,14 +17,14 @@ export default class TupleType<T extends any[]> extends Type<T> {
     validation: Validation,
     path: IdentifierPath,
     input: any
-  ): Generator<ErrorTuple, void, void> {
+  ): Iterable<RuntimeTypeErrorItem> {
     const { types } = this
     if (!Array.isArray(input)) {
-      yield [path, getErrorMessage('ERR_EXPECT_ARRAY'), this]
+      yield new InvalidTypeErrorItem(path, input, this)
       return
     }
     if (input.length !== types.length) {
-      yield [path, getErrorMessage('ERR_EXPECT_LENGTH', types.length), this]
+      yield new InvalidLengthErrorItem(path, input, this, types.length)
     }
     for (let i = 0; i < Math.min(input.length, types.length); i++) {
       yield* (types[i] as Type<any>).errors(

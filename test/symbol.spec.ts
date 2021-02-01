@@ -13,22 +13,16 @@ describe(`t.symbol`, function() {
       dedent`
         input must be a symbol
 
-        Expected: symbol
-
         Actual Value: true
-
-        Actual Type: boolean`
+      `
     )
     expect(() => t.symbol().assert(2)).to.throw(
       t.RuntimeTypeError,
       dedent`
         input must be a symbol
 
-        Expected: symbol
-
         Actual Value: 2
-
-        Actual Type: number`
+      `
     )
   })
   it(`.acceptsSomeCompositeTypes is false`, function() {
@@ -49,22 +43,16 @@ describe(`t.symbol(literal)`, function() {
       dedent`
         input must be Symbol(foo)
 
-        Expected: Symbol(foo)
-
         Actual Value: Symbol(bar)
-
-        Actual Type: symbol`
+      `
     )
     expect(() => t.symbol(foo).assert(3)).to.throw(
       t.RuntimeTypeError,
       dedent`
         input must be Symbol(foo)
-
-        Expected: Symbol(foo)
         
         Actual Value: 3
-        
-        Actual Type: number`
+      `
     )
   })
 })

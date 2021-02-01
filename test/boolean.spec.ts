@@ -14,37 +14,28 @@ describe(`t.boolean`, function() {
     expect(() => t.boolean().assert(2)).to.throw(
       t.RuntimeTypeError,
       dedent`
-        input must be true or false
-
-        Expected: boolean
+        input must be a boolean
 
         Actual Value: 2
-
-        Actual Type: number`
+      `
     )
     expect(t.boolean().accepts('foo')).to.be.false
     expect(() => t.boolean().assert('foo')).to.throw(
       t.RuntimeTypeError,
       dedent`
-        input must be true or false
-
-        Expected: boolean
+        input must be a boolean
 
         Actual Value: "foo"
-
-        Actual Type: string`
+      `
     )
     expect(t.boolean().accepts([])).to.be.false
     expect(() => t.boolean().assert([])).to.throw(
       t.RuntimeTypeError,
       dedent`
-        input must be true or false
-
-        Expected: boolean
+        input must be a boolean
 
         Actual Value: []
-
-        Actual Type: Array`
+      `
     )
   })
   it(`.acceptsSomeCompositeTypes is false`, function() {
@@ -70,44 +61,32 @@ describe(`t.boolean(literal)`, function() {
       dedent`
         input must be true
 
-        Expected: true
-
         Actual Value: false
-
-        Actual Type: boolean`
+      `
     )
     expect(() => t.boolean(false).assert(true)).to.throw(
       t.RuntimeTypeError,
       dedent`
         input must be false
 
-        Expected: false
-
         Actual Value: true
-
-        Actual Type: boolean`
+      `
     )
     expect(() => t.boolean(true).assert(2)).to.throw(
       t.RuntimeTypeError,
       dedent`
         input must be true
 
-        Expected: true
-
         Actual Value: 2
-
-        Actual Type: number`
+      `
     )
     expect(() => t.boolean(false).assert('foo')).to.throw(
       t.RuntimeTypeError,
       dedent`
         input must be false
 
-        Expected: false
-
         Actual Value: "foo"
-
-        Actual Type: string`
+      `
     )
   })
   it(`.acceptsSomeCompositeTypes is false`, function() {

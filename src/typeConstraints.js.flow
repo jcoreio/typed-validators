@@ -1,7 +1,10 @@
 // @flow
 
 import Type from './types/Type'
-import Validation, { type ErrorTuple, type IdentifierPath } from './Validation'
+import Validation, {
+  type RuntimeTypeErrorItem,
+  type IdentifierPath,
+} from './Validation'
 
 export type TypeConstraint<T> = (input: T) => ?string
 

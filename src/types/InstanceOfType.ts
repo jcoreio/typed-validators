@@ -1,7 +1,7 @@
 import Type from './Type'
-
-import getErrorMessage from '../getErrorMessage'
-import Validation, { ErrorTuple, IdentifierPath } from '../Validation'
+import Validation, { IdentifierPath } from '../Validation'
+import InvalidTypeErrorItem from '../errorReporting/InvalidTypeErrorItem'
+import RuntimeTypeErrorItem from '../errorReporting/RuntimeTypeErrorItem'
 
 export type ClassTypeOption<T> = () => { new (...args: any[]): T }
 
@@ -22,13 +22,9 @@ export default class InstanceOfType<T> extends Type<T> {
     validation: Validation,
     path: IdentifierPath,
     input: any
-  ): Generator<ErrorTuple, void, void> {
+  ): Iterable<RuntimeTypeErrorItem> {
     if (!(input instanceof this.classType)) {
-      yield [
-        path,
-        getErrorMessage('ERR_EXPECT_INSTANCEOF', this.toString()),
-        this,
-      ]
+      yield new InvalidTypeErrorItem(path, input, this)
     }
   }
 
@@ -40,7 +36,9 @@ export default class InstanceOfType<T> extends Type<T> {
     return true
   }
 
-  toString(): string {
-    return this.classType.prototype.constructor.name
+  toString(options?: { formatForMustBe?: boolean }): string {
+    return options?.formatForMustBe
+      ? `an instance of ${this.classType.prototype.constructor.name}`
+      : this.classType.prototype.constructor.name
   }
 }

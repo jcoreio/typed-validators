@@ -1,11 +1,12 @@
 import Type from './Type'
-import Validation, { ErrorTuple, IdentifierPath } from '../Validation'
+import Validation, { IdentifierPath } from '../Validation'
 import {
   addConstraints,
   collectConstraintErrors,
   constraintsAccept,
   TypeConstraint,
 } from '../typeConstraints'
+import RuntimeTypeErrorItem from '../errorReporting/RuntimeTypeErrorItem'
 
 export default class TypeAlias<T> extends Type<T> {
   typeName = 'TypeAlias'
@@ -36,7 +37,7 @@ export default class TypeAlias<T> extends Type<T> {
     validation: Validation,
     path: IdentifierPath,
     input: any
-  ): Generator<ErrorTuple, void, void> {
+  ): Iterable<RuntimeTypeErrorItem> {
     const { type } = this
     let hasErrors = false
     for (const error of type.errors(validation, path, input)) {

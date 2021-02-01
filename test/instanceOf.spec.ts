@@ -17,13 +17,8 @@ describe(`t.instanceOf`, function() {
       dedent`
         input must be an instance of Date
         
-        Expected: Date
-        
         Actual Value: {}
-        
-        Actual Type: {
-
-        }`
+      `
     )
     expect(t.instanceOf(() => Date).accepts(new Foo())).to.be.false
     expect(() => t.instanceOf(() => Date).assert(new Foo())).to.throw(
@@ -31,9 +26,8 @@ describe(`t.instanceOf`, function() {
       dedent`
         input must be an instance of Date
         
-        Expected: Date
-        
-        Actual: Foo`
+        Actual Value: [object Object]
+      `
     )
     expect(t.instanceOf(() => Date).accepts(new Foo())).to.be.false
   })

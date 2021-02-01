@@ -1,6 +1,7 @@
 import Type from './Type'
-import getErrorMessage from '../getErrorMessage'
-import Validation, { ErrorTuple, IdentifierPath } from '../Validation'
+import Validation, { IdentifierPath } from '../Validation'
+import RuntimeTypeErrorItem from '../errorReporting/RuntimeTypeErrorItem'
+import InvalidTypeErrorItem from '../errorReporting/InvalidTypeErrorItem'
 
 export default class StringType extends Type<string> {
   typeName = 'StringType';
@@ -9,9 +10,9 @@ export default class StringType extends Type<string> {
     validation: Validation,
     path: IdentifierPath,
     input: any
-  ): Generator<ErrorTuple, void, void> {
+  ): Iterable<RuntimeTypeErrorItem> {
     if (typeof input !== 'string') {
-      yield [path, getErrorMessage('ERR_EXPECT_STRING'), this]
+      yield new InvalidTypeErrorItem(path, input, this)
     }
   }
 
@@ -19,7 +20,7 @@ export default class StringType extends Type<string> {
     return typeof input === 'string'
   }
 
-  toString(): string {
-    return 'string'
+  toString(options?: { formatForMustBe?: boolean }): string {
+    return options?.formatForMustBe ? 'a string' : 'string'
   }
 }

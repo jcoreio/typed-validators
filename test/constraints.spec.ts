@@ -1,7 +1,6 @@
 import * as t from '../src/'
 import { expect } from 'chai'
 import dedent from 'dedent-js'
-import typeOf from '../src/errorReporting/typeOf'
 
 describe(`constraints`, function() {
   const PositiveNumberType = t
@@ -22,11 +21,8 @@ describe(`constraints`, function() {
         dedent`
           input must be > 0
           
-          Expected: PositiveNumber
-          
           Actual Value: ${value}
-          
-          Actual Type: number`
+        `
       )
     }
   })
@@ -37,12 +33,9 @@ describe(`constraints`, function() {
         t.RuntimeTypeError,
         dedent`
           input must be a number
-          
-          Expected: number
 
           Actual Value: ${JSON.stringify(value)}
-          
-          Actual Type: ${typeOf(value)}`
+        `
       )
     }
   })

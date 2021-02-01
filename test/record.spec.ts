@@ -1,7 +1,6 @@
 import * as t from '../src/'
 import { expect } from 'chai'
 import dedent from 'dedent-js'
-import typeOf from '../src/errorReporting/typeOf'
 
 describe(`t.record`, function() {
   const Numbers = t.record(t.string(), t.number())
@@ -18,11 +17,8 @@ describe(`t.record`, function() {
       dedent`
         value.a must be a number
         
-        Expected: number
-        
         Actual Value: "one"
-        
-        Actual Type: string`
+      `
     )
   })
   it(`rejects everything else`, function() {
@@ -31,13 +27,10 @@ describe(`t.record`, function() {
       expect(() => Numbers.assert(value)).to.throw(
         t.RuntimeTypeError,
         dedent`
-        input must be an object
+          input must be of type Record<string, number>
 
-        Expected: Record<string, number>
-
-        Actual Value: ${JSON.stringify(value)}
-
-        Actual Type: ${typeOf(value)}`
+          Actual Value: ${JSON.stringify(value)}
+        `
       )
     }
   })

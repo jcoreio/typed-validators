@@ -6,8 +6,9 @@ import {
   TypeConstraint,
 } from '../typeConstraints'
 
-import Validation, { ErrorTuple, IdentifierPath } from '../Validation'
-import getErrorMessage from '../getErrorMessage'
+import Validation, { IdentifierPath } from '../Validation'
+import RuntimeTypeErrorItem from '../errorReporting/RuntimeTypeErrorItem'
+import MissingPropertyErrorItem from '../errorReporting/MissingPropertyErrorItem'
 
 export default class ObjectTypeProperty<
   K extends string | number | symbol,
@@ -49,12 +50,12 @@ export default class ObjectTypeProperty<
     validation: Validation,
     path: IdentifierPath,
     input: any
-  ): Generator<ErrorTuple, void, void> {
+  ): Iterable<RuntimeTypeErrorItem> {
     // @flowIgnore
     const { optional, key, value } = this
     const targetPath = path.concat(key)
     if (!optional && !this.existsOn(input)) {
-      yield [targetPath, getErrorMessage('ERR_MISSING_PROPERTY'), this]
+      yield new MissingPropertyErrorItem(path, input, this.__objectType, this)
       return
     }
     const target = input[key]

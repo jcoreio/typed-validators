@@ -1,7 +1,5 @@
 import Type from './Type'
-
-import getErrorMessage from '../getErrorMessage'
-import Validation, { ErrorTuple, IdentifierPath } from '../Validation'
+import Validation, { IdentifierPath } from '../Validation'
 
 import {
   inValidationCycle,
@@ -11,6 +9,8 @@ import {
   startToStringCycle,
   endToStringCycle,
 } from '../cyclic'
+import RuntimeTypeErrorItem from '../errorReporting/RuntimeTypeErrorItem'
+import InvalidTypeErrorItem from '../errorReporting/InvalidTypeErrorItem'
 
 export default class ArrayType<T> extends Type<Array<T>> {
   typeName = 'ArrayType'
@@ -25,9 +25,9 @@ export default class ArrayType<T> extends Type<Array<T>> {
     validation: Validation,
     path: IdentifierPath,
     input: any
-  ): Generator<ErrorTuple, void, void> {
+  ): Iterable<RuntimeTypeErrorItem> {
     if (!Array.isArray(input)) {
-      yield [path, getErrorMessage('ERR_EXPECT_ARRAY'), this]
+      yield new InvalidTypeErrorItem(path, input, this)
       return
     }
     if (validation.inCycle(this, input)) {
@@ -67,7 +67,13 @@ export default class ArrayType<T> extends Type<Array<T>> {
     return true
   }
 
-  toString(): string {
+  toString(options?: { formatForMustBe?: boolean }): string {
+    if (options?.formatForMustBe) {
+      const formatted = this.toString()
+      return /\n/.test(formatted)
+        ? `of type:\n\n${formatted.replace(/^/gm, '  ')}`
+        : `an ${formatted}`
+    }
     const { elementType } = this
     if (inToStringCycle(this)) {
       if (typeof elementType.typeName === 'string') {

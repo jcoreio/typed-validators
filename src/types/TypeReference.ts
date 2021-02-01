@@ -1,6 +1,7 @@
 import Type from './Type'
 import TypeAlias from './TypeAlias'
-import Validation, { ErrorTuple, IdentifierPath } from '../Validation'
+import Validation, { IdentifierPath } from '../Validation'
+import RuntimeTypeErrorItem from '../errorReporting/RuntimeTypeErrorItem'
 
 export default class TypeReference<T> extends Type<T> {
   typeName = 'TypeReference'
@@ -19,7 +20,7 @@ export default class TypeReference<T> extends Type<T> {
     validation: Validation,
     path: IdentifierPath,
     input: any
-  ): Generator<ErrorTuple, void, void> {
+  ): Iterable<RuntimeTypeErrorItem> {
     yield* this.type().errors(validation, path, input)
   }
 

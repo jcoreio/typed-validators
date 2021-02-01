@@ -4,7 +4,7 @@ import Type from './types/Type'
 
 export type IdentifierPath = Array<string | number | symbol>
 
-export type ErrorTuple = [IdentifierPath, string, Type<any>]
+export type RuntimeTypeErrorItem = [IdentifierPath, string, Type<any>]
 
 declare class Validation {
   input: any;
@@ -13,7 +13,7 @@ declare class Validation {
 
   prefix: string;
 
-  errors: ErrorTuple[];
+  errors: RuntimeTypeErrorItem[];
 
   constructor(input: any, prefix?: string, path?: IdentifierPath): void;
 

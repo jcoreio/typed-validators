@@ -13,22 +13,16 @@ describe(`t.string`, function() {
       dedent`
         input must be a string
 
-        Expected: string
-
         Actual Value: true
-
-        Actual Type: boolean`
+      `
     )
     expect(() => t.string().assert(2)).to.throw(
       t.RuntimeTypeError,
       dedent`
         input must be a string
 
-        Expected: string
-
         Actual Value: 2
-
-        Actual Type: number`
+      `
     )
   })
   it(`.acceptsSomeCompositeTypes is false`, function() {
@@ -47,22 +41,16 @@ describe(`t.string(literal)`, function() {
       dedent`
         input must be "foo"
 
-        Expected: "foo"
-
         Actual Value: "bar"
-
-        Actual Type: string`
+      `
     )
     expect(() => t.string('foo').assert(3)).to.throw(
       t.RuntimeTypeError,
       dedent`
         input must be "foo"
 
-        Expected: "foo"
-
         Actual Value: 3
-
-        Actual Type: number`
+      `
     )
   })
   it(`.acceptsSomeCompositeTypes is false`, function() {

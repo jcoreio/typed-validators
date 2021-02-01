@@ -1,7 +1,6 @@
 import * as t from '../src/'
 import { expect } from 'chai'
 import dedent from 'dedent-js'
-import typeOf from '../src/errorReporting/typeOf'
 
 describe(`t.null`, function() {
   it(`accepts null`, function() {
@@ -14,13 +13,10 @@ describe(`t.null`, function() {
       expect(() => t.null().assert(value)).to.throw(
         t.RuntimeTypeError,
         dedent`
-        input must be null
+          input must be null
 
-        Expected: null
-
-        Actual Value: ${JSON.stringify(value)}
-
-        Actual Type: ${typeOf(value)}`
+          Actual Value: ${JSON.stringify(value)}
+        `
       )
     }
   })

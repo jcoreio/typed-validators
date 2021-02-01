@@ -1,10 +1,13 @@
 // @flow
 
-import { type ErrorTuple } from '../Validation'
+import type RuntimeTypeErrorItem from './RuntimeTypeErrorItem'
 
 declare class RuntimeTypeError extends TypeError {
-  errors: ?(ErrorTuple[]);
-  constructor(message: string, options?: { errors?: ?(ErrorTuple[]) }): void;
+  errors: ?(RuntimeTypeErrorItem[]);
+  constructor(
+    message: string,
+    options?: { errors?: ?(RuntimeTypeErrorItem[]) }
+  ): void;
 }
 
 export default RuntimeTypeError
