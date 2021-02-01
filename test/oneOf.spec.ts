@@ -135,6 +135,84 @@ describe(`t.oneOf`, function() {
       `
     )
   })
+  it(`has good error messages for union of objects with type property`, function() {
+    const TestType = t.oneOf(
+      t.object({
+        required: {
+          Type: t.string('External'),
+          Host: t.string(),
+          User: t.string(),
+          Name: t.string(),
+          Password: t.string(),
+        },
+
+        optional: {
+          Port: t.oneOf(t.string(), t.null()),
+          RootDBName: t.oneOf(t.string(), t.null()),
+          SecurityGroupId: t.oneOf(t.string(), t.null()),
+        },
+      }),
+      t.object({
+        Type: t.string('RDS'),
+        MasterUserPassword: t.string(),
+        AvailabilityZone: t.string(),
+      }),
+      t.object({
+        Type: t.string('Historian'),
+      }),
+      t.string('Test'),
+      t.null(),
+      t.undefined()
+    )
+
+    expect(() => TestType.assert({ foo: 'bar' })).throw(
+      t.RuntimeTypeError,
+      dedent`
+        input must be one of:
+        
+          {
+            Type: "External"
+            Host: string
+            User: string
+            Name: string
+            Password: string
+            Port?: string | null
+            RootDBName?: string | null
+            SecurityGroupId?: string | null
+          } | {
+            Type: "RDS"
+            MasterUserPassword: string
+            AvailabilityZone: string
+          } | {
+            Type: "Historian"
+          } | "Test" | null | undefined
+        
+        Actual Value: {
+          "foo": "bar"
+        }
+      `
+    )
+
+    expect(() =>
+      TestType.assert({ Type: 'RDS', AvailabilityZone: 1 })
+    ).to.throw(
+      t.RuntimeTypeError,
+      dedent`
+        input is missing required property MasterUserPassword, which must be a string
+
+        Actual Value: {
+          "Type": "RDS",
+          "AvailabilityZone": 1
+        }
+
+        -------------------------------------------------
+
+        input.AvailabilityZone must be a string
+
+        Actual Value: 1
+      `
+    )
+  })
   it(`.acceptsSomeCompositeTypes`, function() {
     expect(t.oneOf(t.number(), t.string()).acceptsSomeCompositeTypes).to.be
       .false
