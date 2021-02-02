@@ -552,18 +552,18 @@ Actual Type: number
 Creating validators for recursive types takes a bit of extra effort. Naively, we would want to do this:
 
 ```ts
-const NodeType = t.object<{
-  value: any
-  left?: any
-  right?: any
-}>()({
-  value: t.any(),
-  left: t.optional(NodeType),
-  right: t.optional(NodeType),
+const NodeType = t.object({
+  required: {
+    value: t.any(),
+  },
+  optional: {
+    left: NodeType,
+    right: NodeType,
+  },
 })
 ```
 
-But `t.optional(NodeType)` causes the error `Block-scoped variable 'NodeType' referenced before its declaration`.
+But `left: NodeTYpe` causes the error `Block-scoped variable 'NodeType' referenced before its declaration`.
 
 To work around this, we can create a `TypeAlias` and a reference to it:
 
@@ -574,14 +574,14 @@ const NodeType: t.TypeAlias<{
   right?: Node
 }> = t.alias(
   'Node',
-  t.object<{
-    value: any
-    left?: any
-    right?: any
-  }>()({
-    value: t.any(),
-    left: t.optional(t.ref(() => NodeType)),
-    right: t.optional(t.ref(() => NodeType)),
+  t.object({
+    required: {
+      value: t.any(),
+    },
+    optional: {
+      left: t.ref(() => NodeType),
+      right: t.ref(() => NodeType),
+    },
   })
 )
 
