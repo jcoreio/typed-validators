@@ -29,7 +29,7 @@ export default class MergedObjectType<T extends {}> extends Type<T> {
           )
         }
         for (const property of resolved.properties) {
-          properties[property.key as any] = property
+          properties[property.key as any] = property.clone()
         }
       }
       this.resolved = new ObjectType(Object.values(properties), this.exact)
