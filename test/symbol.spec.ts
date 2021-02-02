@@ -6,8 +6,10 @@ describe(`t.symbol`, function() {
   it(`accepts symbols`, function() {
     t.symbol().assert(Symbol('foo'))
     t.symbol().assert(Symbol())
+    expect(t.symbol().accepts(Symbol('foo'))).to.be.true
   })
   it(`rejects everything else`, function() {
+    expect(t.symbol().accepts(true)).to.be.false
     expect(() => t.symbol().assert(true)).to.throw(
       t.RuntimeTypeError,
       dedent`
@@ -16,6 +18,7 @@ describe(`t.symbol`, function() {
         Actual Value: true
       `
     )
+    expect(t.symbol().accepts(2)).to.be.false
     expect(() => t.symbol().assert(2)).to.throw(
       t.RuntimeTypeError,
       dedent`
