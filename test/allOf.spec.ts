@@ -25,7 +25,7 @@ describe(`t.allOf`, function() {
           value is missing required property bar, which must be a string
           
           Actual Value: {
-            "foo": 3
+            foo: 3,
           }
         `
     )
@@ -38,7 +38,7 @@ describe(`t.allOf`, function() {
         value is missing required property foo, which must be a number
         
         Actual Value: {
-          "bar": "hello"
+          bar: "hello",
         }
       `
     )

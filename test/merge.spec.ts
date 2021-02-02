@@ -37,7 +37,7 @@ describe(`t.merge`, function() {
         input is missing required property bar, which must be a string
         
         Actual Value: {
-          "foo": 3
+          foo: 3,
         }
       `
     )
@@ -48,7 +48,7 @@ describe(`t.merge`, function() {
         input is missing required property foo, which must be a number
         
         Actual Value: {
-          "bar": "hello"
+          bar: "hello",
         }
       `
     )
@@ -59,9 +59,9 @@ describe(`t.merge`, function() {
         input has unknown property: baz
         
         Actual Value: {
-          "foo": 1,
-          "bar": "a",
-          "baz": "qux"
+          foo: 1,
+          bar: "a",
+          baz: "qux",
         }
       `
     )

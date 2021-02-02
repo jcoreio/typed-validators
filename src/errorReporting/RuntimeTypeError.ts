@@ -13,10 +13,29 @@ export default class RuntimeTypeError extends TypeError {
   }
 
   get message(): string {
-    return this.errors
-      .map(
-        e => `${e.toString()}\n\nActual Value: ${stringifyValue(e.valueAtPath)}`
-      )
-      .join(delimiter)
+    return this.formatMessage()
+  }
+
+  formatMessage({ limit = 10000 }: { limit?: number } = {}): string {
+    const result = []
+    let remaining =
+      limit - delimiter.length + `... ${this.errors.length} more errors`.length
+    for (let i = 0; i < this.errors.length; i++) {
+      const error = this.errors[i]
+      if (result.length) remaining -= delimiter.length
+      const stringified = error.toString()
+      remaining -= stringified.length
+      const actualValuePart = `\n\nActual Value: ${stringifyValue(
+        error.valueAtPath,
+        { limit: remaining - `\n\nActual Value: `.length }
+      )}`
+      remaining -= actualValuePart.length
+      if (remaining < 0 && result.length) {
+        result.push(`... ${this.errors.length - i} more errors`)
+        break
+      }
+      result.push(remaining < 0 ? stringified : stringified + actualValuePart)
+    }
+    return result.join(delimiter)
   }
 }

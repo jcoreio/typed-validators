@@ -1,6 +1,7 @@
 import * as t from '../src/'
 import { expect } from 'chai'
 import dedent from 'dedent-js'
+import stringifyValue from '../src/errorReporting/stringifyValue'
 
 describe(`t.oneOf`, function() {
   const NumberOrString = t.oneOf(t.number(), t.string())
@@ -57,7 +58,7 @@ describe(`t.oneOf`, function() {
               bar: string
             }
           
-          Actual Value: ${JSON.stringify(value, null, 2)}
+          Actual Value: ${stringifyValue(value)}
         `
       )
       expect(ObjectUnion.accepts(value)).to.be.false
@@ -110,7 +111,7 @@ describe(`t.oneOf`, function() {
         value[0] is missing required property foo, which must be a string
 
         Actual Value: {
-          "bar": "hello"
+          bar: "hello",
         }
 
         -------------------------------------------------
@@ -118,7 +119,7 @@ describe(`t.oneOf`, function() {
         value[0] has unknown property: bar
         
         Actual Value: {
-          "bar": "hello"
+          bar: "hello",
         }
       `
     )
@@ -188,7 +189,7 @@ describe(`t.oneOf`, function() {
           } | "Test" | null | undefined
         
         Actual Value: {
-          "foo": "bar"
+          foo: "bar",
         }
       `
     )
@@ -201,8 +202,8 @@ describe(`t.oneOf`, function() {
         input is missing required property MasterUserPassword, which must be a string
 
         Actual Value: {
-          "Type": "RDS",
-          "AvailabilityZone": 1
+          Type: "RDS",
+          AvailabilityZone: 1,
         }
 
         -------------------------------------------------

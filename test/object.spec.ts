@@ -29,7 +29,7 @@ describe(`t.object`, function() {
         input is missing required property name, which must be a string
 
         Actual Value: {
-          "age": 20
+          age: 20,
         }
       `
     )
@@ -45,7 +45,7 @@ describe(`t.object`, function() {
         input is missing required property "first-name", which must be a string
 
         Actual Value: {
-          "age": 20
+          age: 20,
         }
       `
     )
@@ -89,8 +89,8 @@ describe(`t.object`, function() {
         input has unknown property: powerLevel
 
         Actual Value: {
-          "name": "Jimbo",
-          "powerLevel": 9001
+          name: "Jimbo",
+          powerLevel: 9001,
         }
       `
     )

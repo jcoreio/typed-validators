@@ -61,8 +61,8 @@ describe(`t.ref`, function() {
         node.left.right has unknown property: bar
         
         Actual Value: {
-          "value": 3,
-          "bar": 3
+          value: 3,
+          bar: 3,
         }
       `
     )

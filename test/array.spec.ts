@@ -17,7 +17,7 @@ describe(`t.array`, function() {
         input must be an Array<number>
 
         Actual Value: {
-          "foo": "bar"
+          foo: "bar",
         }
       `
     )

@@ -26,7 +26,7 @@ describe(`t.instanceOf`, function() {
       dedent`
         input must be an instance of Date
         
-        Actual Value: [object Object]
+        Actual Value: Foo {}
       `
     )
     expect(t.instanceOf(() => Date).accepts(new Foo())).to.be.false

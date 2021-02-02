@@ -1,6 +1,7 @@
 import * as t from '../src/'
 import { expect } from 'chai'
 import dedent from 'dedent-js'
+import stringifyValue from '../src/errorReporting/stringifyValue'
 
 describe(`t.tuple`, function() {
   const TheTuple = t.tuple(t.string(), t.number(), t.boolean())
@@ -20,7 +21,7 @@ describe(`t.tuple`, function() {
         dedent`
           input.length must be 3, instead it is ${value.length}
           
-          Actual Value: ${JSON.stringify(value, null, 2)}
+          Actual Value: ${stringifyValue(value)}
         `
       )
       expect(TheTuple.accepts(value)).to.be.false
@@ -33,7 +34,7 @@ describe(`t.tuple`, function() {
         dedent`
           input.length must be 3, instead it is 4
 
-          Actual Value: ${JSON.stringify(value, null, 2)}
+          Actual Value: ${stringifyValue(value)}
         `
       )
       expect(TheTuple.accepts(value)).to.be.false
