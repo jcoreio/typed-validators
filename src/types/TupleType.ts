@@ -55,7 +55,8 @@ export default class TupleType<T extends any[]> extends Type<T> {
     return true
   }
 
-  toString(): string {
+  toString(options?: { formatForMustBe?: boolean }): string {
+    if (options?.formatForMustBe) return `of type ${this.toString()}`
     return `[${this.types.join(', ')}]`
   }
 }

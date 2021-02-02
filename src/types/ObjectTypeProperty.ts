@@ -8,6 +8,7 @@ import {
 import Validation, { IdentifierPath } from '../Validation'
 import RuntimeTypeErrorItem from '../errorReporting/RuntimeTypeErrorItem'
 import MissingPropertyErrorItem from '../errorReporting/MissingPropertyErrorItem'
+import { keyToString } from '../errorReporting/keyToString'
 
 export default class ObjectTypeProperty<
   K extends string | number | symbol,
@@ -91,10 +92,8 @@ export default class ObjectTypeProperty<
   }
 
   toString(): string {
-    let key: any = this.key
-    if (typeof key === 'symbol') {
-      key = `[${key.toString()}]`
-    }
-    return `${key}${this.optional ? '?' : ''}: ${this.value.toString()}`
+    return `${keyToString(this.key)}${
+      this.optional ? '?' : ''
+    }: ${this.value.toString()}`
   }
 }

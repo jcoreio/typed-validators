@@ -23,7 +23,7 @@ describe(`t.ref`, function() {
   type Node = t.ExtractType<typeof NodeType>
 
   it(`accepts recursive types`, function() {
-    NodeType.assert({
+    const value = {
       value: 'foo',
       left: {
         value: 2,
@@ -34,28 +34,25 @@ describe(`t.ref`, function() {
       right: {
         value: 6,
       },
-    })
+    }
+    NodeType.assert(value)
+    expect(NodeType.accepts(value)).to.be.true
   })
   it(`throws correct errors within recursive types`, function() {
-    expect(() =>
-      NodeType.assert(
-        {
-          value: 'foo',
-          left: {
-            value: 2,
-            right: {
-              value: 3,
-              bar: 3,
-            },
-          },
-          right: {
-            value: 6,
-          },
+    const value = {
+      value: 'foo',
+      left: {
+        value: 2,
+        right: {
+          value: 3,
+          bar: 3,
         },
-        '',
-        ['node']
-      )
-    ).to.throw(
+      },
+      right: {
+        value: 6,
+      },
+    }
+    expect(() => NodeType.assert(value, '', ['node'])).to.throw(
       t.RuntimeTypeError,
       dedent`
         node.left.right has unknown property: bar
@@ -66,6 +63,7 @@ describe(`t.ref`, function() {
         }
       `
     )
+    expect(NodeType.accepts(value)).to.be.false
   })
   it(`.acceptsSomeCompositeTypes`, function() {
     expect(t.ref(() => t.alias('Foo', t.number())).acceptsSomeCompositeTypes).to

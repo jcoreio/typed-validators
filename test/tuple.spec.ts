@@ -40,8 +40,22 @@ describe(`t.tuple`, function() {
       expect(TheTuple.accepts(value)).to.be.false
     }
   })
+  it(`rejects non-arrays`, function() {
+    for (const value of [1, 2, null, undefined, {}, new Date()]) {
+      expect(TheTuple.accepts(value)).to.be.false
+      expect(() => TheTuple.assert(value)).to.throw(
+        t.RuntimeTypeError,
+        dedent`
+          input must be of type [string, number, boolean]
+
+          Actual Value: ${stringifyValue(value)}
+        `
+      )
+    }
+  })
   it(`rejects elements of the wrong type`, function() {
     const value = [1, 2, null]
+    expect(TheTuple.accepts(value)).to.be.false
     expect(() => TheTuple.assert(value)).to.throw(
       t.RuntimeTypeError,
       dedent`

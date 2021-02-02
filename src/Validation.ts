@@ -77,23 +77,3 @@ export function stringifyPath(path: IdentifierPath): string {
   }
   return parts.join('')
 }
-
-export function resolvePath(input: any, path: IdentifierPath): any {
-  let subject = input
-  const { length } = path
-  for (let i = 0; i < length; i++) {
-    if (subject == null) {
-      return undefined
-    }
-    const part = path[i]
-    if (part === '[[Return Type]]') {
-      continue
-    }
-    if (subject instanceof Map) {
-      subject = subject.get(part)
-    } else {
-      subject = subject[part]
-    }
-  }
-  return subject
-}
