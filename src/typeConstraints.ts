@@ -10,16 +10,6 @@ export type ConstrainableType<T> = Type<T> & {
 }
 
 /**
- * Add constraints to the given subject type.
- */
-export function addConstraints<T>(
-  subject: ConstrainableType<T>,
-  ...constraints: TypeConstraint<T>[]
-): void {
-  subject.constraints.push(...constraints)
-}
-
-/**
  * Collect any errors from constraints on the given subject type.
  */
 export function* collectConstraintErrors(

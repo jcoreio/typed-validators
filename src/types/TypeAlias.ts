@@ -1,7 +1,6 @@
 import Type from './Type'
 import Validation, { IdentifierPath } from '../Validation'
 import {
-  addConstraints,
   collectConstraintErrors,
   constraintsAccept,
   TypeConstraint,
@@ -25,7 +24,7 @@ export default class TypeAlias<T> extends Type<T> {
   }
 
   addConstraint(...constraints: TypeConstraint<T>[]): this {
-    addConstraints(this, ...constraints)
+    this.constraints.push(...constraints)
     return this
   }
 

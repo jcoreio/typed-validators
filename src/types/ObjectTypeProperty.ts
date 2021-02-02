@@ -1,6 +1,5 @@
 import Type from './Type'
 import {
-  addConstraints,
   collectConstraintErrors,
   constraintsAccept,
   TypeConstraint,
@@ -33,7 +32,7 @@ export default class ObjectTypeProperty<
   }
 
   addConstraint(...constraints: TypeConstraint<V>[]): ObjectTypeProperty<K, V> {
-    addConstraints(this, ...constraints)
+    this.constraints.push(...constraints)
     return this
   }
 
