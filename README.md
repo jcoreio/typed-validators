@@ -538,13 +538,9 @@ PositiveNumberType.assert(-1)
 The assertion will throw a `t.RuntimeTypeError` with the following message:
 
 ```
-Value must be > 0
-
-Expected: PositiveNumber
+input must be > 0
 
 Actual Value: -1
-
-Actual Type: number
 ```
 
 ## Recursive Types
