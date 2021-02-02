@@ -1,7 +1,7 @@
 import Validation from '../Validation'
 import { IdentifierPath } from '../Validation'
 import RuntimeTypeErrorItem from '../errorReporting/RuntimeTypeErrorItem'
-import { RuntimeTypeError } from '..'
+import RuntimeTypeError from '../errorReporting/RuntimeTypeError'
 
 /**
  * # Type

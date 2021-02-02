@@ -2,9 +2,12 @@ import Type from './Type'
 import Validation, { IdentifierPath } from '../Validation'
 import RuntimeTypeErrorItem from '../errorReporting/RuntimeTypeErrorItem'
 import InvalidTypeErrorItem from '../errorReporting/InvalidTypeErrorItem'
-import { NullLiteralType, ObjectType, UndefinedLiteralType } from '..'
 import ObjectTypeProperty from './ObjectTypeProperty'
 import PrimitiveLiteralType from './PrimitiveLiteralType'
+import IntersectionType from './IntersectionType'
+import NullLiteralType from './NullLiteralType'
+import ObjectType from './ObjectType'
+import UndefinedLiteralType from './UndefinedLiteralType'
 
 function getDeterminantProperty(
   types: Type<any>[]
@@ -131,19 +134,12 @@ export default class UnionType<T> extends Type<T> {
         ? `one of:\n\n${formatted.replace(/^/gm, '  ')}`
         : `one of ${formatted}`
     }
-    const { types } = this
-    const normalized = new Array(types.length)
-    for (let i = 0; i < types.length; i++) {
-      const type = types[i]
-      if (
-        type.typeName === 'FunctionType' ||
-        type.typeName === 'ParameterizedFunctionType'
-      ) {
-        normalized[i] = `(${type.toString()})`
-      } else {
-        normalized[i] = type.toString()
-      }
-    }
-    return normalized.join(' | ')
+    return this.types
+      .map(type =>
+        type instanceof UnionType || type instanceof IntersectionType
+          ? `(${type.toString()})`
+          : type.toString()
+      )
+      .join(' | ')
   }
 }

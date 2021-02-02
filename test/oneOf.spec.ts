@@ -10,6 +10,17 @@ describe(`t.oneOf`, function() {
     t.object({ required: { foo: t.number() }, exact: false }),
     t.object({ required: { bar: t.string() }, exact: false })
   )
+  it(`.toString()`, function() {
+    expect(
+      t
+        .oneOf(
+          t.allOf(t.string(), t.number()),
+          t.null(),
+          t.allOf(t.number(), t.number(2))
+        )
+        .toString()
+    ).to.equal('(string & number) | null | (number & 2)')
+  })
   it(`accepts valid values`, function() {
     for (const value of [1, 2, 'three', 'four']) {
       NumberOrString.assert(value)

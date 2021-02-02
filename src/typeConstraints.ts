@@ -1,4 +1,4 @@
-import { RuntimeTypeErrorItem } from '.'
+import RuntimeTypeErrorItem from './errorReporting/RuntimeTypeErrorItem'
 import ViolatedConstraintErrorItem from './errorReporting/ViolatedConstraintErrorItem'
 import Type from './types/Type'
 import Validation, { IdentifierPath } from './Validation'

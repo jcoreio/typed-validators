@@ -1,7 +1,7 @@
 import Type from './Type'
 import Validation, { IdentifierPath } from '../Validation'
-import { RuntimeTypeErrorItem } from '..'
 import InvalidTypeErrorItem from '../errorReporting/InvalidTypeErrorItem'
+import RuntimeTypeErrorItem from '../errorReporting/RuntimeTypeErrorItem'
 
 export default class BooleanType extends Type<boolean> {
   typeName = 'BooleanType';

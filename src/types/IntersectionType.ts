@@ -2,7 +2,8 @@ import Type from './Type'
 import Validation, { IdentifierPath } from '../Validation'
 import RuntimeTypeErrorItem from '../errorReporting/RuntimeTypeErrorItem'
 import ObjectType from './ObjectType'
-import { MergedObjectType } from '..'
+import MergedObjectType from './MergedObjectType'
+import UnionType from './UnionType'
 
 export default class IntersectionType<T> extends Type<T> {
   typeName = 'IntersectionType'
@@ -79,6 +80,12 @@ export default class IntersectionType<T> extends Type<T> {
         ? `of type:\n\n${formatted.replace(/^/gm, '  ')}`
         : `of type ${formatted}`
     }
-    return this.types.join(' & ')
+    return this.types
+      .map(type =>
+        type instanceof UnionType || type instanceof IntersectionType
+          ? `(${type.toString()})`
+          : type.toString()
+      )
+      .join(' & ')
   }
 }
