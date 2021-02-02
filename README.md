@@ -126,44 +126,110 @@ type Post = {
 }
 ```
 
+Example error message:
+
+```ts
+PostValidator.assert({
+  author: {
+    name: 'MC Hammer',
+    usernme: 'hammertime',
+  },
+  content: 1,
+  tags: ['mc-hammer', { tag: 'hammertime' }],
+})
+```
+
+```
+RuntimeTypeError: input.author is missing required property username, which must be a string
+
+Actual Value: {
+  name: "MC Hammer",
+  usernme: "hammertime",
+}
+
+-------------------------------------------------
+
+input.author has unknown property: usernme
+
+Actual Value: {
+  name: "MC Hammer",
+  usernme: "hammertime",
+}
+
+-------------------------------------------------
+
+input.content must be a string
+
+Actual Value: 1
+
+-------------------------------------------------
+
+input.tags[1] must be a string
+
+Actual Value: {
+  tag: "hammertime",
+}
+```
+
 # What about generating validators from type defs?
 
-I'd like to be able to do this, because type defs are a lot more readable. In fact, for Flow, it's possible with
-`babel-pluging-flow-runtime`, which I have a lot of experience with. That looks like this:
+This is in the works at [`typed-validators-codemods`](https://github.com/jcoreio/typed-validators-codemods).
+Once it's ready for prime time I'll publish it.
 
-```js
-import {type Type, reify} from 'flow-runtime'
+It creates or replaces validators anywhere you declare a variable of type `t.TypeAlias`:
 
-type Post = {
-  author: {
-    name: string
-    username: string
-  }
+### Before
+
+```ts
+import * as t from 'typed-validators'
+
+type Author = {
+  name: string
+  username: string
+}
+
+export type Post = {
+  author: Author
   content: string
   tags: string[]
 }
 
-const PostValidator = (reify: Type<Post>) // looooots of magic here
-
-const example: Post = PostValidator.assert({
-  author: {
-    name: 'MC Hammer',
-    username: 'hammertime',
-  },
-  content: "Can't touch this",
-  tags: ['mc-hammer', 'hammertime'],
-})
+export const PostType: t.TypeAlias<Post> = null
 ```
 
-This is sweet but there are some caveats:
+### After
 
-- You have to add a Babel plugin to your toolchain (for TypeScript, not everyone wants to use Babel)
-- There are issues with the Babel plugin. It aims to support all Flow types, with varying success.
-- The original author of `flow-runtime` abandoned the project and I don't blame him. It was hugely ambitious and difficult to maintain.
+```ts
+import * as t from 'typed-validators'
 
-The author of `flow-runtime` himself told me in private conversations that he had moved on to an approach like
-`typed-validators` in his own projects, because generating types from the validator declarations is a lot
-simpler and more maintainable in the long run.
+export type Author = {
+  name: string
+  username: string
+}
+
+const AuthorType: t.TypeAlias<Author> = t.alias(
+  'Author',
+  t.object({
+    name: t.string(),
+    username: t.string(),
+  })
+)
+
+export type Post = {
+  author: Author
+  content: string
+  tags: string[]
+}
+
+export const PostType: t.TypeAlias<Post> = t.alias(
+  'Post',
+  t.object({
+    author: t.ref(() => AuthorType),
+    content: t.string(),
+    tags: t.array(t.string()),
+  })
+)
+```
 
 # API
 
