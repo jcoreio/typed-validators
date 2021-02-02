@@ -112,6 +112,13 @@ export function symbol(
   return literal != null ? new SymbolLiteralType(literal) : new SymbolType()
 }
 
+function entries<O extends {}>(obj: O): [string | symbol, any][] {
+  return [
+    ...Object.entries(obj),
+    ...Object.getOwnPropertySymbols(obj).map(s => [s, (obj as any)[s]]),
+  ] as any
+}
+
 export function object<R extends Record<string | number | symbol, Type<any>>>(
   required: R
 ): ObjectType<{ [K in keyof R]: ExtractType<R[K]> }>
@@ -164,20 +171,20 @@ export function object<
   ) {
     return new ObjectType(
       [
-        ...[...Object.entries(required || {})].map(
+        ...entries(required || {}).map(
           ([key, type]) => new ObjectTypeProperty(key, type, false)
         ),
-        ...[...Object.entries(optional || {})].map(
+        ...entries(optional || {}).map(
           ([key, type]) => new ObjectTypeProperty(key, type, true)
         ),
-      ],
+      ] as any,
       exact !== false
     ) as any
   }
   return new ObjectType(
-    [...Object.entries(options)].map(
+    entries(options).map(
       ([key, type]) => new ObjectTypeProperty(key, type, false)
-    ),
+    ) as any,
     true
   ) as any
 }

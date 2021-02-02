@@ -18,11 +18,11 @@ import UnknownPropertyErrorItem from '../errorReporting/UnknownPropertyErrorItem
 export default class ObjectType<T extends {}> extends Type<T> {
   typeName = 'ObjectType'
   readonly properties: ObjectTypeProperty<keyof T, any>[]
-  readonly exact: boolean | undefined
+  readonly exact: boolean
 
   constructor(
     properties: ObjectTypeProperty<keyof T, any>[] = [],
-    exact?: boolean | undefined
+    exact = true
   ) {
     super()
     this.properties = properties
@@ -50,7 +50,7 @@ export default class ObjectType<T extends {}> extends Type<T> {
     validation.startCycle(this, input)
 
     yield* collectErrorsWithoutIndexers(this, validation, path, input)
-    if (this.exact !== false) {
+    if (this.exact) {
       yield* collectErrorsExact(this, validation, path, input)
     }
     validation.endCycle(this, input)

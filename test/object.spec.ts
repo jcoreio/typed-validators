@@ -11,6 +11,15 @@ describe(`t.object`, function() {
       age: t.nullOr(t.number()),
     },
   })
+  const nameSymbol = Symbol('name')
+  const TypeWithSymbol = t.object({
+    required: {
+      [nameSymbol]: t.string(),
+    },
+    optional: {
+      age: t.nullOr(t.number()),
+    },
+  })
   it(`accepts matching object`, function() {
     for (const value of [
       { name: 'Jimbo' },
@@ -20,6 +29,15 @@ describe(`t.object`, function() {
       expect(Person.accepts(value)).to.be.true
       Person.assert(value)
     }
+
+    for (const value of [
+      { [nameSymbol]: 'Jimbo' },
+      { [nameSymbol]: 'Jimbo', age: null },
+      { [nameSymbol]: 'Jimbo', age: 20 },
+    ]) {
+      expect(TypeWithSymbol.accepts(value)).to.be.true
+      TypeWithSymbol.assert(value)
+    }
   })
   it(`rejects missing properties`, function() {
     expect(Person.accepts({ age: 20 })).to.be.false
@@ -27,6 +45,17 @@ describe(`t.object`, function() {
       t.RuntimeTypeError,
       dedent`
         input is missing required property name, which must be a string
+
+        Actual Value: {
+          age: 20,
+        }
+      `
+    )
+    expect(TypeWithSymbol.accepts({ age: 20 })).to.be.false
+    expect(() => TypeWithSymbol.assert({ age: 20 })).to.throw(
+      t.RuntimeTypeError,
+      dedent`
+        input is missing required property [Symbol(name)], which must be a string
 
         Actual Value: {
           age: 20,
@@ -91,6 +120,20 @@ describe(`t.object`, function() {
         Actual Value: {
           name: "Jimbo",
           powerLevel: 9001,
+        }
+      `
+    )
+
+    const value2 = { [nameSymbol]: 'Jimbo', powerLevel: 9001 }
+    expect(TypeWithSymbol.accepts(value2)).to.be.false
+    expect(() => TypeWithSymbol.assert(value2)).to.throw(
+      t.RuntimeTypeError,
+      dedent`
+        input has unknown property: powerLevel
+
+        Actual Value: {
+          powerLevel: 9001,
+          [Symbol(name)]: "Jimbo",
         }
       `
     )

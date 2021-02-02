@@ -1,21 +1,23 @@
 import { keyToString } from './keyToString'
 
+type Options = {
+  indent?: string
+  limit?: number
+  enclosing?: WeakMap<any, number | null>
+  refCounter?: [number]
+  reachedLimit?: [boolean]
+}
+
 export default function stringifyValue(
   value: any,
-  options: {
-    indent?: string
-    limit?: number
-    enclosing?: WeakMap<any, number | null>
-    refCounter?: [number]
-    reachedLimit?: [boolean]
-  } = {}
+  options: Options = {}
 ): string {
   const {
     indent = '',
     limit = Infinity,
     enclosing = new WeakMap(),
-    refCounter = [0],
-    reachedLimit = [false],
+    refCounter = [0] as [number],
+    reachedLimit = [false] as [boolean],
   } = options
   if (value === null) {
     return 'null'
@@ -54,7 +56,7 @@ export default function stringifyValue(
   enclosing.set(value, null)
   try {
     const nextIndent = indent + '  '
-    const recurseOptions = {
+    const recurseOptions: Options = {
       indent: nextIndent,
       limit,
       enclosing,
@@ -96,7 +98,10 @@ export default function stringifyValue(
         constructor != null && constructor !== Object
           ? `${constructor.name} {`
           : '{'
-      const keys = Object.keys(value)
+      const keys = [
+        ...Object.keys(value),
+        ...Object.getOwnPropertySymbols(value),
+      ]
       let remaining =
         limit -
         `${opener}\n${nextIndent}... ${keys.length} more properties\n${indent}}`
