@@ -5,7 +5,7 @@ const delimiter = '\n\n-------------------------------------------------\n\n'
 
 export default class RuntimeTypeError extends TypeError {
   name = 'RuntimeTypeError'
-  errors: RuntimeTypeErrorItem[]
+  readonly errors: RuntimeTypeErrorItem[]
 
   constructor(errors: RuntimeTypeErrorItem[]) {
     super()
