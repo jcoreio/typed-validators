@@ -77,8 +77,8 @@ export const undefinedLiteral = (): Type<undefined> =>
   new UndefinedLiteralType()
 export { undefinedLiteral as undefined }
 
-export const nullish = <T>(type: Type<T>): Type<T | null | undefined> =>
-  oneOf(type, nullLiteral(), undefinedLiteral())
+export const nullish = (): Type<null | undefined> =>
+  oneOf(nullLiteral(), undefinedLiteral())
 export const nullishOr = <T>(type: Type<T>): Type<T | null | undefined> =>
   oneOf(type, nullLiteral(), undefinedLiteral())
 

@@ -76,7 +76,7 @@ declare export function nullOr<T>(type: Type<T>): Type<T | null>
 declare export function undefinedLiteral(): Type<void>
 export { undefinedLiteral as undefined }
 
-declare export function nullish<T>(type: Type<T>): Type<?T>
+declare export function nullish(): Type<null | void>
 declare export function nullishOr<T>(type: Type<T>): Type<?T>
 
 declare export function boolean<T: true | false>(literal: T): Type<T>
