@@ -46,6 +46,44 @@ describe(`t.array`, function() {
       `
     )
   })
+  it(`circular references`, function() {
+    const array: any = [1]
+    array.push(array)
+
+    const NonRecursiveArray = t.array(t.oneOf(t.number(), t.array(t.number())))
+    const RecursiveArray = t.alias(
+      'RecursiveArray',
+      t.array(
+        t.oneOf(
+          t.number(),
+          t.ref(() => RecursiveArray)
+        )
+      )
+    )
+    expect(() => NonRecursiveArray.assert(array)).to.throw(
+      t.RuntimeTypeError,
+      dedent`
+        input[1][1] must be a number
+
+        Actual Value: <ref *1> [
+          1,
+          <ref *1>,
+        ]
+      `
+    )
+    expect(NonRecursiveArray.accepts(array)).to.be.false
+
+    RecursiveArray.assert(array)
+    expect(RecursiveArray.accepts(array)).to.be.true
+
+    const array2: any = []
+    array2.push(array2)
+    array2.push(2)
+
+    RecursiveArray.assert(array2)
+    expect(RecursiveArray.accepts(array2)).to.be.true
+    expect(NonRecursiveArray.accepts(array2)).to.be.false
+  })
   it(`.acceptsSomeCompositeTypes is true`, function() {
     expect(t.array(t.number()).acceptsSomeCompositeTypes).to.be.true
   })

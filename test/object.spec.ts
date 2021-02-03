@@ -156,6 +156,50 @@ describe(`t.object`, function() {
       )
     }
   })
+  it(`circular references`, function() {
+    const obj: any = { foo: 1 }
+    obj.bar = obj
+
+    const RecursiveObject = t.alias(
+      'RecursiveObject',
+      t.object({
+        foo: t.number(),
+        bar: t.ref(() => RecursiveObject),
+      })
+    )
+    const NonRecursiveObject = t.object({
+      foo: t.number(),
+      bar: t.object({
+        foo: t.number(),
+        bar: t.object({}),
+      }),
+    })
+
+    RecursiveObject.assert(obj)
+    expect(RecursiveObject.accepts(obj)).to.be.true
+
+    expect(() => NonRecursiveObject.assert(obj)).to.throw(
+      t.RuntimeTypeError,
+      dedent`
+        input.bar.bar has unknown property: foo
+        
+        Actual Value: <ref *1> {
+          foo: 1,
+          bar: <ref *1>,
+        }
+        
+        -------------------------------------------------
+        
+        input.bar.bar has unknown property: bar
+        
+        Actual Value: <ref *1> {
+          foo: 1,
+          bar: <ref *1>,
+        }
+      `
+    )
+    expect(NonRecursiveObject.accepts(obj)).to.be.false
+  })
   it(`.acceptsSomeCompositeTypes is true`, function() {
     expect(t.object({ foo: t.number() }).acceptsSomeCompositeTypes).to.be.true
   })
