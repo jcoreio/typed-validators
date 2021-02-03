@@ -1,0 +1,5 @@
+// @flow
+
+import AnyType from './AnyType'
+
+declare export default class UnknownType extends AnyType<mixed> {}

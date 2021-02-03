@@ -26,6 +26,7 @@ import TypeAlias from './types/TypeAlias'
 import TypeReference from './types/TypeReference'
 import UndefinedLiteralType from './types/UndefinedLiteralType'
 import UnionType from './types/UnionType'
+import UnknownType from './types/UnknownType'
 import Validation from './Validation'
 
 export {
@@ -57,11 +58,12 @@ export {
   TypeReference,
   UndefinedLiteralType,
   UnionType,
+  UnknownType,
   Validation,
 }
 
 export const any = (): Type<any> => new AnyType()
-export const unknown = (): Type<unknown> => new AnyType()
+export const unknown = (): Type<unknown> => new UnknownType()
 
 export const array = <T>(elementType: Type<T>): Type<T[]> =>
   new ArrayType(elementType)

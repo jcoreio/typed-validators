@@ -2,6 +2,6 @@
 
 import Type from './Type'
 
-declare class AnyType extends Type<any> {}
+declare class AnyType<T = any> extends Type<T> {}
 
 export default AnyType
