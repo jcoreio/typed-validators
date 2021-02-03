@@ -62,12 +62,7 @@ export function stringifyPath(path: IdentifierPath): string {
   const parts = new Array(length)
   for (let i = 0; i < length; i++) {
     const part = path[i]
-    if (part === '[[Return Type]]') {
-      parts[i] = 'Return Type'
-    } else if (
-      typeof part !== 'string' ||
-      !validIdentifierOrAccessor.test(part)
-    ) {
+    if (typeof part !== 'string' || !validIdentifierOrAccessor.test(part)) {
       parts[i] = `[${String(part)}]`
     } else if (i > 0) {
       parts[i] = `.${String(part)}`
