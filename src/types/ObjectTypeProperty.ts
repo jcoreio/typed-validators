@@ -1,10 +1,4 @@
 import Type from './Type'
-import {
-  collectConstraintErrors,
-  constraintsAccept,
-  TypeConstraint,
-} from '../typeConstraints'
-
 import Validation, { IdentifierPath } from '../Validation'
 import RuntimeTypeErrorItem from '../errorReporting/RuntimeTypeErrorItem'
 import MissingPropertyErrorItem from '../errorReporting/MissingPropertyErrorItem'
@@ -18,7 +12,6 @@ export default class ObjectTypeProperty<
   readonly key: K
   readonly value: Type<V>
   readonly optional: boolean
-  readonly constraints: TypeConstraint<V>[] = []
   __objectType: Type<any> = null as any
 
   constructor(key: K, value: Type<V>, optional: boolean) {
@@ -30,11 +23,6 @@ export default class ObjectTypeProperty<
 
   clone(): ObjectTypeProperty<K, V> {
     return new ObjectTypeProperty(this.key, this.value, this.optional)
-  }
-
-  addConstraint(...constraints: TypeConstraint<V>[]): ObjectTypeProperty<K, V> {
-    this.constraints.push(...constraints)
-    return this
   }
 
   /**
@@ -62,14 +50,7 @@ export default class ObjectTypeProperty<
     if (optional && target === undefined) {
       return
     }
-    let hasErrors = false
-    for (const error of value.errors(validation, targetPath, target)) {
-      hasErrors = true
-      yield error
-    }
-    if (!hasErrors) {
-      yield* collectConstraintErrors(this, validation, targetPath, target)
-    }
+    yield* value.errors(validation, targetPath, target)
   }
 
   accepts(input: Record<K, V>): input is any {
@@ -84,11 +65,7 @@ export default class ObjectTypeProperty<
       return true
     }
 
-    if (!value.accepts(target)) {
-      return false
-    } else {
-      return constraintsAccept(this, target)
-    }
+    return value.accepts(target)
   }
 
   toString(): string {
