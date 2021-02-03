@@ -151,10 +151,11 @@ describe(`t.oneOf`, function() {
     const TestType = t.oneOf(
       t.object({
         required: {
-          Type: t.string('External'),
+          Foo: t.number(1),
           Host: t.string(),
           User: t.string(),
           Name: t.string(),
+          Type: t.string('External'),
           Password: t.string(),
         },
 
@@ -183,10 +184,11 @@ describe(`t.oneOf`, function() {
         input must be one of:
         
           {
-            Type: "External"
+            Foo: 1
             Host: string
             User: string
             Name: string
+            Type: "External"
             Password: string
             Port?: string | null
             RootDBName?: string | null
