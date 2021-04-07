@@ -68,6 +68,12 @@ export const unknown = (): Type<unknown> => new UnknownType()
 export const array = <T>(elementType: Type<T>): Type<T[]> =>
   new ArrayType(elementType)
 
+export const readonlyArray = <T>(elementType: Type<T>): Type<readonly T[]> =>
+  new ArrayType(elementType) as any
+
+export const readonly = <T extends {}>(type: Type<T>): Type<Readonly<T>> =>
+  type as any
+
 export const nullLiteral = (): Type<null> => new NullLiteralType()
 export { nullLiteral as null }
 export const nullOr = <T>(type: Type<T>): Type<T | null> =>

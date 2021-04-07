@@ -313,6 +313,11 @@ A validator that requires the value to be `string | null | undefined`.
 
 A validator that requires the value to be `number[]`.
 
+### `t.readonlyArray(t.number())`
+
+A validator that requires the value to be `number[]`.
+Doesn't require the value to be frozen; just allows the extracted type to be `ReadonlyArray`.
+
 ### `t.object(properties)`
 
 A validator that requires the value to be an object with all of the given required properties an no additional properties.
@@ -353,6 +358,10 @@ PersonType.assert({ name: 'dude', age: 100 }) // ok
 PersonType.assert({ name: 1 }) // error
 PersonType.assert({ name: 'dude', age: 'old' }) // error
 ```
+
+### `t.readonly(objectType)`
+
+Use `t.readOnly(t.object(...))` or `t.readOnly(t.merge(...))` etc. Doesn't require the object to be frozen, just allows the extracted type to be readonly.
 
 ### `t.merge(...objectTypes)`
 

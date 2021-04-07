@@ -1,0 +1,15 @@
+// @flow
+
+/* eslint-disable @typescript-eslint/no-unused-vars */
+
+import * as t from '../src/index'
+import { describe, it } from 'mocha'
+
+describe('readonlyArray', () => {
+  type Nums = $ReadOnlyArray<number>
+
+  const PersonType: t.TypeAlias<Nums> = t.alias(
+    'Person',
+    t.readonlyArray(t.number())
+  )
+})

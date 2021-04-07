@@ -68,6 +68,11 @@ declare export function any(): Type<any>
 declare export function unknown(): Type<mixed>
 
 declare export function array<T>(elementType: Type<T>): Type<T[]>
+declare export function readonlyArray<T>(
+  elementType: Type<T>
+): Type<$ReadOnlyArray<T>>
+
+declare export function readonly<T: {}>(type: Type<T>): Type<$ReadOnly<T>>
 
 declare export function nullLiteral(): Type<null>
 export { nullLiteral as null }
