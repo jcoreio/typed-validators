@@ -16,4 +16,6 @@ declare export default class RuntimeTypeErrorItem {
     expectedTypeAtPath: Type<mixed>,
     depth?: number
   ): void;
+
+  messageAtPath(): string;
 }
