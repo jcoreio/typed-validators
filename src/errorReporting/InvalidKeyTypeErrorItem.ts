@@ -1,5 +1,5 @@
 import Type from '../types/Type'
-import { IdentifierPath, stringifyPath } from '../Validation'
+import { IdentifierPath } from '../Validation'
 import { keyToString } from './keyToString'
 import RuntimeTypeErrorItem from './RuntimeTypeErrorItem'
 
@@ -20,8 +20,8 @@ export default class InvalidKeyTypeErrorItem extends RuntimeTypeErrorItem {
     this.expectedKeyType = expectedKeyType
   }
 
-  toString(): string {
-    return `${stringifyPath(this.path)} has key of invalid type: ${keyToString(
+  messageAtPath(): string {
+    return `has key of invalid type: ${keyToString(
       this.key
     )}\n\nEach key must be ${this.expectedKeyType.toString({
       formatForMustBe: true,

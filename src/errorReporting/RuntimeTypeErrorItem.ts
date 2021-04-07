@@ -1,4 +1,4 @@
-import { IdentifierPath } from '../Validation'
+import { IdentifierPath, stringifyPath } from '../Validation'
 import Type from '../types/Type'
 
 export default abstract class RuntimeTypeErrorItem {
@@ -18,5 +18,11 @@ export default abstract class RuntimeTypeErrorItem {
     this.valueAtPath = valueAtPath
     this.expectedTypeAtPath = expectedTypeAtPath
     this.depth = depth
+  }
+
+  abstract messageAtPath(): string
+
+  toString(): string {
+    return `${stringifyPath(this.path)} ${this.messageAtPath()}`
   }
 }

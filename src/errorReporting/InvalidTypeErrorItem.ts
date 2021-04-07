@@ -1,5 +1,5 @@
 import Type from '../types/Type'
-import { IdentifierPath, stringifyPath } from '../Validation'
+import { IdentifierPath } from '../Validation'
 import RuntimeTypeErrorItem from './RuntimeTypeErrorItem'
 
 export default class InvalidTypeErrorItem extends RuntimeTypeErrorItem {
@@ -13,9 +13,9 @@ export default class InvalidTypeErrorItem extends RuntimeTypeErrorItem {
     super(path, valueAtPath, expectedTypeAtPath)
   }
 
-  toString(): string {
-    return `${stringifyPath(
-      this.path
-    )} must be ${this.expectedTypeAtPath.toString({ formatForMustBe: true })}`
+  messageAtPath(): string {
+    return `must be ${this.expectedTypeAtPath.toString({
+      formatForMustBe: true,
+    })}`
   }
 }

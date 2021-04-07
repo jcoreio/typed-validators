@@ -1,5 +1,5 @@
 import Type from '../types/Type'
-import { IdentifierPath, stringifyPath } from '../Validation'
+import { IdentifierPath } from '../Validation'
 import RuntimeTypeErrorItem from './RuntimeTypeErrorItem'
 
 export default class ViolatedConstraintErrorItem extends RuntimeTypeErrorItem {
@@ -16,7 +16,7 @@ export default class ViolatedConstraintErrorItem extends RuntimeTypeErrorItem {
     this.constraintErrorMessage = constraintErrorMessage
   }
 
-  toString(): string {
-    return `${stringifyPath(this.path)} ${this.constraintErrorMessage}`
+  messageAtPath(): string {
+    return this.constraintErrorMessage
   }
 }

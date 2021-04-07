@@ -18,9 +18,11 @@ export default class InvalidLengthErrorItem extends RuntimeTypeErrorItem {
     this.expectedLength = expectedLength
   }
 
+  messageAtPath(): string {
+    return `length must be ${this.expectedLength}, instead it is ${this.valueAtPath.length}`
+  }
+
   toString(): string {
-    return `${stringifyPath(this.path)}.length must be ${
-      this.expectedLength
-    }, instead it is ${this.valueAtPath.length}`
+    return `${stringifyPath(this.path)}.${this.messageAtPath()}`
   }
 }

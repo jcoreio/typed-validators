@@ -1,6 +1,6 @@
 import Type from '../types/Type'
 import RuntimeTypeErrorItem from './RuntimeTypeErrorItem'
-import { IdentifierPath, stringifyPath } from '../Validation'
+import { IdentifierPath } from '../Validation'
 import { keyToString } from './keyToString'
 
 export default class UnknownPropertyErrorItem extends RuntimeTypeErrorItem {
@@ -17,9 +17,7 @@ export default class UnknownPropertyErrorItem extends RuntimeTypeErrorItem {
     this.key = key
   }
 
-  toString(): string {
-    return `${stringifyPath(this.path)} has unknown property: ${keyToString(
-      this.key
-    )}`
+  messageAtPath(): string {
+    return `has unknown property: ${keyToString(this.key)}`
   }
 }
