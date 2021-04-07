@@ -3,6 +3,10 @@ import { expect } from 'chai'
 import dedent from 'dedent-js'
 
 describe(`t.object`, function() {
+  it(`requires values to be instance of Type`, function() {
+    expect(() => t.object({ name: 2 as any })).to.throw()
+  })
+
   const Person = t.object({
     required: {
       name: t.string(),

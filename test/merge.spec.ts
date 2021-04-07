@@ -3,6 +3,9 @@ import { expect } from 'chai'
 import dedent from 'dedent-js'
 
 describe(`t.merge`, function() {
+  it(`requires objectTypes to be instance of Type`, function() {
+    expect(() => t.merge(t.object({ foo: t.number() }), 2 as any)).to.throw()
+  })
   const BarAlias = t.alias('Bar', t.object({ bar: t.string() }))
   const Merged = t.merge(
     t.object({ foo: t.number() }),

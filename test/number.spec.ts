@@ -31,6 +31,9 @@ describe(`t.number`, function() {
 })
 
 describe(`t.number(literal)`, function() {
+  it(`requires value to be a boolean`, function() {
+    expect(() => t.number('1' as any)).to.throw()
+  })
   it(`accepts literal value`, function() {
     t.number(2).assert(2)
     t.number(15).assert(15)

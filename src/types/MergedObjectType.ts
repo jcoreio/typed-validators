@@ -1,4 +1,4 @@
-import Type from './Type'
+import Type, { assertIsType } from './Type'
 import ObjectType from './ObjectType'
 import ObjectTypeProperty from './ObjectTypeProperty'
 import Validation, { IdentifierPath } from '../Validation'
@@ -12,6 +12,9 @@ export default class MergedObjectType<T extends {}> extends Type<T> {
 
   constructor(objects: Type<T>[], exact = true) {
     super()
+    for (let i = 0; i < objects.length; i++) {
+      assertIsType(objects[i], `objects[${i}]`)
+    }
     this.objects = objects
     this.exact = exact
   }

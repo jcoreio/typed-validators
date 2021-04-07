@@ -1,4 +1,4 @@
-import Type from './Type'
+import Type, { assertIsType } from './Type'
 import Validation, { IdentifierPath } from '../Validation'
 import RuntimeTypeErrorItem from '../errorReporting/RuntimeTypeErrorItem'
 import InvalidLengthErrorItem from '../errorReporting/InvalidLengthErrorItem'
@@ -10,6 +10,9 @@ export default class TupleType<T extends any[]> extends Type<T> {
 
   constructor(types: { [Index in keyof T]: Type<T[Index]> }) {
     super()
+    for (let i = 0; i < types.length; i++) {
+      assertIsType(types[i], `types[${i}]`)
+    }
     this.types = types
   }
 

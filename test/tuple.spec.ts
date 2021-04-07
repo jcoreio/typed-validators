@@ -4,6 +4,9 @@ import dedent from 'dedent-js'
 import stringifyValue from '../src/errorReporting/stringifyValue'
 
 describe(`t.tuple`, function() {
+  it(`requires types to be instance of Type`, function() {
+    expect(() => t.tuple(t.object({ foo: t.number() }), 2 as any)).to.throw()
+  })
   const TheTuple = t.tuple(t.string(), t.number(), t.boolean())
   it(`accepts matching types`, function() {
     for (const value of [

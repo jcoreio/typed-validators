@@ -25,6 +25,13 @@ export default class ObjectType<T extends {}> extends Type<T> {
     exact = true
   ) {
     super()
+    for (let i = 0; i < properties.length; i++) {
+      if (!(properties[i] instanceof ObjectTypeProperty)) {
+        throw new Error(
+          `properties[${i}] must be an instance of ObjectTypeProperty`
+        )
+      }
+    }
     this.properties = properties
     this.exact = exact
     properties.forEach(prop => (prop.__objectType = this))

@@ -1,4 +1,4 @@
-import Type from './Type'
+import Type, { assertIsType } from './Type'
 import Validation, { IdentifierPath } from '../Validation'
 import {
   collectConstraintErrors,
@@ -15,6 +15,7 @@ export default class TypeAlias<T> extends Type<T> {
 
   constructor(name: string, type: Type<T>) {
     super()
+    assertIsType(type, 'type')
     this.name = name
     this.type = type
   }

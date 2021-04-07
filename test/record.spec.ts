@@ -3,6 +3,12 @@ import { expect } from 'chai'
 import dedent from 'dedent-js'
 
 describe(`t.record`, function() {
+  it(`requires key to be instance of Type`, function() {
+    expect(() => t.record('hello' as any, t.number())).to.throw()
+  })
+  it(`requires value to be instance of Type`, function() {
+    expect(() => t.record(t.string('a'), 2 as any)).to.throw()
+  })
   const Numbers = t.record(
     t.oneOf(t.string('a'), t.string('b'), t.string('c')),
     t.number()

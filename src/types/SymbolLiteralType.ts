@@ -7,5 +7,8 @@ export default class SymbolLiteralType<
 
   constructor(value: T) {
     super(value)
+    if (typeof value !== 'symbol') {
+      throw new Error(`value must be symbol`)
+    }
   }
 }

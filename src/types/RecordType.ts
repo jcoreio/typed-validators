@@ -1,4 +1,4 @@
-import Type from './Type'
+import Type, { assertIsType } from './Type'
 import Validation, { IdentifierPath } from '../Validation'
 
 import {
@@ -23,6 +23,8 @@ export default class RecordType<
 
   constructor(key: Type<K>, value: Type<V>) {
     super()
+    assertIsType(key, 'key')
+    assertIsType(value, 'value')
     this.key = key
     this.value = value
   }

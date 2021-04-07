@@ -3,6 +3,9 @@ import { expect } from 'chai'
 import dedent from 'dedent-js'
 
 describe(`t.array`, function() {
+  it(`requires elementType to be an instance of Type`, function() {
+    expect(() => t.array(2 as any)).to.throw()
+  })
   it(`accepts matching arrays`, function() {
     t.array(t.number()).assert([1, 2, 3])
     expect(t.array(t.number()).accepts([1, 2, 3])).to.be.true

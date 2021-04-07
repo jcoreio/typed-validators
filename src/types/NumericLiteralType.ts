@@ -7,6 +7,9 @@ export default class NumericLiteralType<
 
   constructor(value: T) {
     super(value)
+    if (typeof value !== 'number') {
+      throw new Error(`value must be a number`)
+    }
   }
 
   toString(): string {

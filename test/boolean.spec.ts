@@ -44,6 +44,9 @@ describe(`t.boolean`, function() {
 })
 
 describe(`t.boolean(literal)`, function() {
+  it(`requires value to be a boolean`, function() {
+    expect(() => t.boolean(2 as any)).to.throw()
+  })
   it(`accepts literal value`, function() {
     t.boolean(true).assert(true)
     t.boolean(false).assert(false)

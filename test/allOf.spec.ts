@@ -4,6 +4,9 @@ import dedent from 'dedent-js'
 import stringifyValue from '../src/errorReporting/stringifyValue'
 
 describe(`t.allOf`, function() {
+  it(`requires all types to be instance of Type`, function() {
+    expect(() => t.oneOf(t.null(), 2 as any)).to.throw()
+  })
   describe(`intersection of unions`, function() {
     const NumberOrNull = t.allOf(
       t.oneOf(t.number(), t.string(), t.null()),

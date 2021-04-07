@@ -1,4 +1,4 @@
-import Type from './Type'
+import Type, { assertIsType } from './Type'
 import Validation, { IdentifierPath } from '../Validation'
 import RuntimeTypeErrorItem from '../errorReporting/RuntimeTypeErrorItem'
 import ObjectType from './ObjectType'
@@ -12,6 +12,9 @@ export default class IntersectionType<T> extends Type<T> {
 
   constructor(types: Type<any>[]) {
     super()
+    for (let i = 0; i < types.length; i++) {
+      assertIsType(types[i], `types[${i}]`)
+    }
     this.types = types
   }
 

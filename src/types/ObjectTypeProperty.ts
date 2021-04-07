@@ -1,4 +1,4 @@
-import Type from './Type'
+import Type, { assertIsType } from './Type'
 import Validation, { IdentifierPath } from '../Validation'
 import RuntimeTypeErrorItem from '../errorReporting/RuntimeTypeErrorItem'
 import MissingPropertyErrorItem from '../errorReporting/MissingPropertyErrorItem'
@@ -16,6 +16,15 @@ export default class ObjectTypeProperty<
 
   constructor(key: K, value: Type<V>, optional: boolean) {
     super()
+    switch (typeof key) {
+      case 'number':
+      case 'string':
+      case 'symbol':
+        break
+      default:
+        throw new Error('key must be a number, string or symbol')
+    }
+    assertIsType(value, 'value')
     this.key = key
     this.value = value
     this.optional = optional

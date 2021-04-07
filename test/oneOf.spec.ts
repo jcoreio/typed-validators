@@ -4,6 +4,9 @@ import dedent from 'dedent-js'
 import stringifyValue from '../src/errorReporting/stringifyValue'
 
 describe(`t.oneOf`, function() {
+  it(`requires types to be instance of Type`, function() {
+    expect(() => t.oneOf(t.object({ foo: t.number() }), 2 as any)).to.throw()
+  })
   const NumberOrString = t.oneOf(t.number(), t.string())
 
   const ObjectUnion = t.oneOf(

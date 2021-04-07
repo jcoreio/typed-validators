@@ -9,6 +9,9 @@ describe(`t.alias`, function() {
       t.alias('Foo', t.number()).addConstraint(() => undefined).hasConstraints
     ).to.be.true
   })
+  it(`requires type to be an instance of Type`, function() {
+    expect(() => t.alias('Foo', 2 as any)).to.throw()
+  })
   describe(`constraints`, function() {
     const PositiveNumberType = t
       .alias('PositiveNumber', t.number())

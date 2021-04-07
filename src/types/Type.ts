@@ -3,6 +3,11 @@ import { IdentifierPath } from '../Validation'
 import RuntimeTypeErrorItem from '../errorReporting/RuntimeTypeErrorItem'
 import RuntimeTypeError from '../errorReporting/RuntimeTypeError'
 
+export function assertIsType(x: unknown, name: string): void {
+  if (!(x instanceof Type))
+    throw new Error(`${name} must be an instance of Type`)
+}
+
 /**
  * # Type
  *

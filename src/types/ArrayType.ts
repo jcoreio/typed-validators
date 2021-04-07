@@ -1,4 +1,4 @@
-import Type from './Type'
+import Type, { assertIsType } from './Type'
 import Validation, { IdentifierPath } from '../Validation'
 
 import {
@@ -18,6 +18,7 @@ export default class ArrayType<T> extends Type<Array<T>> {
 
   constructor(elementType: Type<T>) {
     super()
+    assertIsType(elementType, 'elementType')
     this.elementType = elementType
   }
 

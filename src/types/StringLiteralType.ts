@@ -7,6 +7,9 @@ export default class StringLiteralType<
 
   constructor(value: T) {
     super(value)
+    if (typeof value !== 'string') {
+      throw new Error(`value must be a string`)
+    }
   }
 
   toString(): string {

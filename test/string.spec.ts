@@ -31,6 +31,9 @@ describe(`t.string`, function() {
 })
 
 describe(`t.string(literal)`, function() {
+  it(`requires value to be a string`, function() {
+    expect(() => t.string(1 as any)).to.throw()
+  })
   it(`accepts literal value`, function() {
     t.string('foo').assert('foo')
     t.string('').assert('')

@@ -34,6 +34,9 @@ describe(`t.symbol`, function() {
 })
 
 describe(`t.symbol(literal)`, function() {
+  it(`requires value to be a string`, function() {
+    expect(() => t.symbol('hello')).to.throw()
+  })
   const foo = Symbol('foo')
   const bar = Symbol('bar')
   it(`accepts literal value`, function() {
