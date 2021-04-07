@@ -1,10 +1,9 @@
 // @flow
 
 import Type from './types/Type'
+import RuntimeTypeErrorItem from './errorReporting/RuntimeTypeErrorItem'
 
 export type IdentifierPath = Array<string | number | symbol>
-
-export type RuntimeTypeErrorItem = [IdentifierPath, string, Type<any>]
 
 declare class Validation {
   input: any;
