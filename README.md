@@ -419,7 +419,7 @@ A validator that requires the value to be an instance of `Date`.
 ### `t.tuple(t.string(), t.number())`
 
 A validator that requires the value to be `[string, number]`.
-Accepts a variable number of arguments.
+Accepts a variable number of arguments, though type generation for Flow is only overloaded up to 8 arguments.
 
 ### `t.allOf(A, B)`
 
