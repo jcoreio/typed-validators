@@ -72,7 +72,7 @@ declare export function readonlyArray<T>(
   elementType: Type<T>
 ): Type<$ReadOnlyArray<T>>
 
-declare export function readonly<T: {}>(type: Type<T>): Type<$ReadOnly<T>>
+declare export function readonly<T: { ... }>(type: Type<T>): Type<$ReadOnly<T>>
 
 declare export function nullLiteral(): Type<null>
 export { nullLiteral as null }
@@ -96,32 +96,32 @@ declare export function string(): Type<string>
 declare export function symbol<T: symbol>(literal: T): Type<T>
 declare export function symbol(): Type<symbol>
 
-type ExtractPropertyTypes<P: { [any]: Type<any> }> = $Exact<
+type ExtractPropertyTypes<P: { [any]: Type<any>, ... }> = $Exact<
   $ObjMap<P, <T: Type<any>>(T) => $PropertyType<T, '__type'>>
 >
-type ExtractOptionalPropertyTypes<P: { [any]: Type<any> }> = $Exact<
+type ExtractOptionalPropertyTypes<P: { [any]: Type<any>, ... }> = $Exact<
   $Rest<ExtractPropertyTypes<P>, { ... }>
 >
 
-declare export function object<R: { [any]: Type<any> }>({|
+declare export function object<R: { [any]: Type<any>, ... }>({|
   required: R,
   exact: false,
 |}): ObjectType<{ ...ExtractPropertyTypes<R>, ... }>
-declare export function object<R: { [any]: Type<any> }>({|
+declare export function object<R: { [any]: Type<any>, ... }>({|
   required: R,
   exact?: true,
 |}): ObjectType<ExtractPropertyTypes<R>>
-declare export function object<S: { [any]: Type<any> }>({|
+declare export function object<S: { [any]: Type<any>, ... }>({|
   optional: S,
   exact: false,
 |}): ObjectType<{ ...ExtractOptionalPropertyTypes<S>, ... }>
-declare export function object<S: { [any]: Type<any> }>({|
+declare export function object<S: { [any]: Type<any>, ... }>({|
   optional: S,
   exact?: true,
 |}): ObjectType<ExtractOptionalPropertyTypes<S>>
 declare export function object<
-  R: { [any]: Type<any> },
-  S: { [any]: Type<any> }
+  R: { [any]: Type<any>, ... },
+  S: { [any]: Type<any>, ... }
 >({|
   required: R,
   optional: S,
@@ -132,8 +132,8 @@ declare export function object<
   ...
 }>
 declare export function object<
-  R: { [any]: Type<any> },
-  S: { [any]: Type<any> }
+  R: { [any]: Type<any>, ... },
+  S: { [any]: Type<any>, ... }
 >({|
   required: R,
   optional: S,
@@ -142,11 +142,11 @@ declare export function object<
   ...ExtractPropertyTypes<R>,
   ...ExtractOptionalPropertyTypes<S>,
 |}>
-declare export function object<R: { [any]: Type<any> }>(
+declare export function object<R: { [any]: Type<any>, ... }>(
   required: R
 ): ObjectType<ExtractPropertyTypes<R>>
 
-type Properties = { [string | number | symbol]: Type<any> }
+type Properties = { [string | number | symbol]: Type<any>, ... }
 
 declare export function record<K: string | number | symbol, V>(
   key: Type<K>,

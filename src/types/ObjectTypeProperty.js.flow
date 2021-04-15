@@ -16,7 +16,7 @@ declare class ObjectTypeProperty<
   /**
    * Determine whether the property exists on the given input or its prototype chain.
    */
-  existsOn(input: { [string]: any }): boolean;
+  existsOn(input: { [string]: any, ... }): boolean;
 }
 
 export default ObjectTypeProperty

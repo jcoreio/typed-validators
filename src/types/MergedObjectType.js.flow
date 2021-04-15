@@ -2,7 +2,7 @@
 
 import Type from './Type'
 
-declare export default class MergedObjectType<T: {}> extends Type<T> {
+declare export default class MergedObjectType<T: { ... }> extends Type<T> {
   objects: Type<T>[];
   exact: boolean;
 

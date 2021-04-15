@@ -5,7 +5,7 @@ import type RuntimeTypeErrorItem from './RuntimeTypeErrorItem'
 declare class RuntimeTypeError extends TypeError {
   +errors: RuntimeTypeErrorItem[];
   constructor(errors: RuntimeTypeErrorItem[]): void;
-  formatMessage(options?: { limit?: number }): string;
+  formatMessage(options?: { limit?: number, ... }): string;
 }
 
 export default RuntimeTypeError
