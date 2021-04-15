@@ -23,7 +23,7 @@ declare class Type<T> {
 
   +acceptsSomeCompositeTypes: boolean;
 
-  assert<V: T>(input: any, prefix?: string, path?: IdentifierPath): V;
+  assert(input: any, prefix?: string, path?: IdentifierPath): T;
 
   validate(input: any, prefix?: string, path?: IdentifierPath): Validation;
 
