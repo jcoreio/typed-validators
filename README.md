@@ -13,8 +13,13 @@ The validation errors are detailed. Adapted from the brilliant work in `flow-run
 
 <!-- toc -->
 
+- [typed-validators](#typed-validators)
+- [Table of Contents](#table-of-contents)
 - [Introduction](#introduction)
-- [What about generating validators from type defs?](#what-about-generating-validators-from-type-defs)
+- [Generating validators from type defs](#generating-validators-from-type-defs)
+  - [Before](#before)
+  - [Command](#command)
+  - [After](#after)
 - [API](#api)
   - [Type creators](#type-creators)
     - [`t.any()`](#tany)
@@ -33,8 +38,10 @@ The validation errors are detailed. Adapted from the brilliant work in `flow-run
     - [`t.nullish()`](#tnullish)
     - [`t.nullishOr(t.string())`](#tnullishortstring)
     - [`t.array(t.number())`](#tarraytnumber)
+    - [`t.readonlyArray(t.number())`](#treadonlyarraytnumber)
     - [`t.object(properties)`](#tobjectproperties)
     - [`t.object({ required?, optional?, exact? })`](#tobject-required-optional-exact-)
+    - [`t.readonly(objectType)`](#treadonlyobjecttype)
     - [`t.merge(...objectTypes)`](#tmergeobjecttypes)
     - [`t.mergeInexact(...objectTypes)`](#tmergeinexactobjecttypes)
     - [`t.record(t.string(), t.number())`](#trecordtstring-tnumber)
@@ -44,17 +51,17 @@ The validation errors are detailed. Adapted from the brilliant work in `flow-run
     - [`t.oneOf(t.string(), t.number())`](#toneoftstring-tnumber)
     - [`t.alias(name, type)`](#taliasname-type)
     - [`t.ref(() => typeAlias)`](#tref--typealias)
-  - [`t.Type`](#ttype)
+  - [`t.Type<T>`](#ttypet)
     - [`accepts(input: any): boolean`](#acceptsinput-any-boolean)
     - [`acceptsSomeCompositeTypes: boolean (getter)`](#acceptssomecompositetypes-boolean-getter)
-    - [`assert(input: any, prefix = '', path?: (string | number | symbol)[]): V`](#assertinput-any-prefix---path-string--number--symbol-v)
-    - [`validate(input: any, prefix = '', path?: (string | number | symbol)[]): Validation`](#validateinput-any-prefix---path-string--number--symbol-validation)
+    - [`assert<V extends T>(input: any, prefix = '', path?: (string | number | symbol)[]): V`](#assertv-extends-tinput-any-prefix---path-string--number--symbol-v)
+    - [`validate(input: any, prefix = '', path?: (string | number | symbol)[]): Validation<T>`](#validateinput-any-prefix---path-string--number--symbol-validationt)
     - [`warn(input: any, prefix = '', path?: (string | number | symbol)[]): void`](#warninput-any-prefix---path-string--number--symbol-void)
     - [`toString(): string`](#tostring-string)
-  - [`t.ExtractType>`](#textracttype)
-  - [`t.TypeAlias`](#ttypealias)
+  - [`t.ExtractType<T extends Type<any>>`](#textracttypet-extends-typeany)
+  - [`t.TypeAlias<T>`](#ttypealiast)
     - [`readonly name: string`](#readonly-name-string)
-    - [`addConstraint(...constraints: TypeConstraint[]): this`](#addconstraintconstraints-typeconstraint-this)
+    - [`addConstraint(...constraints: TypeConstraint<T>[]): this`](#addconstraintconstraints-typeconstraintt-this)
   - [Custom Constraints](#custom-constraints)
   - [Recursive Types](#recursive-types)
 
@@ -171,16 +178,16 @@ Actual Value: {
 }
 ```
 
-# What about generating validators from type defs?
+# Generating validators from type defs
 
-This is in the works at [`typed-validators-codemods`](https://github.com/jcoreio/typed-validators-codemods).
-Once it's ready for prime time I'll publish it.
+This is now possible with [`gen-typed-validators`](https://github.com/jcoreio/gen-typed-validators)!
 
 It creates or replaces validators anywhere you declare a variable of type `t.TypeAlias`:
 
 ### Before
 
 ```ts
+// Post.ts
 import * as t from 'typed-validators'
 
 type Author = {
@@ -197,9 +204,16 @@ export type Post = {
 export const PostType: t.TypeAlias<Post> = null
 ```
 
+### Command
+
+```sh
+$ gen-typed-validators Post.ts
+```
+
 ### After
 
 ```ts
+// Post.ts
 import * as t from 'typed-validators'
 
 export type Author = {
