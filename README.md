@@ -16,6 +16,7 @@ The validation errors are detailed. Adapted from the brilliant work in `flow-run
 - [typed-validators](#typed-validators)
 - [Table of Contents](#table-of-contents)
 - [Introduction](#introduction)
+- [Limitations](#limitations)
 - [Generating validators from type defs](#generating-validators-from-type-defs)
   - [Before](#before)
   - [Command](#command)
@@ -177,6 +178,18 @@ Actual Value: {
   tag: "hammertime",
 }
 ```
+
+# Limitations
+
+- Flow seems to suck at fully resolving `t.ExtractType<...>` for deeply nested object types. Past a certain level of complexity
+  it seems to give up and use `any` for some object-valued properties. That's why I created [`gen-typed-validators`](https://github.com/jcoreio/gen-typed-validators),
+  so that you can control the type definitions and generate `typed-validators` from them.
+- Generic types aren't supported. I may add support for it in the future if I'm confident I can make a robust implementation.
+- Function types aren't supported. You can use `t.instanceOf(() => Function)`, but Flow treats the `Function` type as `any`. I may add `t.function()` in the future, but
+  it won't validate argument or return types, because those can't be determined from function instances at runtime.
+- The goal is to support a subset of types common to TS and Flow well, rather than support every possible complex derived type
+  you can make. (That's what `babel-plugin-flow-runtime` basically tried to do, and it was too ambitious. I created this so that I could
+  stop using it.)
 
 # Generating validators from type defs
 
