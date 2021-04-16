@@ -2,10 +2,9 @@
 
 import Type from './Type'
 
-declare class RecordType<K: string | number | symbol, V> extends Type<{
+declare class RecordType<K: string | number | symbol, V> extends Type<{|
   [K]: V,
-  ...
-}> {
+|}> {
   key: Type<K>;
   value: Type<V>;
 
