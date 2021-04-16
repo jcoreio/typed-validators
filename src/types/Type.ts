@@ -35,11 +35,7 @@ export default abstract class Type<T> {
     return false
   }
 
-  assert<V extends T>(
-    input: any,
-    prefix = '',
-    path: IdentifierPath = ['input']
-  ): V {
+  assert(input: any, prefix = '', path: IdentifierPath = ['input']): T {
     const validation = this.validate(input, prefix, path)
     if (validation.errors.length) {
       throw new RuntimeTypeError(validation.errors)
