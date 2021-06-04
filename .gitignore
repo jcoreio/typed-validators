@@ -6,6 +6,7 @@ node_modules
 *.js
 *.js.flow
 *.d.ts
+!/flow-typed/**/*.js
 !/src/**/*.ts
 !/src/**/*.js
 !/src/**/*.js.flow
