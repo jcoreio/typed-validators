@@ -13,7 +13,7 @@ jobs:
             echo "registry=https://registry.npmjs.org/" >> ~/.npmrc
       - run:
           name: Install pnpm
-          command: npm install --global pnpm
+          command: sudo npm install --global pnpm
       - run:
           name: Install Dependencies
           command: pnpm install --frozen-lockfile
