@@ -61,6 +61,29 @@ describe(`RuntimeTypeError`, function() {
         `
       )
     })
+    it(`includeActualValues: false`, function() {
+      const TestType = t.array(t.object({ foo: t.number() }))
+      const testValue = []
+      for (let i = 0; i < 2; i++) {
+        testValue.push({
+          foo: 'this is a long long long long long property name',
+        })
+      }
+
+      expect(
+        expectError(TestType, testValue).formatMessage({
+          includeActualValues: false,
+        })
+      ).to.equal(
+        dedent`
+          input[0].foo must be a number
+          
+          -------------------------------------------------
+          
+          input[1].foo must be a number
+        `
+      )
+    })
     it(`limit works on number of errors`, function() {
       const TestType = t.array(t.object({ foo: t.number() }))
       const testValue = []

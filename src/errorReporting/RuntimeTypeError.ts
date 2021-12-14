@@ -16,7 +16,10 @@ export default class RuntimeTypeError extends TypeError {
     return this.formatMessage()
   }
 
-  formatMessage({ limit = 10000 }: { limit?: number } = {}): string {
+  formatMessage({
+    limit = 10000,
+    includeActualValues = true,
+  }: { limit?: number; includeActualValues?: boolean } = {}): string {
     const result = []
     let remaining =
       limit - delimiter.length + `... ${this.errors.length} more errors`.length
@@ -25,16 +28,23 @@ export default class RuntimeTypeError extends TypeError {
       if (result.length) remaining -= delimiter.length
       const stringified = error.toString()
       remaining -= stringified.length
-      const actualValuePart = `\n\nActual Value: ${stringifyValue(
-        error.valueAtPath,
-        { limit: remaining - `\n\nActual Value: `.length }
-      )}`
-      remaining -= actualValuePart.length
+      let actualValuePart
+      if (includeActualValues) {
+        actualValuePart = `\n\nActual Value: ${stringifyValue(
+          error.valueAtPath,
+          { limit: remaining - `\n\nActual Value: `.length }
+        )}`
+        remaining -= actualValuePart.length
+      }
       if (remaining < 0 && result.length) {
         result.push(`... ${this.errors.length - i} more errors`)
         break
       }
-      result.push(remaining < 0 ? stringified : stringified + actualValuePart)
+      result.push(
+        remaining < 0 || !actualValuePart
+          ? stringified
+          : stringified + actualValuePart
+      )
     }
     return result.join(delimiter)
   }
