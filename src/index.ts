@@ -13,6 +13,7 @@ import NumericLiteralType from './types/NumericLiteralType'
 import ObjectType from './types/ObjectType'
 import ObjectTypeProperty from './types/ObjectTypeProperty'
 import oneOf from './oneOf'
+import PrimitiveLiteralType from './types/PrimitiveLiteralType'
 import RecordType from './types/RecordType'
 import RuntimeTypeError from './errorReporting/RuntimeTypeError'
 import RuntimeTypeErrorItem from './errorReporting/RuntimeTypeErrorItem'
@@ -45,6 +46,7 @@ export {
   ObjectType,
   ObjectTypeProperty,
   oneOf,
+  PrimitiveLiteralType,
   RecordType,
   RuntimeTypeError,
   RuntimeTypeErrorItem,
