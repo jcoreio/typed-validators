@@ -13,6 +13,8 @@ declare class Type<T> {
   typeName: string;
   +__type: T;
 
+  resolveType(): Type<T>;
+
   errors(
     validation: Validation,
     path: IdentifierPath,

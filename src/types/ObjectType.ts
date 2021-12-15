@@ -36,11 +36,6 @@ export default class ObjectType<T extends {}> extends Type<T> {
     this.exact = exact
     properties.forEach(prop => (prop.__objectType = this))
   }
-
-  resolveObjectType(): ObjectType<T> {
-    return this
-  }
-
   *errors(
     validation: Validation,
     path: IdentifierPath,
