@@ -12,6 +12,7 @@ import NumberType from './types/NumberType'
 import NumericLiteralType from './types/NumericLiteralType'
 import ObjectType from './types/ObjectType'
 import ObjectTypeProperty from './types/ObjectTypeProperty'
+import OpaqueType from './types/OpaqueType'
 import oneOf from './oneOf'
 import PrimitiveLiteralType from './types/PrimitiveLiteralType'
 import RecordType from './types/RecordType'
@@ -45,6 +46,7 @@ export {
   NumericLiteralType,
   ObjectType,
   ObjectTypeProperty,
+  OpaqueType,
   oneOf,
   PrimitiveLiteralType,
   RecordType,
@@ -66,6 +68,8 @@ export {
 
 export const any = (): Type<any> => new AnyType()
 export const unknown = (): Type<unknown> => new UnknownType()
+export const opaque = <T>(type: () => Type<any>): OpaqueType<T> =>
+  new OpaqueType<T>(type)
 
 export const array = <T>(elementType: Type<T>): Type<T[]> =>
   new ArrayType(elementType)

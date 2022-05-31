@@ -1,0 +1,11 @@
+// @flow
+
+import Type from './Type'
+
+declare class OpaqueType<T> extends Type<T> {
+  type: () => Type<any>;
+
+  constructor(type: () => Type<any>): void;
+}
+
+export default OpaqueType

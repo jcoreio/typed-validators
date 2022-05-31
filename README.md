@@ -42,6 +42,7 @@ The validation errors are detailed. Adapted from the brilliant work in `flow-run
     - [`t.readonlyArray(t.number())`](#treadonlyarraytnumber)
     - [`t.object(properties)`](#tobjectproperties)
     - [`t.object({ required?, optional?, exact? })`](#tobject-required-optional-exact-)
+    - [`t.opaque<DateString>(() => t.string())`](#topaquedatestring--tstring)
     - [`t.readonly(objectType)`](#treadonlyobjecttype)
     - [`t.merge(...objectTypes)`](#tmergeobjecttypes)
     - [`t.mergeInexact(...objectTypes)`](#tmergeinexactobjecttypes)
@@ -386,9 +387,13 @@ PersonType.assert({ name: 1 }) // error
 PersonType.assert({ name: 'dude', age: 'old' }) // error
 ```
 
+### `t.opaque<DateString>(() => t.string())`
+
+A validator that requires the value to be a string, but presents the type as `DateString` (for instance with `export opaque type DateString = string`)
+
 ### `t.readonly(objectType)`
 
-Use `t.readOnly(t.object(...))` or `t.readOnly(t.merge(...))` etc. Doesn't require the object to be frozen, just allows the extracted type to be readonly.
+Use `t.readonly(t.object(...))` or `t.readonly(t.merge(...))` etc. Doesn't require the object to be frozen, just allows the extracted type to be readonly.
 
 ### `t.merge(...objectTypes)`
 
