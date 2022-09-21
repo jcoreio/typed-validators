@@ -2,7 +2,7 @@ import AnyType from './types/AnyType'
 import ArrayType from './types/ArrayType'
 import BooleanLiteralType from './types/BooleanLiteralType'
 import BooleanType from './types/BooleanType'
-import InstanceOfType from './types/InstanceOfType'
+import InstanceOfType, { Constructor } from './types/InstanceOfType'
 import IntersectionType from './types/IntersectionType'
 import merge from './merge'
 import MergedObjectType from './types/MergedObjectType'
@@ -208,11 +208,8 @@ export const record = <K extends string | number | symbol, V>(
   value: Type<V>
 ): RecordType<K, V> => new RecordType(key, value)
 
-export const instanceOf = <T>(
-  classType: () => {
-    new (...args: any[]): T
-  }
-): Type<T> => new InstanceOfType(classType)
+export const instanceOf = <T>(classType: () => Constructor<T>): Type<T> =>
+  new InstanceOfType(classType)
 
 export const tuple = <T extends Type<any>[]>(
   ...types: T

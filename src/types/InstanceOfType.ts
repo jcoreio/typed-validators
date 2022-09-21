@@ -3,13 +3,14 @@ import Validation, { IdentifierPath } from '../Validation'
 import InvalidTypeErrorItem from '../errorReporting/InvalidTypeErrorItem'
 import RuntimeTypeErrorItem from '../errorReporting/RuntimeTypeErrorItem'
 
-export type ClassTypeOption<T> = () => { new (...args: any[]): T }
+export type Constructor<T> = ((new (...args: any[]) => T) | (abstract new (...args: any[]) => T))
+export type ClassTypeOption<T> = () => Constructor<T>
 
 export default class InstanceOfType<T> extends Type<T> {
   typeName = 'InstanceOfType'
   private _classType: ClassTypeOption<T>
 
-  get classType(): { new (...args: any[]): T } {
+  get classType(): Constructor<T> {
     return this._classType()
   }
 
