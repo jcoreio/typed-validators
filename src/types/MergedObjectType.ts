@@ -3,8 +3,9 @@ import ObjectType from './ObjectType'
 import ObjectTypeProperty from './ObjectTypeProperty'
 import Validation, { IdentifierPath } from '../Validation'
 import RuntimeTypeErrorItem from '../errorReporting/RuntimeTypeErrorItem'
-
-export default class MergedObjectType<T extends {}> extends Type<T> {
+export default class MergedObjectType<
+  T extends Record<string, any>
+> extends Type<T> {
   typeName = 'MergedObjectType'
   readonly objects: Type<T>[]
   readonly exact: boolean

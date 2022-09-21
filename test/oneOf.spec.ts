@@ -3,8 +3,8 @@ import { expect } from 'chai'
 import dedent from 'dedent-js'
 import stringifyValue from '../src/errorReporting/stringifyValue'
 
-describe(`t.oneOf`, function() {
-  it(`requires types to be instance of Type`, function() {
+describe(`t.oneOf`, function () {
+  it(`requires types to be instance of Type`, function () {
     expect(() => t.oneOf(t.object({ foo: t.number() }), 2 as any)).to.throw()
   })
   const NumberOrString = t.oneOf(t.number(), t.string())
@@ -13,7 +13,7 @@ describe(`t.oneOf`, function() {
     t.object({ required: { foo: t.number() }, exact: false }),
     t.object({ required: { bar: t.string() }, exact: false })
   )
-  it(`.toString()`, function() {
+  it(`.toString()`, function () {
     expect(
       t
         .oneOf(
@@ -24,7 +24,7 @@ describe(`t.oneOf`, function() {
         .toString()
     ).to.equal('(string & number) | null | (number & 2)')
   })
-  it(`accepts valid values`, function() {
+  it(`accepts valid values`, function () {
     for (const value of [1, 2, 'three', 'four']) {
       NumberOrString.assert(value)
       expect(NumberOrString.accepts(value)).to.be.true
@@ -39,7 +39,7 @@ describe(`t.oneOf`, function() {
       expect(ObjectUnion.accepts(value)).to.be.true
     }
   })
-  it(`rejects invalid values`, function() {
+  it(`rejects invalid values`, function () {
     for (const value of [true, false, null, undefined, [], {}]) {
       expect(() => NumberOrString.assert(value)).to.throw(
         t.RuntimeTypeError,
@@ -78,7 +78,7 @@ describe(`t.oneOf`, function() {
       expect(ObjectUnion.accepts(value)).to.be.false
     }
   })
-  it(`has good error messages for {foo: string} | null on non-null input`, function() {
+  it(`has good error messages for {foo: string} | null on non-null input`, function () {
     const MaybeFoo = t.oneOf(t.object({ foo: t.string() }), t.null())
     const value = { foo: 1 }
     expect(() => MaybeFoo.assert(value, undefined, ['value'])).to.throw(
@@ -102,7 +102,7 @@ describe(`t.oneOf`, function() {
       `
     )
   })
-  it(`has good error messages for {foo: string}[] | null on non-null input`, function() {
+  it(`has good error messages for {foo: string}[] | null on non-null input`, function () {
     const MaybeFooArray = t.oneOf(
       t.array(t.object({ foo: t.string() })),
       t.null()
@@ -150,7 +150,7 @@ describe(`t.oneOf`, function() {
       `
     )
   })
-  it(`has good error messages for union of objects with type property`, function() {
+  it(`has good error messages for union of objects with type property`, function () {
     const TestType = t.oneOf(
       t.object({
         required: {
@@ -230,7 +230,7 @@ describe(`t.oneOf`, function() {
       `
     )
   })
-  it(`.acceptsSomeCompositeTypes`, function() {
+  it(`.acceptsSomeCompositeTypes`, function () {
     expect(t.oneOf(t.number(), t.string()).acceptsSomeCompositeTypes).to.be
       .false
     expect(

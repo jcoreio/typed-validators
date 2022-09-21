@@ -24,33 +24,33 @@ function getDeterminantProperty(
     string | number | symbol,
     ObjectTypeProperty<any, any>
   >[] = objTypes.map(
-    ({ properties }) => new Map(properties.map(p => [p.key, p]))
+    ({ properties }) => new Map(properties.map((p) => [p.key, p]))
   )
-  const potential: (
-    | [string | number | symbol, Map<any, Type<any>>]
-    | null
-  )[] = objTypes[0].properties
-    .map((p: ObjectTypeProperty<any, any>):
-      | [string | number | symbol, Map<any, Type<any>>]
-      | null => {
-      const eachProperty = propertyMaps.map(m => m.get(p.key))
-      const valueMap: Map<any, Type<any>> = new Map()
-      for (const property of eachProperty) {
-        if (!property) return null
-        const { value } = property
-        if (
-          !(value instanceof PrimitiveLiteralType) ||
-          value instanceof NullLiteralType ||
-          value instanceof UndefinedLiteralType ||
-          valueMap.has(value.value)
-        )
-          return null
+  const potential: ([string | number | symbol, Map<any, Type<any>>] | null)[] =
+    objTypes[0].properties
+      .map(
+        (
+          p: ObjectTypeProperty<any, any>
+        ): [string | number | symbol, Map<any, Type<any>>] | null => {
+          const eachProperty = propertyMaps.map((m) => m.get(p.key))
+          const valueMap: Map<any, Type<any>> = new Map()
+          for (const property of eachProperty) {
+            if (!property) return null
+            const { value } = property
+            if (
+              !(value instanceof PrimitiveLiteralType) ||
+              value instanceof NullLiteralType ||
+              value instanceof UndefinedLiteralType ||
+              valueMap.has(value.value)
+            )
+              return null
 
-        valueMap.set(value.value, property.__objectType)
-      }
-      return [p.key, valueMap]
-    })
-    .filter(p => p != null)
+            valueMap.set(value.value, property.__objectType)
+          }
+          return [p.key, valueMap]
+        }
+      )
+      .filter((p) => p != null)
   return potential.length === 1 ? potential[0] : null
 }
 
@@ -93,8 +93,8 @@ export default class UnionType<T> extends Type<T> {
     }
     if (input != null) {
       const deepErrors: RuntimeTypeErrorItem[][] = this.types
-        .map(t => [...t.errors(validation, path, input)])
-        .filter(errors => errors.find(e => e.depth > path.length))
+        .map((t) => [...t.errors(validation, path, input)])
+        .filter((errors) => errors.find((e) => e.depth > path.length))
       if (deepErrors.length === 1) {
         yield* deepErrors[0]
         return
@@ -127,7 +127,7 @@ export default class UnionType<T> extends Type<T> {
   }
 
   get acceptsSomeCompositeTypes(): boolean {
-    return this.types.some(t => t.acceptsSomeCompositeTypes)
+    return this.types.some((t) => t.acceptsSomeCompositeTypes)
   }
 
   toString(options?: { formatForMustBe?: boolean }): string {
@@ -138,7 +138,7 @@ export default class UnionType<T> extends Type<T> {
         : `one of ${formatted}`
     }
     return this.types
-      .map(type =>
+      .map((type) =>
         type instanceof UnionType || type instanceof IntersectionType
           ? `(${type.toString()})`
           : type.toString()

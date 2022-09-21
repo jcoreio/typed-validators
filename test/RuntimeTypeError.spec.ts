@@ -13,9 +13,9 @@ function expectError(type: t.Type<any>, input: any): t.RuntimeTypeError {
   }
 }
 
-describe(`RuntimeTypeError`, function() {
-  describe(`.formatMessage`, function() {
-    it(`works on class types`, function() {
+describe(`RuntimeTypeError`, function () {
+  describe(`.formatMessage`, function () {
+    it(`works on class types`, function () {
       const TestType = t.array(t.object({ foo: t.number() }))
       const testValue = [{ foo: new Date(10000000000) }]
 
@@ -27,7 +27,7 @@ describe(`RuntimeTypeError`, function() {
         `
       )
     })
-    it(`works on circular references`, function() {
+    it(`works on circular references`, function () {
       const TestType = t.array(t.object({ foo: t.number() }))
       const testValue = []
       testValue.push(testValue)
@@ -61,7 +61,7 @@ describe(`RuntimeTypeError`, function() {
         `
       )
     })
-    it(`includeActualValues: false`, function() {
+    it(`includeActualValues: false`, function () {
       const TestType = t.array(t.object({ foo: t.number() }))
       const testValue = []
       for (let i = 0; i < 2; i++) {
@@ -84,7 +84,7 @@ describe(`RuntimeTypeError`, function() {
         `
       )
     })
-    it(`limit works on number of errors`, function() {
+    it(`limit works on number of errors`, function () {
       const TestType = t.array(t.object({ foo: t.number() }))
       const testValue = []
       for (let i = 0; i < 100; i++) {
@@ -113,7 +113,7 @@ describe(`RuntimeTypeError`, function() {
         `
       )
     })
-    it(`limit works on long string values`, function() {
+    it(`limit works on long string values`, function () {
       const TestType = t.array(t.object({ foo: t.number() }))
       const testValue = []
       const longString = 'long string '.repeat(1000)
@@ -137,7 +137,7 @@ describe(`RuntimeTypeError`, function() {
         `
       )
     })
-    it(`limit works on long string values in an object`, function() {
+    it(`limit works on long string values in an object`, function () {
       const TestType = t.array(t.number())
       const testValue = []
       const longString = 'long string '.repeat(1000)
@@ -164,7 +164,7 @@ describe(`RuntimeTypeError`, function() {
       )
     })
 
-    it(`limit works on too many object properties`, function() {
+    it(`limit works on too many object properties`, function () {
       const TestType = t.array(t.number())
       const testValue = {}
       for (let i = 0; i < 100; i++) {
@@ -187,7 +187,7 @@ describe(`RuntimeTypeError`, function() {
       )
     })
 
-    it(`limit works on too many array elements`, function() {
+    it(`limit works on too many array elements`, function () {
       const TestType = t.object({ foo: t.number() })
       const testValue = []
       for (let i = 0; i < 100; i++) {

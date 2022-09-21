@@ -2,14 +2,14 @@ import * as t from '../src/'
 import { expect } from 'chai'
 import dedent from 'dedent-js'
 
-describe(`t.boolean`, function() {
-  it(`accepts booleans`, function() {
+describe(`t.boolean`, function () {
+  it(`accepts booleans`, function () {
     t.boolean().assert(true)
     t.boolean().assert(false)
     expect(t.boolean().accepts(true)).to.be.true
     expect(t.boolean().accepts(false)).to.be.true
   })
-  it(`rejects everything else`, function() {
+  it(`rejects everything else`, function () {
     expect(t.boolean().accepts(2)).to.be.false
     expect(() => t.boolean().assert(2)).to.throw(
       t.RuntimeTypeError,
@@ -38,22 +38,22 @@ describe(`t.boolean`, function() {
       `
     )
   })
-  it(`.acceptsSomeCompositeTypes is false`, function() {
+  it(`.acceptsSomeCompositeTypes is false`, function () {
     expect(t.boolean().acceptsSomeCompositeTypes).to.be.false
   })
 })
 
-describe(`t.boolean(literal)`, function() {
-  it(`requires value to be a boolean`, function() {
+describe(`t.boolean(literal)`, function () {
+  it(`requires value to be a boolean`, function () {
     expect(() => t.boolean(2 as any)).to.throw()
   })
-  it(`accepts literal value`, function() {
+  it(`accepts literal value`, function () {
     t.boolean(true).assert(true)
     t.boolean(false).assert(false)
     expect(t.boolean(true).accepts(true)).to.be.true
     expect(t.boolean(false).accepts(false)).to.be.true
   })
-  it(`rejects everything else`, function() {
+  it(`rejects everything else`, function () {
     expect(t.boolean(true).accepts(false)).to.be.false
     expect(t.boolean(false).accepts(true)).to.be.false
     expect(t.boolean(false).accepts(2)).to.be.false
@@ -92,7 +92,7 @@ describe(`t.boolean(literal)`, function() {
       `
     )
   })
-  it(`.acceptsSomeCompositeTypes is false`, function() {
+  it(`.acceptsSomeCompositeTypes is false`, function () {
     expect(t.boolean(true).acceptsSomeCompositeTypes).to.be.false
   })
 })

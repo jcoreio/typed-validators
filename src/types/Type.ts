@@ -22,12 +22,12 @@ export default abstract class Type<T> {
   }
 
   abstract errors(
-    /* eslint-disable @typescript-eslint/no-unused-vars */
+  /* eslint-disable @typescript-eslint/no-unused-vars */
     validation: Validation,
     path: IdentifierPath,
     input: any
-    /* eslint-enable @typescript-eslint/no-unused-vars */
-  ): Iterable<RuntimeTypeErrorItem>
+  ): /* eslint-enable @typescript-eslint/no-unused-vars */
+  Iterable<RuntimeTypeErrorItem>
 
   abstract accepts(input: any): input is T
 

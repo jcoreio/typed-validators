@@ -2,8 +2,8 @@ import * as t from '../src/'
 import { expect } from 'chai'
 import dedent from 'dedent-js'
 
-describe(`t.object`, function() {
-  it(`requires values to be instance of Type`, function() {
+describe(`t.object`, function () {
+  it(`requires values to be instance of Type`, function () {
     expect(() => t.object({ name: 2 as any })).to.throw()
   })
 
@@ -24,7 +24,7 @@ describe(`t.object`, function() {
       age: t.nullOr(t.number()),
     },
   })
-  it(`accepts matching object`, function() {
+  it(`accepts matching object`, function () {
     for (const value of [
       { name: 'Jimbo' },
       { name: 'Jimbo', age: null },
@@ -43,7 +43,7 @@ describe(`t.object`, function() {
       TypeWithSymbol.assert(value)
     }
   })
-  it(`rejects missing properties`, function() {
+  it(`rejects missing properties`, function () {
     expect(Person.accepts({ age: 20 })).to.be.false
     expect(() => Person.assert({ age: 20 })).to.throw(
       t.RuntimeTypeError,
@@ -67,7 +67,7 @@ describe(`t.object`, function() {
       `
     )
   })
-  it(`rejects missing properties (key formatting)`, function() {
+  it(`rejects missing properties (key formatting)`, function () {
     expect(t.object({ 'first-name': t.string() }).accepts({ 'first-name': 0 }))
       .to.be.false
     expect(() =>
@@ -83,7 +83,7 @@ describe(`t.object`, function() {
       `
     )
   })
-  it(`validates properties`, function() {
+  it(`validates properties`, function () {
     const value = { name: 1 }
     expect(Person.accepts(value)).to.be.false
     expect(() => Person.assert(value, undefined, ['value'])).to.throw(
@@ -95,7 +95,7 @@ describe(`t.object`, function() {
       `
     )
   })
-  it(`deep validation`, function() {
+  it(`deep validation`, function () {
     const People = t.array(Person)
     const values = [{ name: 1 }, { name: 'Jimbo', age: 'old' }]
     expect(() => People.assert(values, undefined, ['values'])).to.throw(
@@ -113,7 +113,7 @@ describe(`t.object`, function() {
       `
     )
   })
-  it(`rejects extraneous properties`, function() {
+  it(`rejects extraneous properties`, function () {
     const value = { name: 'Jimbo', powerLevel: 9001 }
     expect(Person.accepts(value)).to.be.false
     expect(() => Person.assert(value)).to.throw(
@@ -142,7 +142,7 @@ describe(`t.object`, function() {
       `
     )
   })
-  it(`rejects everything else`, function() {
+  it(`rejects everything else`, function () {
     for (const value of [true, 'foo', null, undefined, 2, []]) {
       expect(Person.accepts(value)).to.be.false
       expect(() => Person.assert(value)).to.throw(
@@ -160,7 +160,7 @@ describe(`t.object`, function() {
       )
     }
   })
-  it(`circular references`, function() {
+  it(`circular references`, function () {
     const obj: any = { foo: 1 }
     obj.bar = obj
 
@@ -204,7 +204,7 @@ describe(`t.object`, function() {
     )
     expect(NonRecursiveObject.accepts(obj)).to.be.false
   })
-  it(`.acceptsSomeCompositeTypes is true`, function() {
+  it(`.acceptsSomeCompositeTypes is true`, function () {
     expect(t.object({ foo: t.number() }).acceptsSomeCompositeTypes).to.be.true
   })
 })

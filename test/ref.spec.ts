@@ -2,7 +2,7 @@ import * as t from '../src/'
 import dedent from 'dedent-js'
 import { expect } from 'chai'
 
-describe(`t.ref`, function() {
+describe(`t.ref`, function () {
   const NodeType: t.TypeAlias<{
     value: any
     left?: Node
@@ -22,7 +22,7 @@ describe(`t.ref`, function() {
 
   type Node = t.ExtractType<typeof NodeType>
 
-  it(`accepts recursive types`, function() {
+  it(`accepts recursive types`, function () {
     const value = {
       value: 'foo',
       left: {
@@ -38,7 +38,7 @@ describe(`t.ref`, function() {
     NodeType.assert(value)
     expect(NodeType.accepts(value)).to.be.true
   })
-  it(`throws correct errors within recursive types`, function() {
+  it(`throws correct errors within recursive types`, function () {
     const value = {
       value: 'foo',
       left: {
@@ -65,7 +65,7 @@ describe(`t.ref`, function() {
     )
     expect(NodeType.accepts(value)).to.be.false
   })
-  it(`.acceptsSomeCompositeTypes`, function() {
+  it(`.acceptsSomeCompositeTypes`, function () {
     expect(t.ref(() => t.alias('Foo', t.number())).acceptsSomeCompositeTypes).to
       .be.false
     expect(

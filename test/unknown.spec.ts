@@ -1,11 +1,11 @@
 import * as t from '../src/'
 import { expect } from 'chai'
 
-describe(`t.unknown`, function() {
-  it(`toString()`, function() {
+describe(`t.unknown`, function () {
+  it(`toString()`, function () {
     expect(t.unknown().toString()).to.equal('unknown')
   })
-  it(`accepts unknownthing`, function() {
+  it(`accepts unknownthing`, function () {
     for (const value of [
       null,
       undefined,
@@ -23,7 +23,7 @@ describe(`t.unknown`, function() {
       ]).to.deep.equal([])
     }
   })
-  it(`.acceptsSomeCompositeTypes is true`, function() {
+  it(`.acceptsSomeCompositeTypes is true`, function () {
     expect(t.unknown().acceptsSomeCompositeTypes).to.be.true
   })
 })

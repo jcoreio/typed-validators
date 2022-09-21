@@ -76,9 +76,9 @@ export const array = <T>(elementType: Type<T>): Type<T[]> =>
 
 export const readonlyArray = <T>(elementType: Type<T>): Type<readonly T[]> =>
   new ArrayType(elementType) as any
-
-export const readonly = <T extends {}>(type: Type<T>): Type<Readonly<T>> =>
-  type as any
+export const readonly = <T extends Record<string, any>>(
+  type: Type<T>
+): Type<Readonly<T>> => type as any
 
 export const nullLiteral = (): Type<null> => new NullLiteralType()
 export { nullLiteral as null }
@@ -126,10 +126,12 @@ export function symbol(
   return literal != null ? new SymbolLiteralType(literal) : new SymbolType()
 }
 
-function entries<O extends {}>(obj: O): [string | symbol, any][] {
+function entries<O extends Record<string, any>>(
+  obj: O
+): [string | symbol, any][] {
   return [
     ...Object.entries(obj),
-    ...Object.getOwnPropertySymbols(obj).map(s => [s, (obj as any)[s]]),
+    ...Object.getOwnPropertySymbols(obj).map((s) => [s, (obj as any)[s]]),
   ] as any
 }
 

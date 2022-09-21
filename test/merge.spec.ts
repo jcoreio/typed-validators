@@ -2,8 +2,8 @@ import * as t from '../src/'
 import { expect } from 'chai'
 import dedent from 'dedent-js'
 
-describe(`t.merge`, function() {
-  it(`requires objectTypes to be instance of Type`, function() {
+describe(`t.merge`, function () {
+  it(`requires objectTypes to be instance of Type`, function () {
     expect(() => t.merge(t.object({ foo: t.number() }), 2 as any)).to.throw()
   })
   const BarAlias = t.alias('Bar', t.object({ bar: t.string() }))
@@ -11,7 +11,7 @@ describe(`t.merge`, function() {
     t.object({ foo: t.number() }),
     t.ref(() => BarAlias)
   )
-  it(`throws if any of the given types aren't objects`, function() {
+  it(`throws if any of the given types aren't objects`, function () {
     const NumberAlias = t.alias('Number', t.number())
     expect(() =>
       t
@@ -24,7 +24,7 @@ describe(`t.merge`, function() {
       `a merged type didn't resolve to an ObjectType: Number (resolved to number)`
     )
   })
-  it(`accepts valid values`, function() {
+  it(`accepts valid values`, function () {
     for (const value of [
       { foo: 2, bar: 'hello' },
       { foo: -5, bar: 'world' },
@@ -33,7 +33,7 @@ describe(`t.merge`, function() {
       expect(Merged.accepts(value)).to.be.true
     }
   })
-  it(`rejects invalid values`, function() {
+  it(`rejects invalid values`, function () {
     expect(() => Merged.assert({ foo: 3 })).to.throw(
       t.RuntimeTypeError,
       dedent`
@@ -70,7 +70,7 @@ describe(`t.merge`, function() {
     )
     expect(Merged.accepts({ foo: 1, bar: 'a', baz: 'qux' })).to.be.false
   })
-  it(`.acceptsSomeCompositeTypes is true`, function() {
+  it(`.acceptsSomeCompositeTypes is true`, function () {
     expect(Merged.acceptsSomeCompositeTypes).to.be.true
   })
 })

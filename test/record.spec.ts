@@ -2,24 +2,24 @@ import * as t from '../src/'
 import { expect } from 'chai'
 import dedent from 'dedent-js'
 
-describe(`t.record`, function() {
-  it(`requires key to be instance of Type`, function() {
+describe(`t.record`, function () {
+  it(`requires key to be instance of Type`, function () {
     expect(() => t.record('hello' as any, t.number())).to.throw()
   })
-  it(`requires value to be instance of Type`, function() {
+  it(`requires value to be instance of Type`, function () {
     expect(() => t.record(t.string('a'), 2 as any)).to.throw()
   })
   const Numbers = t.record(
     t.oneOf(t.string('a'), t.string('b'), t.string('c')),
     t.number()
   )
-  it(`accepts matching records`, function() {
+  it(`accepts matching records`, function () {
     for (const value of [{ a: 1 }, { a: 1, b: 2 }, { a: 1, b: 2, c: 3 }]) {
       Numbers.assert(value)
       expect(Numbers.accepts(value)).to.be.true
     }
   })
-  it(`rejects keys that don't match`, function() {
+  it(`rejects keys that don't match`, function () {
     expect(() => Numbers.assert({ a: 1, d: 3 })).to.throw(
       t.RuntimeTypeError,
       dedent`
@@ -34,7 +34,7 @@ describe(`t.record`, function() {
       `
     )
   })
-  it(`rejects values that don't match`, function() {
+  it(`rejects values that don't match`, function () {
     expect(() => Numbers.assert({ a: 'one' })).to.throw(
       t.RuntimeTypeError,
       dedent`
@@ -44,7 +44,7 @@ describe(`t.record`, function() {
       `
     )
   })
-  it(`rejects everything else`, function() {
+  it(`rejects everything else`, function () {
     for (const value of [true, 'foo', null, undefined, 2, []]) {
       expect(Numbers.accepts(value)).to.be.false
       expect(() => Numbers.assert(value)).to.throw(
@@ -57,7 +57,7 @@ describe(`t.record`, function() {
       )
     }
   })
-  it(`circular references`, function() {
+  it(`circular references`, function () {
     const RecursiveType = t.alias(
       'RecursiveType',
       t.record(t.string(), t.array(t.ref(() => RecursiveType)))
@@ -130,7 +130,7 @@ describe(`t.record`, function() {
     )
     expect(NonRecursiveType.accepts(value)).to.be.false
   })
-  it(`.acceptsSomeCompositeTypes is false`, function() {
+  it(`.acceptsSomeCompositeTypes is false`, function () {
     expect(t.record(t.string(), t.number()).acceptsSomeCompositeTypes).to.be
       .true
   })

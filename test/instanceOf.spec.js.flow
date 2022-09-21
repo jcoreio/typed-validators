@@ -8,14 +8,14 @@ import { describe, it } from 'mocha'
 class Foo {}
 class Bar {}
 
-describe(`t.instanceOf`, function() {
+describe(`t.instanceOf`, function () {
   const FooInstanceType = t.instanceOf(() => Foo)
   type FooInstance = t.ExtractType<typeof FooInstanceType>
 
-  it(`accepts instances of class type`, function() {
+  it(`accepts instances of class type`, function () {
     const a: FooInstance = new Foo()
   })
-  it(`rejects not instances of class type`, function() {
+  it(`rejects not instances of class type`, function () {
     // $FlowFixMe
     const a: FooInstance = new Bar()
   })

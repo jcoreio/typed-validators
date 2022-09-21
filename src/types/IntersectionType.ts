@@ -30,7 +30,7 @@ export default class IntersectionType<T> extends Type<T> {
       if (objects.length && !rest.length) {
         this.resolved = new MergedObjectType(
           objects,
-          !objects.find(obj => obj.exact === false)
+          !objects.find((obj) => obj.exact === false)
         ).resolveType()
       } else {
         this.resolved = this
@@ -73,7 +73,7 @@ export default class IntersectionType<T> extends Type<T> {
   get acceptsSomeCompositeTypes(): boolean {
     const resolved = this.resolveType()
     if (resolved !== this) return resolved.acceptsSomeCompositeTypes
-    return this.types.some(t => t.acceptsSomeCompositeTypes)
+    return this.types.some((t) => t.acceptsSomeCompositeTypes)
   }
 
   toString(options?: { formatForMustBe?: boolean }): string {
@@ -84,7 +84,7 @@ export default class IntersectionType<T> extends Type<T> {
         : `of type ${formatted}`
     }
     return this.types
-      .map(type =>
+      .map((type) =>
         type instanceof UnionType || type instanceof IntersectionType
           ? `(${type.toString()})`
           : type.toString()

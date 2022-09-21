@@ -3,7 +3,9 @@ import Validation, { IdentifierPath } from '../Validation'
 import InvalidTypeErrorItem from '../errorReporting/InvalidTypeErrorItem'
 import RuntimeTypeErrorItem from '../errorReporting/RuntimeTypeErrorItem'
 
-export type Constructor<T> = ((new (...args: any[]) => T) | (abstract new (...args: any[]) => T))
+export type Constructor<T> =
+  | (new (...args: any[]) => T)
+  | (abstract new (...args: any[]) => T)
 export type ClassTypeOption<T> = () => Constructor<T>
 
 export default class InstanceOfType<T> extends Type<T> {

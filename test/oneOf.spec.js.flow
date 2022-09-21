@@ -5,7 +5,7 @@ import { describe, it } from 'mocha'
 
 /* eslint-disable @typescript-eslint/no-unused-vars */
 
-describe(`t.oneOf`, function() {
+describe(`t.oneOf`, function () {
   const NumberOrStringType = t.oneOf(t.number(), t.string())
   type NumberOrString = t.ExtractType<typeof NumberOrStringType>
 
@@ -35,7 +35,7 @@ describe(`t.oneOf`, function() {
   )
   type TypeFieldUnion = t.ExtractType<typeof TypeFieldUnionType>
 
-  it(`accepts valid values`, function() {
+  it(`accepts valid values`, function () {
     const a: NumberOrString = 1
     const b: NumberOrString = 2
     const c: NumberOrString = 'three'
@@ -51,7 +51,7 @@ describe(`t.oneOf`, function() {
     const h: NestedObjectUnion = { obj: { bar: 'hello' } }
     const i: NestedObjectUnion = { obj: undefined }
   })
-  it(`rejects invalid values`, function() {
+  it(`rejects invalid values`, function () {
     // $FlowFixMe
     const a: NumberOrString = true
     // $FlowFixMe

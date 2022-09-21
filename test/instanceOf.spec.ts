@@ -4,14 +4,14 @@ import dedent from 'dedent-js'
 
 class Foo {}
 
-describe(`t.instanceOf`, function() {
-  it(`accepts instances of class type`, function() {
+describe(`t.instanceOf`, function () {
+  it(`accepts instances of class type`, function () {
     t.instanceOf(() => Date).assert(new Date())
     t.instanceOf(() => Foo).assert(new Foo())
     expect(t.instanceOf(() => Date).accepts(new Date())).to.be.true
     expect(t.instanceOf(() => Foo).accepts(new Foo())).to.be.true
   })
-  it(`rejects not instances of class type`, function() {
+  it(`rejects not instances of class type`, function () {
     expect(() => t.instanceOf(() => Date).assert({})).to.throw(
       t.RuntimeTypeError,
       dedent`
@@ -31,7 +31,7 @@ describe(`t.instanceOf`, function() {
     )
     expect(t.instanceOf(() => Date).accepts(new Foo())).to.be.false
   })
-  it(`.acceptsSomeCompositeTypes is true`, function() {
+  it(`.acceptsSomeCompositeTypes is true`, function () {
     expect(t.instanceOf(() => Date).acceptsSomeCompositeTypes).to.be.true
   })
 })

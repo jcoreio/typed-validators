@@ -5,7 +5,7 @@ import { describe, it } from 'mocha'
 
 /* eslint-disable @typescript-eslint/no-unused-vars */
 
-describe(`t.ref`, function() {
+describe(`t.ref`, function () {
   const NodeType = t.alias(
     'Node',
     t.object({

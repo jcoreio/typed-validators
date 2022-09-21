@@ -2,12 +2,12 @@ import * as t from '../src/'
 import { expect } from 'chai'
 import dedent from 'dedent-js'
 
-describe(`t.string`, function() {
-  it(`accepts strings`, function() {
+describe(`t.string`, function () {
+  it(`accepts strings`, function () {
     t.string().assert('foo')
     t.string().assert('')
   })
-  it(`rejects everything else`, function() {
+  it(`rejects everything else`, function () {
     expect(() => t.string().assert(true)).to.throw(
       t.RuntimeTypeError,
       dedent`
@@ -25,20 +25,20 @@ describe(`t.string`, function() {
       `
     )
   })
-  it(`.acceptsSomeCompositeTypes is false`, function() {
+  it(`.acceptsSomeCompositeTypes is false`, function () {
     expect(t.string().acceptsSomeCompositeTypes).to.be.false
   })
 })
 
-describe(`t.string(literal)`, function() {
-  it(`requires value to be a string`, function() {
+describe(`t.string(literal)`, function () {
+  it(`requires value to be a string`, function () {
     expect(() => t.string(1 as any)).to.throw()
   })
-  it(`accepts literal value`, function() {
+  it(`accepts literal value`, function () {
     t.string('foo').assert('foo')
     t.string('').assert('')
   })
-  it(`rejects everything else`, function() {
+  it(`rejects everything else`, function () {
     expect(() => t.string('foo').assert('bar')).to.throw(
       t.RuntimeTypeError,
       dedent`
@@ -56,7 +56,7 @@ describe(`t.string(literal)`, function() {
       `
     )
   })
-  it(`.acceptsSomeCompositeTypes is false`, function() {
+  it(`.acceptsSomeCompositeTypes is false`, function () {
     expect(t.string('foo').acceptsSomeCompositeTypes).to.be.false
   })
 })

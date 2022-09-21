@@ -196,8 +196,8 @@ const DeployConfigType = t.object({
 
 type DeployConfig = t.ExtractType<typeof DeployConfigType>
 
-describe(`smoke test`, function() {
-  it(`works`, function() {
+describe(`smoke test`, function () {
+  it(`works`, function () {
     const config: DeployConfig = {
       CloudFormationTemplateBucket: 'templates.clarity.foo.com',
       DeploymentName: 'clarity-new',

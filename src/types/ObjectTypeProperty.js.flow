@@ -2,10 +2,9 @@
 
 import Type from './Type'
 
-declare class ObjectTypeProperty<
-  K: string | number | symbol,
-  V
-> extends Type<V> {
+declare class ObjectTypeProperty<K: string | number | symbol, V>
+  extends Type<V>
+{
   key: K;
   value: Type<V>;
   optional: boolean;

@@ -5,16 +5,16 @@ import { describe, it } from 'mocha'
 
 /* eslint-disable @typescript-eslint/no-unused-vars */
 
-describe(`t.allOf`, function() {
+describe(`t.allOf`, function () {
   const MergedType = t.merge(
     t.object({ foo: t.number() }),
     t.object({ bar: t.string() })
   )
   type Merged = t.ExtractType<typeof MergedType>
-  it(`accepts valid values`, function() {
+  it(`accepts valid values`, function () {
     const a: Merged = { foo: 1, bar: 'a' }
   })
-  it(`rejects invalid values`, function() {
+  it(`rejects invalid values`, function () {
     // $FlowFixMe
     const a: Merged = { foo: 1 }
     // $FlowFixMe

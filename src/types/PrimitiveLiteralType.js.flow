@@ -3,8 +3,10 @@
 import Type from './Type'
 
 declare export default class PrimitiveLiteralType<
-  T: string | number | boolean | symbol | null | void
-> extends Type<T> {
+    T: string | number | boolean | symbol | null | void
+  >
+  extends Type<T>
+{
   +value: T;
   constructor(value: T): void;
 }

@@ -3,12 +3,12 @@ import { expect } from 'chai'
 import dedent from 'dedent-js'
 import stringifyValue from '../src/errorReporting/stringifyValue'
 
-describe(`t.tuple`, function() {
-  it(`requires types to be instance of Type`, function() {
+describe(`t.tuple`, function () {
+  it(`requires types to be instance of Type`, function () {
     expect(() => t.tuple(t.object({ foo: t.number() }), 2 as any)).to.throw()
   })
   const TheTuple = t.tuple(t.string(), t.number(), t.boolean())
-  it(`accepts matching types`, function() {
+  it(`accepts matching types`, function () {
     for (const value of [
       ['foo', 1, true],
       ['bar', 2, false],
@@ -17,7 +17,7 @@ describe(`t.tuple`, function() {
       expect(TheTuple.accepts(value)).to.be.true
     }
   })
-  it(`rejects shorter arrays`, function() {
+  it(`rejects shorter arrays`, function () {
     for (const value of [['foo'], ['foo', 1]]) {
       expect(() => TheTuple.assert(value)).to.throw(
         t.RuntimeTypeError,
@@ -30,7 +30,7 @@ describe(`t.tuple`, function() {
       expect(TheTuple.accepts(value)).to.be.false
     }
   })
-  it(`rejects longer arrays`, function() {
+  it(`rejects longer arrays`, function () {
     for (const value of [['foo', 1, false, null]]) {
       expect(() => TheTuple.assert(value)).to.throw(
         t.RuntimeTypeError,
@@ -43,7 +43,7 @@ describe(`t.tuple`, function() {
       expect(TheTuple.accepts(value)).to.be.false
     }
   })
-  it(`rejects non-arrays`, function() {
+  it(`rejects non-arrays`, function () {
     for (const value of [1, 2, null, undefined, {}, new Date()]) {
       expect(TheTuple.accepts(value)).to.be.false
       expect(() => TheTuple.assert(value)).to.throw(
@@ -56,7 +56,7 @@ describe(`t.tuple`, function() {
       )
     }
   })
-  it(`rejects elements of the wrong type`, function() {
+  it(`rejects elements of the wrong type`, function () {
     const value = [1, 2, null]
     expect(TheTuple.accepts(value)).to.be.false
     expect(() => TheTuple.assert(value)).to.throw(
@@ -74,7 +74,7 @@ describe(`t.tuple`, function() {
       `
     )
   })
-  it(`.acceptsSomeCompositeTypes is true`, function() {
+  it(`.acceptsSomeCompositeTypes is true`, function () {
     expect(t.tuple(t.number()).acceptsSomeCompositeTypes).to.be.true
   })
 })

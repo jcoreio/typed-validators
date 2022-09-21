@@ -7,7 +7,7 @@ import { expect } from 'chai'
 import dedent from 'dedent-js'
 import { describe, it } from 'mocha'
 
-describe(`t.string`, function() {
+describe(`t.string`, function () {
   const ValueType = t.string()
   type Value = t.ExtractType<typeof ValueType>
 
@@ -16,7 +16,7 @@ describe(`t.string`, function() {
   const v: Value = 1
 })
 
-describe(`t.string(literal)`, function() {
+describe(`t.string(literal)`, function () {
   const ValueType = t.string<'foo'>('foo')
   type Value = t.ExtractType<typeof ValueType>
 

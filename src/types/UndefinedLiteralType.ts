@@ -1,8 +1,6 @@
 import PrimitiveLiteralType from './PrimitiveLiteralType'
 
-export default class UndefinedLiteralType extends PrimitiveLiteralType<
-  undefined
-> {
+export default class UndefinedLiteralType extends PrimitiveLiteralType<undefined> {
   typeName = 'UndefinedLiteralType'
 
   constructor() {

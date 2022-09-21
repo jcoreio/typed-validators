@@ -5,18 +5,18 @@ import { describe, it } from 'mocha'
 
 /* eslint-disable @typescript-eslint/no-unused-vars */
 
-describe(`t.allOf`, function() {
+describe(`t.allOf`, function () {
   const BarAlias = t.alias('Bar', t.object({ bar: t.string() }))
   const MergedType = t.mergeInexact(
     t.object({ foo: t.number() }),
     t.ref(() => BarAlias)
   )
   type Merged = t.ExtractType<typeof MergedType>
-  it(`accepts valid values`, function() {
+  it(`accepts valid values`, function () {
     const a: Merged = { foo: 1, bar: 'a' }
     const e: Merged = { foo: 1, bar: 'a', baz: 'qux' }
   })
-  it(`rejects invalid values`, function() {
+  it(`rejects invalid values`, function () {
     // $FlowFixMe
     const a: Merged = { foo: 1 }
     // $FlowFixMe

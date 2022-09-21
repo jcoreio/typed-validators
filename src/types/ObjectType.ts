@@ -14,8 +14,7 @@ import {
 import RuntimeTypeErrorItem from '../errorReporting/RuntimeTypeErrorItem'
 import InvalidTypeErrorItem from '../errorReporting/InvalidTypeErrorItem'
 import UnknownPropertyErrorItem from '../errorReporting/UnknownPropertyErrorItem'
-
-export default class ObjectType<T extends {}> extends Type<T> {
+export default class ObjectType<T extends Record<string, any>> extends Type<T> {
   typeName = 'ObjectType'
   readonly properties: ObjectTypeProperty<keyof T, any>[]
   readonly exact: boolean
@@ -34,7 +33,7 @@ export default class ObjectType<T extends {}> extends Type<T> {
     }
     this.properties = properties
     this.exact = exact
-    properties.forEach(prop => (prop.__objectType = this))
+    properties.forEach((prop) => (prop.__objectType = this))
   }
   *errors(
     validation: Validation,
@@ -125,7 +124,7 @@ function acceptsExact(
   const { properties } = type
   for (const key in input) {
     // eslint-disable-line guard-for-in
-    if (!properties.some(property => property.key === key)) {
+    if (!properties.some((property) => property.key === key)) {
       return false
     }
   }
@@ -154,7 +153,7 @@ function* collectErrorsExact(
   const { properties } = type
   for (const key in input) {
     // eslint-disable-line guard-for-in
-    if (!properties.some(property => property.key === key)) {
+    if (!properties.some((property) => property.key === key)) {
       yield new UnknownPropertyErrorItem(path, input, type, key)
     }
   }

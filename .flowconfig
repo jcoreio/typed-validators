@@ -8,8 +8,6 @@
 ambiguous-object-type=error
 
 [options]
-well_formed_exports=true
-types_first=true
 ; Fixes out of shared memory error for Mac Rosetta 2, see https://github.com/facebook/flow/issues/8538
 sharedmemory.heap_size=3221225472
 

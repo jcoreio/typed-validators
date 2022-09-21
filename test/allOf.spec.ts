@@ -3,11 +3,11 @@ import { expect } from 'chai'
 import dedent from 'dedent-js'
 import stringifyValue from '../src/errorReporting/stringifyValue'
 
-describe(`t.allOf`, function() {
-  it(`requires all types to be instance of Type`, function() {
+describe(`t.allOf`, function () {
+  it(`requires all types to be instance of Type`, function () {
     expect(() => t.oneOf(t.null(), 2 as any)).to.throw()
   })
-  describe(`intersection of unions`, function() {
+  describe(`intersection of unions`, function () {
     const NumberOrNull = t.allOf(
       t.oneOf(t.number(), t.string(), t.null()),
       t.oneOf(
@@ -16,7 +16,7 @@ describe(`t.allOf`, function() {
         t.null()
       )
     )
-    it(`.toString()`, function() {
+    it(`.toString()`, function () {
       expect(NumberOrNull.toString()).to.equal(
         '(number | string | null) & (number | Date | null)'
       )
@@ -27,13 +27,13 @@ describe(`t.allOf`, function() {
         t.allOf(t.string(), t.oneOf(t.string(), t.null())).toString()
       ).to.equal('string & (string | null)')
     })
-    it(`accepts valid values`, function() {
+    it(`accepts valid values`, function () {
       for (const value of [1, 2, null]) {
         NumberOrNull.assert(value)
         expect(NumberOrNull.accepts(value)).to.be.true
       }
     })
-    it(`rejects invalid values`, function() {
+    it(`rejects invalid values`, function () {
       for (const value of [undefined, {}]) {
         expect(() => NumberOrNull.assert(value)).to.throw(
           t.RuntimeTypeError,
@@ -73,7 +73,7 @@ describe(`t.allOf`, function() {
       expect(NumberOrNull.accepts(new Date())).to.be.false
     })
   })
-  describe(`object intersections`, function() {
+  describe(`object intersections`, function () {
     const ObjectIntersection = t.allOf(
       t.object({ required: { foo: t.number() } }),
       t.object({ required: { bar: t.string() } })
@@ -82,7 +82,7 @@ describe(`t.allOf`, function() {
       t.object({ required: { foo: t.number() } }),
       t.object({ required: { bar: t.string() }, exact: false })
     )
-    it(`accepts valid values`, function() {
+    it(`accepts valid values`, function () {
       for (const value of [
         { foo: 2, bar: 'hello' },
         { foo: -5, bar: 'world' },
@@ -98,7 +98,7 @@ describe(`t.allOf`, function() {
         expect(InexactObjectIntersection.accepts(value)).to.be.true
       }
     })
-    it(`rejects invalid values`, function() {
+    it(`rejects invalid values`, function () {
       expect(() =>
         ObjectIntersection.assert({ foo: 3 }, undefined, ['value'])
       ).to.throw(
@@ -146,7 +146,7 @@ describe(`t.allOf`, function() {
         .false
     })
   })
-  it(`.acceptsSomeCompositeTypes`, function() {
+  it(`.acceptsSomeCompositeTypes`, function () {
     expect(t.allOf(t.string('foo'), t.string()).acceptsSomeCompositeTypes).to.be
       .false
     expect(

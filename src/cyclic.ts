@@ -1,8 +1,7 @@
-import Type from './types/Type'
+import Type from './types/Type' // Tracks whether we're in validation of cyclic objects.
 
-// Tracks whether we're in validation of cyclic objects.
-const cyclicValidation = new WeakMap()
-// Tracks whether we're toString() of cyclic objects.
+const cyclicValidation = new WeakMap() // Tracks whether we're toString() of cyclic objects.
+
 const cyclicToString = new WeakSet()
 
 export function inValidationCycle(type: Type<any>, input: any): boolean {
@@ -46,8 +45,7 @@ export function startToStringCycle(type: Type<any>): void {
 export function endToStringCycle(type: Type<any>): void {
   cyclicToString.delete(type)
 }
-
-export function weakSetHas<V extends {}>(
+export function weakSetHas<V extends Record<string, any>>(
   weakset: WeakSet<V>,
   value: V
 ): boolean {
@@ -57,16 +55,17 @@ export function weakSetHas<V extends {}>(
     return true
   }
 }
-
-export function weakSetAdd<V extends {}>(weakset: WeakSet<V>, value: V): void {
+export function weakSetAdd<V extends Record<string, any>>(
+  weakset: WeakSet<V>,
+  value: V
+): void {
   try {
     weakset.add(value)
   } catch (e) {
     // ignore
   }
 }
-
-export function weakSetDelete<V extends {}>(
+export function weakSetDelete<V extends Record<string, any>>(
   weakset: WeakSet<V>,
   value: V
 ): void {
